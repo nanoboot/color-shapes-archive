@@ -1,0 +1,21 @@
+#files to ignore
+
+*.metadata/**
+*.recommenders/**
+*/target/**
+*/build/**
+*.idea/**
+
+*.iml
+#*.class
+
+*/target/*
+
+
+#Netbeans
+**nb-configuration.xml
+**nfbactions.xml
+.env
+**.env
+
+obsolete*
