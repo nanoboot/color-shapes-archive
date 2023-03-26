@@ -20,7 +20,16 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
     @Override
     public List<Website> list(int pageNumber, int pageSize) {
         if (internalList.isEmpty()) {
-            internalList.add(new Website(1, "colorshapes.nanoboot.org", false, "", "en", false, false, null));
+            internalList.add(
+                    new Website(
+                            1, 
+                            "http://colorshapes.nanoboot.org", 
+                            "abc", 
+                            "en", 
+                            true, 
+                            true, 
+                            true,
+                            null));
         }
         return internalList;
     }

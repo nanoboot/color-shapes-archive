@@ -31,15 +31,16 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Website {
-    /**
-     * UUID identification of this entity.
-     */
+
     private Integer number;
     private String url;
-    private Boolean deadUrl;
     private String webArchiveSnapshot;
     private String language;
     private Boolean downloaded;
     private Boolean formatted;
+    private Boolean verified;
     private Integer variantNumber;
+    public Boolean getDeadUrl() {
+        return this.webArchiveSnapshot != null;
+    }
 }

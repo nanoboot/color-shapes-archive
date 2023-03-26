@@ -29,10 +29,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     <bean id="secretText" class="java.lang.String">
         <constructor-arg value="abc123"/>
     </bean>
-<!--
-    <import resource="services.xml"/>
-    <import resource="plugins.xml"/>
-    <import resource="entities.xml"/>
-    <import resource="strutsActions.xml"/>
--->
+
+<bean id="websiteRepoImplMock" class="org.nanoboot.colorlinesarchive.persistence.impl.mock.WebsiteRepoImplMock">
+</bean>
+
 </beans>
