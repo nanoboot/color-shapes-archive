@@ -23,6 +23,9 @@
  * @since 0.0.0
  */
 module colorlinesarchive.web {
+    requires colorlinesarchive.entity;
+    requires colorlinesarchive.persistence.api;
+    requires colorlinesarchive.persistence.impl.mock;
     requires spring.context;
     requires javax.servlet.api;
     requires lombok;

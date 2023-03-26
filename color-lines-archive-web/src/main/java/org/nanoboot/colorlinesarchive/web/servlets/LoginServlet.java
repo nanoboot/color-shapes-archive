@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
             returnError(response, request, "Loading octagon.properties failed.");
             return;
         }
-
+        
         if (!anonymous && authentication != null && !authentication.isBlank()) {
             String[] authenticationArray = authentication.split("/");
             if (authenticationArray.length != 2) {
