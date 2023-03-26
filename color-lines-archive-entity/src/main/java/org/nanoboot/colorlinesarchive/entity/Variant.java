@@ -17,17 +17,38 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-package org.nanoboot.colorlinesarchive.web.misc.utils;
+package org.nanoboot.colorlinesarchive.entity;
 
-import javax.servlet.http.HttpServletRequest;
+import lombok.Data;
 
+import java.util.UUID;
 /**
  *
  * @author <a href="mailto:robertvokac@nanoboot.org">Robert Vokac</a>
  * @since 0.0.0
  */
-public class Utils {
-    public static String getBaseUrl(HttpServletRequest request) {
-        return request.getServerName() + ':' + request.getServerPort() + request.getContextPath() + '/';
-    }
+import org.nanoboot.powerframework.time.moment.LocalDate;
+@Data
+public class Variant {
+    /**
+     * UUID identification of this entity.
+     */
+    private UUID id;
+    //
+    private String name;
+    private String image;
+    private String status;
+    private String author;
+    //
+    private String licence;
+    private Boolean openSource;
+    private String userInterface;
+    private String programmingLanguage;
+    
+    private Boolean binariesAvailable;
+    private LocalDate lastUpdate;
+    private String lastVersion;
+    
+
+ 
 }

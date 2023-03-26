@@ -37,9 +37,10 @@
     <name>color-lines-archive</name>
     <description>color-lines-archive</description>
     <modules>
+        <module>color-lines-archive-entity/pom.xml</module>
 <!--        <module>color-lines-archive-persistence-api/pom.xml</module>
         <module>color-lines-archive-persistence-impl-sqlite/pom.xml</module>
-        <module>color-lines-archive-entity/pom.xml</module>
+        
         <module>color-lines-archive-html/pom.xml</module>-->
         <module>color-lines-archive-web/pom.xml</module>
 

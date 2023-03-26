@@ -25,7 +25,7 @@ import java.io.IOException;
 /**
  *
  * @author <a href="mailto:robertvokac@nanoboot.org">Robert Vokac</a>
- * @since 0.1.0
+ * @since 0.0.0
  */
 public class CharacterEncodingFilter implements Filter {
 

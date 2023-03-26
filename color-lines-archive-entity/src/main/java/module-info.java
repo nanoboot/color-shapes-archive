@@ -17,17 +17,22 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-package org.nanoboot.colorlinesarchive.web.misc.utils;
-
-import javax.servlet.http.HttpServletRequest;
-
 /**
  *
  * @author <a href="mailto:robertvokac@nanoboot.org">Robert Vokac</a>
  * @since 0.0.0
  */
-public class Utils {
-    public static String getBaseUrl(HttpServletRequest request) {
-        return request.getServerName() + ':' + request.getServerPort() + request.getContextPath() + '/';
-    }
+module octagon.entity {
+    exports org.nanoboot.colorlinesarchive.entity;
+
+    requires java.sql;
+    requires spring.jdbc;
+    requires powerframework.json;
+    requires powerframework.time;
+    requires powerframework.utils;
+    requires powerframework.reflection;
+    requires powerframework.sql;
+    requires lombok;
+    requires org.apache.logging.log4j.core;
+    requires org.apache.logging.log4j;
 }
