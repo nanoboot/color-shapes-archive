@@ -17,29 +17,24 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-package org.nanoboot.colorlinesarchive.entity;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-
 /**
  *
  * @author <a href="mailto:robertvokac@nanoboot.org">Robert Vokac</a>
  * @since 0.0.0
  */
-@Data
-@AllArgsConstructor
-public class Website {
-    /**
-     * UUID identification of this entity.
-     */
-    private Integer number;
-    private String url;
-    private Boolean deadUrl;
-    private String webArchiveSnapshot;
-    private String language;
-    private Boolean downloaded;
-    private Boolean formatted;
-    private Integer variantNumber;
+module colorlinesarchive.persistence.impl.mock {
+    exports org.nanoboot.colorlinesarchive.persistence.impl.mock;
+
+    requires colorlinesarchive.entity;
+    requires colorlinesarchive.persistence.api;
+    requires java.sql;
+    requires spring.jdbc;
+    requires powerframework.json;
+    requires powerframework.time;
+    requires powerframework.utils;
+    requires powerframework.reflection;
+    requires powerframework.sql;
+    requires lombok;
+    requires org.apache.logging.log4j.core;
+    requires org.apache.logging.log4j;
 }

@@ -21,7 +21,6 @@ package org.nanoboot.colorlinesarchive.entity;
 
 import lombok.Data;
 
-import java.util.UUID;
 /**
  *
  * @author <a href="mailto:robertvokac@nanoboot.org">Robert Vokac</a>
@@ -30,10 +29,7 @@ import java.util.UUID;
 import org.nanoboot.powerframework.time.moment.LocalDate;
 @Data
 public class Variant {
-    /**
-     * UUID identification of this entity.
-     */
-    private UUID id;
+    private Integer number;
     //
     private String name;
     private String image;

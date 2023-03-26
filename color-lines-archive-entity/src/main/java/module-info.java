@@ -22,7 +22,7 @@
  * @author <a href="mailto:robertvokac@nanoboot.org">Robert Vokac</a>
  * @since 0.0.0
  */
-module octagon.entity {
+module colorlinesarchive.entity {
     exports org.nanoboot.colorlinesarchive.entity;
 
     requires java.sql;

@@ -38,7 +38,9 @@
     <description>color-lines-archive</description>
     <modules>
         <module>color-lines-archive-entity/pom.xml</module>
-<!--        <module>color-lines-archive-persistence-api/pom.xml</module>
+        <module>color-lines-archive-persistence-api/pom.xml</module>
+        <module>color-lines-archive-persistence-impl-mock/pom.xml</module>
+<!--        
         <module>color-lines-archive-persistence-impl-sqlite/pom.xml</module>
         
         <module>color-lines-archive-html/pom.xml</module>-->
@@ -230,11 +232,22 @@
             </dependency>
 
             <!-- Color Lines Archive modules -->
-<!--            <dependency>
+            <dependency>
                 <groupId>org.nanoboot.colorshapes</groupId>
                 <artifactId>color-lines-archive-entity</artifactId>
                 <version>${color-lines-archive.version}</version>
-            </dependency>            
+            </dependency>
+            <dependency>
+                <groupId>org.nanoboot.colorshapes</groupId>
+                <artifactId>color-lines-archive-persistence-api</artifactId>
+                <version>${color-lines-archive.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.nanoboot.colorshapes</groupId>
+                <artifactId>color-lines-archive-persistence-impl-mock</artifactId>
+                <version>${color-lines-archive.version}</version>
+            </dependency>
+<!--                   
             <dependency>
                 <groupId>org.nanoboot.colorshapes</groupId>
                 <artifactId>color-lines-archive-html</artifactId>
