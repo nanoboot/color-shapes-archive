@@ -66,15 +66,12 @@
             String downloaded = request.getParameter("downloaded");
             String formatted = request.getParameter("formatted");
             String verified = request.getParameter("verified");
-            String pageNumber = request.getParameter("pageNumber");
-            int pageNumberInt = pageNumber == null || pageNumber.isEmpty() ? 1 : Integer.valueOf(pageNumber);
 
         %>
 
         
     <form action="websites.jsp" method="get">
 
-        <label for="pageNumber">Page </label><input type="text" name="pageNumber" value="<%=pageNumber != null ? pageNumber : "" %>" size="4" style="margin-right:10px;">
         <label for="number">Number </label><input type="text" name="number" value="<%=number != null ? number : "" %>" size="5" style="margin-right:10px;">
         <label for="url">Url </label><input type="text" name="url" value="<%=url != null ? url : "" %>" style="margin-right:10px;">
         <label for="downloaded">Downloaded</label><input type="checkbox" name="downloaded" <%=downloaded != null && downloaded.equals("1") ? "checked " : "" %> value="1">
@@ -85,7 +82,7 @@
 
         <%
             List<Website> websites = websiteRepo.list(
-            pageNumberInt, 
+            1, 
             10, 
             downloaded == null ? null : Boolean.valueOf(downloaded.equals("1")),
             formatted == null? null : Boolean.valueOf(formatted.equals("1")),
@@ -102,8 +99,7 @@ if(websites.isEmpty()) {
             throw new javax.servlet.jsp.SkipPageException();
         }
     %>
-        
-    <b>Page:</b> <%=pageNumberInt%>
+            
             
     <table>
         <tr>
@@ -143,8 +139,8 @@ if(websites.isEmpty()) {
         <tr>
             <td><%=w.getNumber()%></td>
             <td>
-                <a href="read_website.jsp?number=<%=w.getNumber()%>"><img src="images/read.png" title="View" /></a>
-                <a href="update_website.jsp?number=<%=w.getNumber()%>"><img src="images/update.png" title="Update" /></a>
+                <a href="read_website.jsp?number=<%=w.getNumber()%>"><img src="images/read.png"/></a>
+                <a href="update_website.jsp?number=<%=w.getNumber()%>"><img src="images/update.png" /></a>
             </td>
             <%
                 String finalUrl = w.getUrl();
