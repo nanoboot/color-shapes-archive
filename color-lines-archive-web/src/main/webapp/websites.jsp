@@ -17,7 +17,7 @@
 
        <span class="nav"><a href="index.jsp">Home</a>
         >> <a href="websites.jsp" class="nav_a_current">Websites</a>
-        >> <a href="add_website.jsp">Add Website</a>
+        >> <a href="create_website.jsp">Add Website</a>
        </span>
 
         <%
@@ -27,6 +27,7 @@
     <table>
         <tr>
             <th title="Number">#</th>
+            <th></th>
             <th>Url</th>
             <th>Language</th>
             <th>Variant</th>
@@ -38,13 +39,23 @@
             final String EMPTY = "[empty]";
             for (Website w : websiteRepo.list(1, 10)) {
         %>
+        <style>
+            
+            tr td a img {border:2px solid grey;background:#dddddd;padding:4px;width:20%;height:20%;;}
+            tr td a img:hover {border:3px solid #888888;padding:3px;}
+        </style>
         <tr>
             <td><%=w.getNumber()%></td>
+            <td>
+                <a href="read_website.jsp?number=<%=w.getNumber()%>"><img src="images/read.png"/></a>
+                <a href="update_website.jsp?number=<%=w.getNumber()%>"><img src="images/update.png" /></a>
+            </td>
             <%
                 String finalUrl = w.getUrl();
                 if (w.getDeadUrl().booleanValue()) {
                     finalUrl = "https://web.archive.org/web/" + w.getWebArchiveSnapshot() + "/" + w.getUrl();
                 }
+                //example:
                 //https://web.archive.org/web/20080521061635if_/http://linez.varten.net:80
             %>
 

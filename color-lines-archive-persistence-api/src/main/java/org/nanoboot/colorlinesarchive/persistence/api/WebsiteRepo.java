@@ -13,7 +13,7 @@ import org.nanoboot.colorlinesarchive.entity.Website;
  */
 public interface WebsiteRepo {
     List<Website> list(int pageNumber,int pageSize);
-    void create(Website website);
+    int create(Website website);
     Website read(Integer number);
     void update(Website website);
     default void delete(Integer Number) {

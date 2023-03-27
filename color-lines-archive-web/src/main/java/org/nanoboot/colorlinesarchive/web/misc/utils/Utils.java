@@ -30,4 +30,17 @@ public class Utils {
     public static String getBaseUrl(HttpServletRequest request) {
         return request.getServerName() + ':' + request.getServerPort() + request.getContextPath() + '/';
     }
+    public static String formatToHtml(Object o) {
+        if(o == null) {
+            return "[empty]";
+        }
+        if(o instanceof String && (((String) o)).isEmpty()) {
+            return "[empty]";
+        }
+        if(o instanceof Boolean) {
+            Boolean b = (Boolean) o;
+            return b.booleanValue() ? "YES" : "NO";
+        }
+        return o.toString();
+    }
 }

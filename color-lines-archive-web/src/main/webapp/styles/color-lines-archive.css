@@ -211,5 +211,10 @@ form table, form table th, form table td {
     padding:6px;
 }
 
-
+.margin_left_and_big_font {
+    margin-left:20px;
+    padding-bottom:10px;
+    font-size:130%;
+    display:block; 
+}
 

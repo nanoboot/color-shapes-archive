@@ -17,12 +17,13 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
 
     private final List<Website> internalList = new ArrayList<>();
 
+    private int nextNumber = 1;
     @Override
     public List<Website> list(int pageNumber, int pageSize) {
         if (internalList.isEmpty()) {
             internalList.add(
                     new Website(
-                            1, 
+                            nextNumber++, 
                             "http://colorshapes.nanoboot.org", 
                             "abc", 
                             "en", 
@@ -35,8 +36,10 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
     }
 
     @Override
-    public void create(Website website) {
+    public int create(Website website) {
+        website.setNumber(nextNumber++);
         internalList.add(website);
+        return website.getNumber();
     }
 
     @Override
