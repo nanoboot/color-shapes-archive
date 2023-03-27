@@ -27,7 +27,7 @@ import org.nanoboot.colorlinesarchive.entity.Variant;
  * @author robertvokac
  */
 public interface VariantRepo {
-    List<Variant> list(int pageNumber,int pageSize);
+    List<Variant> list(int pageNumber,int pageSize, Integer number);
         
     int create(Variant variant);
     Variant read(Integer number);

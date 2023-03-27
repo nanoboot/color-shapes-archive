@@ -50,8 +50,8 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
             }
         }
         List<Website> finalList = new ArrayList<>();
-        int numberStart = pageNumber + (pageSize * (pageNumber - 1));
         int numberEnd = pageSize * pageNumber;
+        int numberStart = numberEnd - pageSize + 1;
         for (Website w : internalList) {
             if (w.getNumber() < numberStart || w.getNumber() > numberEnd) {
                 continue;

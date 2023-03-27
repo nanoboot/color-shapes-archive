@@ -34,28 +34,37 @@ public class VariantRepoImplMock implements VariantRepo {
     private int nextNumber = 1;
 
     @Override
-    public List<Variant> list(int pageNumber, int pageSize) {
+    public List<Variant> list(int pageNumber, int pageSize, Integer number) {
         if (internalList.isEmpty()) {
             for(int i = 0;i< 50;i++) {
             internalList.add(
                     new Variant(
                             nextNumber++,
-                            "aaa",
-                            "abc",
-                            "df",
-                            "dh",
-                            "fd",
+                            "name",
+                            "image",
+                            "status",
+                            "author",
+                            "licence",
                             true,
-                            "dsf",
+                            "userInterface",
                             "Java",
                             false,
                     null, "0.1.4"));
             }
         }
         List<Variant> finalList = new ArrayList<>();
-        int numberStart = pageNumber + (pageSize * (pageNumber - 1));
+        
         int numberEnd = pageSize * pageNumber;
+        int numberStart = numberEnd - pageSize + 1;
         for (Variant v : internalList) {
+            if(number != null) {
+                if(v.getNumber().intValue() == number.intValue()) {
+                    finalList.add(v);
+                    break;
+                } else {
+                    continue;
+                }
+            }
             if (v.getNumber() < numberStart || v.getNumber() > numberEnd) {
                 continue;
             }
@@ -64,6 +73,7 @@ public class VariantRepoImplMock implements VariantRepo {
 
         }
         return finalList;
+    
     }
 
     @Override

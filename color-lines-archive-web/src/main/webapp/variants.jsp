@@ -144,9 +144,37 @@
             <td>
                 <%=v.getName()%>
             </td>
+            
+            <td>
+                <%=v.getImage()%>
+            </td>
+            <td>
+                <%=v.getStatus()%>
+            </td>
+            <td>
+                <%=v.getAuthor()%>
+            </td>
+            <td>
+                <%=v.getLicence()%>
+            </td>
+            <td>
+                <%=v.getUserInterface()%>
+            </td>
+            <td>
+                <%=v.getProgrammingLanguage()%>
+            </td>
 
             <td>
+                <%=Utils.formatToHtml(v.getBinariesAvailable().booleanValue())%>
+            </td>
+            <td>
                 <%=Utils.formatToHtml(v.getOpenSource().booleanValue())%>
+            </td>
+            <td>
+                <%=v.getLastUpdate()== null ? EMPTY :v.getLastUpdate().toString()%>
+            </td>
+            <td>
+                <%=v.getLastVersion()%>
             </td>
 
         </tr>

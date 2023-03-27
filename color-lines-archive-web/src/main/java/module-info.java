@@ -30,4 +30,5 @@ module colorlinesarchive.web {
     requires javax.servlet.api;
     requires lombok;
     requires spring.web;
+    requires powerframework.time;
 }
