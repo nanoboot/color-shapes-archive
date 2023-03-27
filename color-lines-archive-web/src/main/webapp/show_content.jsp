@@ -1,11 +1,4 @@
-<%@page import="java.util.Scanner"%>
-<%@page import="java.io.File"%>
-<%@page import="org.nanoboot.colorlinesarchive.web.misc.utils.Utils"%>
-<%@page import="org.nanoboot.colorlinesarchive.persistence.api.WebsiteRepo"%>
-<%@page import="org.nanoboot.colorlinesarchive.entity.Website"%>
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
-<%@page import="org.springframework.context.ApplicationContext"%>
-<!DOCTYPE>
+<!DOCTYPE html>
 
 <!--
  Color Lines Archive.
@@ -26,9 +19,17 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+    
+<%@page import="java.util.Scanner"%>
+<%@page import="java.io.File"%>
+<%@page import="org.nanoboot.colorlinesarchive.web.misc.utils.Utils"%>
+<%@page import="org.nanoboot.colorlinesarchive.persistence.api.WebsiteRepo"%>
+<%@page import="org.nanoboot.colorlinesarchive.entity.Website"%>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+<%@page import="org.springframework.context.ApplicationContext"%>
+    
     <head>
         <title>Show content - Color Lines Archive</title>
         <link rel="stylesheet" type="text/css" href="styles/color-lines-archive.css">
@@ -38,7 +39,7 @@
 
     <body>
 
-        <a href="index.jsp" id="main_title">Color Lines Archive</a></span>
+        <a href="index.jsp" id="main_title">Color Lines Archive</a>
 
     <span class="nav"><a href="index.jsp">Home</a>
         >> <a href="websites.jsp">Websites</a>
@@ -49,7 +50,7 @@
         String number = request.getParameter("number");
         Integer.valueOf(number);
         if (number == null || number.isEmpty()) {
-    %><span style="font-weight:bold;color:red;" class="margin_left_and_big_font">Error: Parameter "number" is required</span>
+    %><span style="font-weight:bold;color:red;" class="margin_left_and_big_font">Error: Parameter "number" is required </span>
 
     <%
             throw new javax.servlet.jsp.SkipPageException();
@@ -73,7 +74,7 @@
             sc.useDelimiter("\\Z");
 
             String contentString = sc.next();
-            contentString= contentString.replace("<<FILEPATH>>", "FileServlet?website_number=" + number + "&name=");
+            contentString= contentString.replace("[[FILE]]", "FileServlet/" + number + "/");
             
             
             out.println(contentString);
