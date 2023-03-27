@@ -19,3 +19,6 @@
 **.env
 
 obsolete*
+
+color-lines-archive.confpath/*
+

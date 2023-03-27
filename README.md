@@ -3,6 +3,13 @@
  * This is a project, which has a goal to collect all webpages from Internet, which are related to "Color Lines" game and its clones 
  * It is collection of static "Color Lines" related web pages and its clones
  
+## Local setup
+
+ 1. Copy directory color-lines-archive.confpath.template to color-lines-archive.confpath
+ 2. Copy file tomcat/setenv.sh to bin directory of Tomcat installation directory
+ 3. Update file setenv.sh in bin directory to match the correct path of new directory color-lines-archive.confpath
+
+
 ## Used tools
  * Mozilla Firefox
    * Used to visit and save web pages
