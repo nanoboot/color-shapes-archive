@@ -74,7 +74,7 @@
         
     <form action="websites.jsp" method="get">
 
-        <label for="pageNumber">Page </label><input type="text" name="pageNumber" value="<%=pageNumber != null ? pageNumber : "" %>" size="4" style="margin-right:10px;">
+        <label for="pageNumber">Page </label><input type="text" name="pageNumber" value="<%=pageNumberInt %>" size="4" style="margin-right:10px;">
         <label for="number">Number </label><input type="text" name="number" value="<%=number != null ? number : "" %>" size="5" style="margin-right:10px;">
         <label for="url">Url </label><input type="text" name="url" value="<%=url != null ? url : "" %>" style="margin-right:10px;">
         <label for="downloaded">Downloaded</label><input type="checkbox" name="downloaded" <%=downloaded != null && downloaded.equals("1") ? "checked " : "" %> value="1">
@@ -103,8 +103,6 @@ if(websites.isEmpty()) {
         }
     %>
         
-    <b>Page:</b> <%=pageNumberInt%>
-            
     <table>
         <tr>
             <th title="Number">#</th>
