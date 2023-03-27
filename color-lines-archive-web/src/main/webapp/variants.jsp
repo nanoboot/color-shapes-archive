@@ -102,10 +102,10 @@
             <th>Status</th>
             <th>Author</th>
             <th>Licence</th>
+            <th>Open source</th>
             <th>User interface</th>
             <th>Programming language</th>
             <th>Binaries</th>
-            <th>Open source</th>
             <th>Last update</th>
             <th>Last version</th>
         </tr>
@@ -158,6 +158,9 @@
                 <%=v.getLicence()%>
             </td>
             <td>
+                <%=Utils.formatToHtml(v.getOpenSource())%>
+            </td>
+            <td>
                 <%=v.getUserInterface()%>
             </td>
             <td>
@@ -165,10 +168,7 @@
             </td>
 
             <td>
-                <%=Utils.formatToHtml(v.getBinariesAvailable().booleanValue())%>
-            </td>
-            <td>
-                <%=Utils.formatToHtml(v.getOpenSource().booleanValue())%>
+                <%=Utils.formatToHtml(v.getBinariesAvailable())%>
             </td>
             <td>
                 <%=v.getLastUpdate()== null ? EMPTY :v.getLastUpdate().toString()%>

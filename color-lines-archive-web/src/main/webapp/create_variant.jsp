@@ -1,3 +1,4 @@
+<%@page import="org.nanoboot.powerframework.time.moment.LocalDate"%>
 <!--
  Color Lines Archive.
  Copyright (C) 2023-2023 the original author or authors.
@@ -51,12 +52,12 @@
     %>
 
     <% if (!formToBeProcessed) { %>
-    <form action="create_variant.jsp" method="post">
+    <form action="create_variant.jsp" method="get">
         <table>
 
             <tr>
-                <td><label for="url">Name <b style="color:red;font-size:130%;">*</b>:</label></td>
-                <td><input type="text" name="url" value=""></td>
+                <td><label for="name">Name <b style="color:red;font-size:130%;">*</b>:</label></td>
+                <td><input type="text" name="name" value=""></td>
             </tr>
             <tr>
                 <td><label for="image">Image <b style="color:red;font-size:130%;">*</b>:</label></td>
@@ -75,6 +76,10 @@
                 <td style="text-align:left;"><input type="text" name="licence" value="" ></td>
             </tr>
             <tr>
+                <td><label for="openSource">Open source</label></td>
+                <td style="text-align:left;"><input type="checkbox" name="openSource" value="1" ></td>
+            </tr>
+            <tr>
                 <td><label for="userInterface">User interface</label></td>
                 <td style="text-align:left;"><input type="text" name="userInterface" value="" ></td>
             </tr>
@@ -86,10 +91,7 @@
                 <td><label for="binariesAvailable">Binaries available</label></td>
                 <td style="text-align:left;"><input type="checkbox" name="binariesAvailable" value="1" ></td>
             </tr>
-            <tr>
-                <td><label for="openSource">Open source</label></td>
-                <td style="text-align:left;"><input type="checkbox" name="openSource" value="1" ></td>
-            </tr>
+
             <tr>
                 <td><label for="lastUpdate">Last update</label></td>
                 <td style="text-align:left;"><input type="text" name="lastUpdate" value="" size="10" ></td>
@@ -111,19 +113,57 @@
 
     <% } else { %>
 
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+    <%
+        String param_image = request.getParameter("image");
+
+        String param_status = request.getParameter("status"
+                + "");
+
+        String param_author = request.getParameter("author");
+        String param_licence = request.getParameter("licence");
+        String param_openSource = request.getParameter("openSource");
+        String param_userInterface = request.getParameter("userInterface");
+        String param_programmingLanguage = request.getParameter("programmingLanguage");
+        String param_binariesAvailable = request.getParameter("binariesAvailable");
+        String param_lastUpdate = request.getParameter("lastUpdate");
+        String param_lastVersion = request.getParameter("lastVersion");
+        //
+
+        //
+        Variant newVariant = new Variant(
+                0,
+                param_name,
+                param_image,
+                param_status,
+                param_author,
+                param_licence,
+                param_openSource == null ? null : Boolean.valueOf(param_openSource.equals("1")),
+                param_userInterface,
+                param_programmingLanguage,
+                param_binariesAvailable == null ? false : param_binariesAvailable.equals("1"),
+                param_lastUpdate == null || param_lastUpdate.isEmpty() ? null : new LocalDate(param_lastUpdate),
+                param_lastVersion);
+
+        variantRepo.create(newVariant);
+
+
+    %>
+
+
+    <p style="margin-left:20px;font-size:130%;">Created new variant with number <%=newVariant.getNumber()%>:<br><br>
+        <a href="read_variant.jsp?number=<%=newVariant.getNumber()%>"><%=newVariant.getName()%></a>
+
+    </p>
+
+
+
+
 
 
     <% }%>
