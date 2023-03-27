@@ -28,10 +28,6 @@
     <%
             throw new javax.servlet.jsp.SkipPageException();
         }
-    %>
-
-
-    <%
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         WebsiteRepo websiteRepo = context.getBean("websiteRepoImplMock", WebsiteRepo.class);
         Website website = websiteRepo.read(Integer.valueOf(number));
@@ -42,15 +38,11 @@
     <%
             throw new javax.servlet.jsp.SkipPageException();
         }
-    %>
-
-
-    <%
         String param_url = request.getParameter("url");
         boolean formToBeProcessed = param_url != null && !param_url.isEmpty();
     %>
 
-    <% if (!formToBeProcessed) { %>
+    <% if (!formToBeProcessed) {%>
     <form action="update_website.jsp" method="post">
         <table>
             <tr>
@@ -63,7 +55,7 @@
             </tr>
             <tr>
                 <td><label for="webArchiveSnapshot">Web archive snapshot:</label></td>
-                <td><input type="text" name="webArchiveSnapshot" value="<%=(website.getWebArchiveSnapshot()==null ? "" : website.getWebArchiveSnapshot())%>"></td>
+                <td><input type="text" name="webArchiveSnapshot" value="<%=(website.getWebArchiveSnapshot() == null ? "" : website.getWebArchiveSnapshot())%>"></td>
             </tr>
             <tr>
                 <td><label for="language">Language:</label></td>
@@ -145,14 +137,6 @@
         <a href="read_website.jsp?number=<%=updatedWebsite.getNumber()%>"><%=updatedWebsite.getUrl()%></a>
 
     </p>
-    number = <%=updatedWebsite.getNumber()%><br>
-    url = <%=param_url%><br>
-    webArchiveSnapshot = <%=param_webArchiveSnapshot%><br>
-    language = <%=param_language%><br>
-    downloaded = <%=param_downloaded%><br>
-    formatted = <%=param_formatted%><br>
-    verified = <%=param_verified%><br>
-    variantNumber = <%=param_variantNumber%><br>
 
 
 

@@ -19,7 +19,7 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
 
     private int nextNumber = 1;
     @Override
-    public List<Website> list(int pageNumber, int pageSize) {
+    public List<Website> list(int pageNumber, int pageSize, Boolean downloaded, Boolean formatted, Boolean verified, Integer number, String url) {
         if (internalList.isEmpty()) {
             internalList.add(
                     new Website(
@@ -32,7 +32,61 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
                             true,
                             null));
         }
-        return internalList;
+        List<Website> finalList = new ArrayList<>();
+        for(Website w:internalList) {
+            
+            if(number != null) {
+                if(w.getNumber().intValue() == number.intValue()) {
+                    finalList.add(w);
+                    break;
+                } else {
+                    continue;
+                }
+            }
+            if(url != null) {
+                if(w.getUrl().contains(url)) {
+                    finalList.add(w);
+                    continue;
+                } else {
+                    continue;
+                }
+            }
+                        
+            if(downloaded != null) {
+                if(w.getDownloaded().booleanValue() && !downloaded) {
+                    continue;
+                }
+                
+                if(!w.getDownloaded().booleanValue() && downloaded) {
+                    continue;
+                }
+            }
+            
+            
+            if(formatted != null) {
+                if(w.getFormatted().booleanValue() && !formatted) {
+                    continue;
+                }
+                
+                if(!w.getFormatted().booleanValue() && formatted) {
+                    continue;
+                }
+            }
+            
+            
+            if(verified != null) {
+                if(w.getVerified().booleanValue() && !verified) {
+                    continue;
+                }
+                
+                if(!w.getVerified().booleanValue() && verified) {
+                    continue;
+                }
+            }
+            finalList.add(w);
+            
+        }
+        return finalList;
     }
 
     @Override

@@ -12,7 +12,10 @@ import org.nanoboot.colorlinesarchive.entity.Website;
  * @author robertvokac
  */
 public interface WebsiteRepo {
-    List<Website> list(int pageNumber,int pageSize);
+    default List<Website> list(int pageNumber,int pageSize) {
+        return list(pageNumber, pageSize, null, null, null, null, null);
+    }
+    List<Website> list(int pageNumber,int pageSize, Boolean downloaded, Boolean formatted, Boolean verified, Integer number, String url);
     int create(Website website);
     Website read(Integer number);
     void update(Website website);
