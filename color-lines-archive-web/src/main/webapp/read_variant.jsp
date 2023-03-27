@@ -73,11 +73,13 @@
             background:#cccccc;
         }
     </style>
+    <span class="margin_left_and_big_font"><a href="update_variant.jsp?number=<%=variant.getNumber()%>">Update</a></span>
+    
     <table>
         <tr>
             <th>Number</th><td><%=variant.getNumber()%></td></tr>
         <tr><th>Name</th><td><%=variant.getName()%></td></tr>
-        <tr><th>Image</th><td><%=Utils.formatToHtml(variant.getImage())%></td></tr>
+        <tr><th>Note</th><td><%=Utils.formatToHtml(variant.getNote())%></td></tr>
         <tr><th>Status</th><td><%=Utils.formatToHtml(variant.getStatus())%></td></tr>
         <tr><th>Author</th><td><%=Utils.formatToHtml(variant.getAuthor())%></td></tr>
         <tr><th>Licence</th><td><%=Utils.formatToHtml(variant.getLicence())%></td></tr>

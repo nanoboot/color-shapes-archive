@@ -36,7 +36,7 @@ public class Variant {
     private Integer number;
     //
     private String name;
-    private String image;
+    private String note;
     private String status;
     private String author;
     //

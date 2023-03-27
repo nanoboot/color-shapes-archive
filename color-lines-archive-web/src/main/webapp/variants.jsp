@@ -82,7 +82,9 @@
     <%
         List<Variant> variants = variantRepo.list(
                 pageNumberInt,
-                10
+                10,
+                number == null || number.isEmpty() ? null : Integer.valueOf(number)
+                
         );
 
         if (variants.isEmpty()) {
@@ -98,7 +100,7 @@
             <th title="Number">#</th>
             <th style="width:100px;"></th>
             <th>Name</th>
-            <th>Image</th>
+            <th>Note</th>
             <th>Status</th>
             <th>Author</th>
             <th>Licence</th>
@@ -146,7 +148,7 @@
             </td>
             
             <td>
-                <%=v.getImage()%>
+                <%=v.getNote()%>
             </td>
             <td>
                 <%=v.getStatus()%>

@@ -125,18 +125,32 @@
             <scope>provided</scope>
         </dependency>
 
-            <dependency>
-                <groupId>org.nanoboot.colorshapes</groupId>
-                <artifactId>color-lines-archive-entity</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.nanoboot.colorshapes</groupId>
-                <artifactId>color-lines-archive-persistence-api</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.nanoboot.colorshapes</groupId>
-                <artifactId>color-lines-archive-persistence-impl-mock</artifactId>
-            </dependency>
+        <dependency>
+            <groupId>org.nanoboot.colorshapes</groupId>
+            <artifactId>color-lines-archive-entity</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nanoboot.colorshapes</groupId>
+            <artifactId>color-lines-archive-persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.nanoboot.colorshapes</groupId>
+            <artifactId>color-lines-archive-persistence-impl-mock</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
+
+
             
         <!--        <dependency>-->
         <!--            <groupId>org.springframework</groupId>-->

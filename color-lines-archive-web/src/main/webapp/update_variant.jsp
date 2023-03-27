@@ -4,6 +4,13 @@
 <%@page import="org.nanoboot.colorlinesarchive.entity.Variant"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
+
+<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="org.apache.commons.fileupload.FileUploadException"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@page import="org.apache.commons.io.output.*"%>
+
 <!DOCTYPE>
 <!--
  Color Lines Archive.
@@ -64,7 +71,7 @@
     %>
 
     <% if (!formToBeProcessed) {%>
-    <form action="update_variant.jsp" method="post">
+    <form action="update_variant.jsp" method="get">
         <table>
             <tr>
                 <td><label for="number">Number <b style="color:red;font-size:130%;">*</b>:</label></td>
@@ -75,8 +82,8 @@
                 <td><input type="text" name="name" value="<%=variant.getName()%>"></td>
             </tr>
             <tr>
-                <td><label for="name">Image <b style="color:red;font-size:130%;">*</b>:</label></td>
-                <td><input type="text" name="image" value="<%=variant.getImage()%>"></td>
+                <td><label for="note">Note:</label></td>
+                <td><input type="text" name="note" value="<%=variant.getNote()%>"></td>
             </tr>
             <tr>
                 <td><label for="name">Status:</label></td>
@@ -120,7 +127,7 @@
             </tr>
             <tr>
                 <td><label for="lastVersion">Last version</label></td>
-                <td><input type="text" name="lastVersion" value="<%=variant.getProgrammingLanguage()%>"></td>
+                <td><input type="text" name="lastVersion" value="<%=variant.getLastVersion()%>"></td>
             </tr>
 
 
@@ -137,7 +144,7 @@
     <% } else { %>
 
     <%
-        String param_image = request.getParameter("image");
+        String param_note = request.getParameter("note");
 
         String param_status = request.getParameter("status");
 
@@ -176,7 +183,7 @@
         Variant updatedVariant = new Variant(
                 Integer.valueOf(number),
                 param_name,
-                param_image,
+                param_note,
                 param_status,
                 param_author,
                 param_licence,

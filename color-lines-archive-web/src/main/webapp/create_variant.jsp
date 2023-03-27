@@ -22,6 +22,12 @@
 <%@page import="org.nanoboot.colorlinesarchive.entity.Variant"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="org.apache.commons.fileupload.FileUploadException"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@page import="org.apache.commons.io.output.*"%>
+
 <!DOCTYPE>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -60,8 +66,8 @@
                 <td><input type="text" name="name" value=""></td>
             </tr>
             <tr>
-                <td><label for="image">Image <b style="color:red;font-size:130%;">*</b>:</label></td>
-                <td><input type="text" name="image" value=""></td>
+                <td><label for="note">Note:</label></td>
+                <td><input type="text" name="note" value=""></td>
             </tr>
             <tr>
                 <td><label for="status">Status</label></td>
@@ -120,7 +126,7 @@
 
 
     <%
-        String param_image = request.getParameter("image");
+        String param_note = request.getParameter("note");
 
         String param_status = request.getParameter("status"
                 + "");
@@ -139,7 +145,7 @@
         Variant newVariant = new Variant(
                 0,
                 param_name,
-                param_image,
+                param_note,
                 param_status,
                 param_author,
                 param_licence,
