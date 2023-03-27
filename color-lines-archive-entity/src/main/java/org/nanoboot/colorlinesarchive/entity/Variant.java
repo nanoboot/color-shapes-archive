@@ -19,7 +19,9 @@
 
 package org.nanoboot.colorlinesarchive.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  *
@@ -28,6 +30,8 @@ import lombok.Data;
  */
 import org.nanoboot.powerframework.time.moment.LocalDate;
 @Data
+@AllArgsConstructor
+@ToString
 public class Variant {
     private Integer number;
     //

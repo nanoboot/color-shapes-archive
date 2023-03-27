@@ -30,7 +30,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
         <constructor-arg value="abc123"/>
     </bean>
 
-<bean id="websiteRepoImplMock" class="org.nanoboot.colorlinesarchive.persistence.impl.mock.WebsiteRepoImplMock">
-</bean>
+<bean id="websiteRepoImplMock" class="org.nanoboot.colorlinesarchive.persistence.impl.mock.WebsiteRepoImplMock"></bean>
+
+<bean id="variantRepoImplMock" class="org.nanoboot.colorlinesarchive.persistence.impl.mock.VariantRepoImplMock"></bean>
 
 </beans>
