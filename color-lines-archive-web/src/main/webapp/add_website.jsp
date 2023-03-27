@@ -48,23 +48,29 @@
             </tr>
             <tr>
                 <td><label for="language">Language:</label></td>
-                <td style="text-align:right;"><input type="text" name="language" value="" size="3" ></td>
+                <td style="text-align:left;"><input type="text" name="language" value="" size="4" ></td>
             </tr>
             <tr>
                 <td><label for="downloaded">Downloaded:</label></td>
-                <td style="text-align:right;"><select name="downloaded" class="_select"><option value="1" >YES</option><option value="0" selected="selected" >NO</option></select></td>
+                <td style="text-align:left;">
+                    <input type="checkbox" name="downloaded" value="1" checked="false">
+                </td>
             </tr>
             <tr>
                 <td><label for="formatted">Formatted:</label></td>
-                <td style="text-align:right;"><select name="formatted" class="_select"><option value="1" >YES</option><option value="0" selected="selected" >NO</option></select></td>
+                                <td style="text-align:left;">
+                    <input type="checkbox" name="formatted" value="1" checked="false">
+                </td>
             </tr>
             <tr>
                 <td><label for="verified">Verified:</label></td>
-                <td style="text-align:right;"><select name="verified" class="_select"><option value="1" >YES</option><option value="0" selected="selected" >NO</option></select></td>
+                                <td style="text-align:left;">
+                    <input type="checkbox" name="verified" value="1" checked="false">
+                </td>
             </tr>
             <tr>
                 <td><label for="variantNumber">Variant:</label></td>
-                <td style="text-align:right;"><input type="text" name="variantNumber" value="" size="5" ></td>
+                <td style="text-align:left;"><input type="text" name="variantNumber" value="" size="5" ></td>
             </tr>
             
             <tr style="border-top:4px solid #dddddd;">

@@ -152,6 +152,14 @@ form {
 form input, form label {
     font-size:150%;
 }
+
+input[type="checkbox"] {
+    width:40px;
+    height:40px;
+    content: "\f00d";
+    
+}
+
 ._select {
     font-size:150%;
 }
