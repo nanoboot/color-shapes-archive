@@ -75,14 +75,11 @@ table, th, td {
     border-collapse: collapse;
 }
 
-td {
-    padding: 5px;
-}
 th {
     background: silver;
 }
 td,th {
-    padding:10px;
+    padding:8px;
 }
 tr:hover {
     background-color: #cbf8ff;
@@ -150,18 +147,18 @@ form {
 }
 
 form input, form label {
-    font-size:150%;
+    font-size:130%;
 }
 
 input[type="checkbox"] {
-    width:40px;
-    height:40px;
+    width:35px;
+    height:35px;
     content: "\f00d";
     
 }
 
 ._select {
-    font-size:150%;
+    font-size:130%;
 }
 form table tr:hover {
     background:white;
@@ -171,7 +168,7 @@ form table, form table th, form table td {
 }
 
 .button{
-    font-size:140%;
+    font-size:130%;
     padding:6px;
     margin-left:15px;
     margin-bottom:15px;

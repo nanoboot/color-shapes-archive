@@ -21,6 +21,7 @@ package org.nanoboot.colorlinesarchive.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 
 /**
@@ -30,6 +31,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@ToString
 public class Website {
 
     private Integer number;

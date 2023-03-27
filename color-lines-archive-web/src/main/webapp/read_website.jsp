@@ -7,7 +7,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>Color Lines Archive - List websites</title>
+        <title>Read website - Color Lines Archive</title>
         <link rel="stylesheet" type="text/css" href="styles/color-lines-archive.css">
         <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="32x32">
     </head>
@@ -60,12 +60,12 @@
         <tr><th>Formatted</th><td><%=Utils.formatToHtml(website.getFormatted())%></td></tr>
         <tr><th>Verified</th><td><%=Utils.formatToHtml(website.getVerified())%></td></tr>
         <tr><th>Variant</th><td><%=Utils.formatToHtml(website.getVariantNumber())%></td></tr>
-    </tr>
 
 
 
 
 
-</table>
+
+    </table>
 </body>
 </html>

@@ -66,6 +66,8 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
             return;
         }
         internalList.remove(websiteToBeDeleted);
+        internalList.add(website);
+        
     }
 
 }

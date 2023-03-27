@@ -6,7 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>Color Lines Archive - List websites</title>
+        <title>List websites - Color Lines Archive</title>
         <link rel="stylesheet" type="text/css" href="styles/color-lines-archive.css">
         <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="32x32">
     </head>
@@ -27,7 +27,7 @@
     <table>
         <tr>
             <th title="Number">#</th>
-            <th></th>
+            <th style="width:100px;"></th>
             <th>Url</th>
             <th>Language</th>
             <th>Variant</th>
@@ -41,8 +41,9 @@
         %>
         <style>
             
-            tr td a img {border:2px solid grey;background:#dddddd;padding:4px;width:20%;height:20%;;}
+            tr td a img {border:2px solid grey;background:#dddddd;padding:4px;width:30%;height:30%;}
             tr td a img:hover {border:3px solid #888888;padding:3px;}
+            tr td {padding-right:0;}
         </style>
         <tr>
             <td><%=w.getNumber()%></td>
@@ -66,7 +67,7 @@
                 <%=w.getDeadUrl().booleanValue() ? "<span class=\"grey_flag\" title=\"Dead url\">†</span>" : ""%>
                 <%=w.getDownloaded().booleanValue() ? "<span class=\"yellow_flag\" title=\"Downloaded\">D</span>" : ""%>
                 <%=w.getFormatted().booleanValue() ? "<span class=\"orange_flag\" title=\"Formatted\">F</span>" : ""%>
-                <%=w.getFormatted().booleanValue() ? "<span class=\"green_flag\" title=\"Verified\">V</span>" : ""%>
+                <%=w.getVerified().booleanValue() ? "<span class=\"green_flag\" title=\"Verified\">V</span>" : ""%>
             </td>
 
         </tr>
