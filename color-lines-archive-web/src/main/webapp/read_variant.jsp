@@ -1,3 +1,7 @@
+<%@page import="java.io.IOException"%>
+<%@page import="java.util.Base64"%>
+<%@page import="java.nio.file.Files"%>
+<%@page import="java.io.File"%>
 <%@page import="org.nanoboot.colorlinesarchive.entity.Variant"%>
 <%@page import="org.nanoboot.colorlinesarchive.persistence.api.VariantRepo"%>
 <%@page import="org.nanoboot.colorlinesarchive.web.misc.utils.Utils"%>
@@ -73,11 +77,35 @@
             background:#cccccc;
         }
     </style>
-    <span class="margin_left_and_big_font"><a href="update_variant.jsp?number=<%=variant.getNumber()%>">Update</a></span>
-    
+    <p class="margin_left_and_big_font">
+        <a href="update_variant.jsp?number=<%=variant.getNumber()%>">Update</a>
+        <a href="upload_variant_screenshot.jsp?number=<%=variant.getNumber()%>">Upload screenshot</a>
+        <a href="read_variant.jsp?number=<%=variant.getNumber() - 1%>">Previous</a>
+        <a href="read_variant.jsp?number=<%=variant.getNumber() + 1%>">Next</a>
+    </p>
+
     <table>
         <tr>
-            <th>Number</th><td><%=variant.getNumber()%></td></tr>
+            <th>Number</th><td><%=variant.getNumber()%></td>
+
+            <%
+
+                File file = new File(System.getProperty("color-lines-archive.confpath") + "/" + "variantsScreenshots/" + variant.getNumber() + ".jpg");
+                if (file.exists()) {
+                    String imageBase64Encoded = null;
+                    try {
+                        byte[] fileContent = Files.readAllBytes(file.toPath());
+                        imageBase64Encoded = Base64.getEncoder().encodeToString(fileContent);
+            %><td rowspan="12"><img src="data:imiage/jpg;base64, <%=imageBase64Encoded%>" alt="screenshot" style="max-height:600px;"/></td><%
+                } catch (IOException e) {
+                    log("Could not read file " + file, e);
+                }
+
+            }%>
+
+
+
+        </tr>
         <tr><th>Name</th><td><%=variant.getName()%></td></tr>
         <tr><th>Note</th><td><%=Utils.formatToHtml(variant.getNote())%></td></tr>
         <tr><th>Status</th><td><%=Utils.formatToHtml(variant.getStatus())%></td></tr>
