@@ -71,10 +71,16 @@
             background:#cccccc;
         }
     </style>
-        <p class="margin_left_and_big_font">
+    <p class="margin_left_and_big_font">
         <a href="update_website.jsp?number=<%=website.getNumber()%>">Update</a>
         <a href="read_website.jsp?number=<%=website.getNumber() - 1%>">Previous</a>
         <a href="read_website.jsp?number=<%=website.getNumber() + 1%>">Next</a>
+        <br><br>
+        <a href="show_content.jsp?number=<%=website.getNumber()%>">Show content</a>
+        <a href="edit_content.jsp?number=<%=website.getNumber()%>">Edit content</a>
+        <a href="list_files.jsp?number=<%=website.getNumber()%>">List files</a>
+        <a href="upload_file.jsp?number=<%=website.getNumber()%>">Upload file</a>
+
     </p>
     <table>
         <tr>
