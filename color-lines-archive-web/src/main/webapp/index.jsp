@@ -10,9 +10,10 @@
 <body>
 
 <a href="index.jsp" id="main_title">Color Lines Archive</a></span>
-<ul id="menu">
-<li><a href="websites.jsp">Web Sites</a></li>
-<li><a href="variants.jsp">Variants</a></li>
-</ul>
+
+       <span class="nav"><a href="index.jsp" class="nav_a_current">Home</a>
+        >> <a href="websites.jsp">Websites</a>
+        || <a href="variants.jsp">Variants</a></span>
+
 </body>
 </html>

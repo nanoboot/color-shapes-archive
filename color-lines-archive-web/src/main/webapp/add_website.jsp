@@ -14,6 +14,12 @@
     <body>
 
         <a href="index.jsp" id="main_title">Color Lines Archive</a></span>
+    
+       <span class="nav"><a href="index.jsp">Home</a>
+        >> <a href="websites.jsp">Websites</a>
+        >> <a href="add_website.jsp" class="nav_a_current">Add Website</a></span>
+
+    
         <%
             ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
             WebsiteRepo websiteRepo = context.getBean("websiteRepoImplMock", WebsiteRepo.class);
