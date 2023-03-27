@@ -53,19 +53,19 @@
             <tr>
                 <td><label for="downloaded">Downloaded:</label></td>
                 <td style="text-align:left;">
-                    <input type="checkbox" name="downloaded" value="1" checked="false">
+                    <input type="checkbox" name="downloaded" value="1" >
                 </td>
             </tr>
             <tr>
                 <td><label for="formatted">Formatted:</label></td>
                                 <td style="text-align:left;">
-                    <input type="checkbox" name="formatted" value="1" checked="false">
+                    <input type="checkbox" name="formatted" value="1" >
                 </td>
             </tr>
             <tr>
                 <td><label for="verified">Verified:</label></td>
                                 <td style="text-align:left;">
-                    <input type="checkbox" name="verified" value="1" checked="false">
+                    <input type="checkbox" name="verified" value="1" >
                 </td>
             </tr>
             <tr>
