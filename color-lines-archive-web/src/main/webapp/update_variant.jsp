@@ -1,3 +1,4 @@
+<%@page import="org.nanoboot.powerframework.time.moment.LocalDate"%>
 <%@page import="org.nanoboot.colorlinesarchive.web.misc.utils.Utils"%>
 <%@page import="org.nanoboot.colorlinesarchive.persistence.api.VariantRepo"%>
 <%@page import="org.nanoboot.colorlinesarchive.entity.Variant"%>
@@ -58,8 +59,8 @@
     <%
             throw new javax.servlet.jsp.SkipPageException();
         }
-        String param_url = request.getParameter("url");
-        boolean formToBeProcessed = param_url != null && !param_url.isEmpty();
+        String param_name = request.getParameter("name");
+        boolean formToBeProcessed = param_name != null && !param_name.isEmpty();
     %>
 
     <% if (!formToBeProcessed) {%>
@@ -70,39 +71,58 @@
                 <td><input type="text" name="number" value="<%=number%>" readonly style="background:#dddddd;"></td>
             </tr>
             <tr>
-                <td><label for="url">Url <b style="color:red;font-size:130%;">*</b>:</label></td>
-                <td><input type="text" name="url" value="<%=variant.getUrl()%>"></td>
+                <td><label for="name">Name <b style="color:red;font-size:130%;">*</b>:</label></td>
+                <td><input type="text" name="name" value="<%=variant.getName()%>"></td>
             </tr>
             <tr>
-                <td><label for="webArchiveSnapshot">Web archive snapshot:</label></td>
-                <td><input type="text" name="webArchiveSnapshot" value="<%=(variant.getWebArchiveSnapshot() == null ? "" : variant.getWebArchiveSnapshot())%>"></td>
+                <td><label for="name">Image <b style="color:red;font-size:130%;">*</b>:</label></td>
+                <td><input type="text" name="image" value="<%=variant.getImage()%>"></td>
             </tr>
             <tr>
-                <td><label for="language">Language:</label></td>
-                <td style="text-align:left;"><input type="text" name="language" value="<%=Utils.formatToHtmlWithoutEmptyWord(variant.getLanguage())%>" size="4" ></td>
+                <td><label for="name">Status:</label></td>
+                <td><input type="text" name="status" value="<%=variant.getStatus()%>"></td>
             </tr>
             <tr>
-                <td><label for="downloaded">Downloaded:</label></td>
+                <td><label for="author">Author</label></td>
+                <td><input type="text" name="author" value="<%=variant.getAuthor()%>"></td>
+            </tr>
+            <tr>
+                <td><label for="licence">Licence</label></td>
+                <td><input type="text" name="licence" value="<%=variant.getLicence()%>"></td>
+            </tr>
+
+            <tr>
+                <td><label for="openSource">Open source</label></td>
                 <td style="text-align:left;">
-                    <input type="checkbox" name="downloaded" value="1" <%=variant.getDownloaded().booleanValue() ? "checked" : ""%> >
+                    <input type="checkbox" name="openSource" value="1" <%=variant.getOpenSource().booleanValue() ? "checked" : ""%> >
                 </td>
             </tr>
+            
             <tr>
-                <td><label for="formatted">Formatted:</label></td>
+                <td><label for="userInterface">User interface</label></td>
+                <td><input type="text" name="userInterface" value="<%=variant.getUserInterface()%>"></td>
+            </tr>
+            <tr>
+                <td><label for="programmingLanguage">Programming language</label></td>
+                <td><input type="text" name="programmingLanguage" value="<%=variant.getProgrammingLanguage()%>"></td>
+            </tr>
+
+            <tr>
+                <td><label for="binariesAvailable">Binaries available</label></td>
                 <td style="text-align:left;">
-                    <input type="checkbox" name="formatted" value="1" <%=variant.getFormatted().booleanValue() ? "checked" : ""%>>
+                    <input type="checkbox" name="binariesAvailable" value="1" <%=variant.getBinariesAvailable().booleanValue() ? "checked" : ""%> >
                 </td>
             </tr>
+                        
             <tr>
-                <td><label for="verified">Verified:</label></td>
-                <td style="text-align:left;">
-                    <input type="checkbox" name="verified" value="1"<%=variant.getVerified().booleanValue() ? "checked" : ""%> >
-                </td>
+                <td><label for="lastUpdate">Last update</label></td>
+                <td><input type="text" name="lastUpdate" value="<%=variant.getLastUpdate() == null ? "" : variant.getLastUpdate().toString()%>"></td>
             </tr>
             <tr>
-                <td><label for="variantNumber">Variant:</label></td>
-                <td style="text-align:left;"><input type="text" name="variantNumber" value="<%=variant.getVariantNumber() == null ? "" : variant.getVariantNumber()%>" size="5" ></td>
+                <td><label for="lastVersion">Last version</label></td>
+                <td><input type="text" name="lastVersion" value="<%=variant.getProgrammingLanguage()%>"></td>
             </tr>
+
 
             <tr>
                 <td><a href="variants.jsp" style="font-size:130%;background:#dddddd;border:2px solid #bbbbbb;padding:2px;text-decoration:none;">Cancel</a></td>
@@ -117,46 +137,66 @@
     <% } else { %>
 
     <%
-        String param_webArchiveSnapshot = request.getParameter("webArchiveSnapshot");
+        String param_image = request.getParameter("image");
 
-        String param_language = request.getParameter("language");
+        String param_status = request.getParameter("status");
 
-        String param_downloaded = request.getParameter("downloaded");
-        String param_formatted = request.getParameter("formatted");
-        String param_verified = request.getParameter("verified");
-        String param_variantNumber = request.getParameter("variantNumber");
+        String param_author = request.getParameter("author");
+        String param_licence = request.getParameter("licence");
+        String param_openSource = request.getParameter("openSource");
+        String param_userInterface = request.getParameter("userInterface");
+        String param_programmingLanguage = request.getParameter("programmingLanguage");
+        String param_binariesAvailable = request.getParameter("binariesAvailable");
+        String param_lastUpdate = request.getParameter("lastUpdate");
+        String param_lastVersion = request.getParameter("lastVersion");
         //
-        if (param_webArchiveSnapshot != null && param_webArchiveSnapshot.isEmpty()) {
-            param_webArchiveSnapshot = null;
+        if (param_status != null && param_status.isEmpty()) {
+            param_status = null;
         }
-        if (param_language != null && param_language.isEmpty()) {
-            param_language = null;
+        if (param_author != null && param_author.isEmpty()) {
+            param_author = null;
         }
-
-        if (param_language != null && param_language.isEmpty()) {
-            param_language = null;
+        if (param_licence != null && param_licence.isEmpty()) {
+            param_licence = null;
         }
+        if (param_userInterface != null && param_userInterface.isEmpty()) {
+            param_userInterface = null;
+        }
+        if (param_programmingLanguage != null && param_programmingLanguage.isEmpty()) {
+            param_programmingLanguage = null;
+        }
+        if (param_lastUpdate != null && param_lastUpdate.isEmpty()) {
+            param_lastUpdate = null;
+        }
+        if (param_lastVersion != null && param_lastVersion.isEmpty()) {
+            param_lastVersion = null;
+        }
+        //
         //
         Variant updatedVariant = new Variant(
                 Integer.valueOf(number),
-                param_url,
-                param_webArchiveSnapshot,
-                param_language,
-                param_downloaded == null ? false : param_downloaded.equals("1"),
-                param_formatted == null ? false : param_formatted.equals("1"),
-                param_verified == null ? false : param_verified.equals("1"),
-                (param_variantNumber == null || param_variantNumber.isEmpty()) ? null : Integer.valueOf(param_variantNumber));
+                param_name,
+                param_image,
+                param_status,
+                param_author,
+                param_licence,
+                param_openSource == null ? null : Boolean.valueOf(param_openSource.equals("1")),
+                param_userInterface,
+                param_programmingLanguage,
+                param_binariesAvailable == null ? false : param_binariesAvailable.equals("1"),
+                param_lastUpdate == null || param_lastUpdate.isEmpty() ? null : new LocalDate(param_lastUpdate),
+                param_lastVersion);
 
         variantRepo.update(updatedVariant);
 
 
     %>
 
-
     <p style="margin-left:20px;font-size:130%;">Updated variant with number <%=updatedVariant.getNumber()%>:<br><br>
-        <a href="read_variant.jsp?number=<%=updatedVariant.getNumber()%>"><%=updatedVariant.getUrl()%></a>
+        <a href="read_variant.jsp?number=<%=updatedVariant.getNumber()%>"><%=updatedVariant.getName()%></a>
 
     </p>
+
 
 
 
