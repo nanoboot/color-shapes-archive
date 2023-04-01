@@ -40,12 +40,6 @@
     <body>
 
         <a href="index.jsp" id="main_title">Color Lines Archive</a>
-
-    <span class="nav"><a href="index.jsp">Home</a>
-        >> <a href="websites.jsp">Websites</a>
-        >> <a href="show_content.jsp" class="nav_a_current">Show content</a>
-    </span>
-
     <%
         String number = request.getParameter("number");
         Integer.valueOf(number);
@@ -56,8 +50,23 @@
             throw new javax.servlet.jsp.SkipPageException();
         }
     %>
+    <span class="nav"><a href="index.jsp">Home</a>
+        >> <a href="websites.jsp">Websites</a>
+        >> <a href="read_website.jsp?number=<%=number%>">Read</a>
+        
+        <a href="update_website.jsp?number=<%=number%>">Update</a>
+        
+        
+        <a href="show_content.jsp?number=<%=number%>" class="nav_a_current">Show</a>
+        <a href="edit_content.jsp?number=<%=number%>">Edit</a>
+        <a href="list_files.jsp?number=<%=number%>">List</a>
+        <a href="upload_file.jsp?number=<%=number%>">Upload</a>
+        
+    </span>
 
 
+
+ 
     <%
         String filePath = System.getProperty("color-lines-archive.confpath") + "/" + "websitesFormatted/" + number;
         File dir = new File(filePath);
@@ -77,7 +86,7 @@
             contentString= contentString.replace("[[FILE]]", "FileServlet/" + number + "/");
             
             
-            out.println(contentString);
+            out.println("<div>" + contentString + "</div>");
         } else {
             out.println("<p>No content found</p>");
         }

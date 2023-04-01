@@ -43,12 +43,7 @@
 
         <a href="index.jsp" id="main_title">Color Lines Archive</a></span>
 
-    <span class="nav"><a href="index.jsp">Home</a>
-        >> <a href="variants.jsp">Variants</a>
-        >> <a href="read_variant.jsp" class="nav_a_current">Read Variant</a>
-    </span>
-
-    <%
+        <%
         String number = request.getParameter("number");
         if (number == null || number.isEmpty()) {
     %><span style="font-weight:bold;color:red;" class="margin_left_and_big_font">Error: Parameter "number" is required</span>
@@ -57,6 +52,15 @@
             throw new javax.servlet.jsp.SkipPageException();
         }
     %>
+
+    
+    <span class="nav"><a href="index.jsp">Home</a>
+        >> <a href="variants.jsp">Variants</a>
+        >> <a href="read_variant.jsp?number=<%=number%>" class="nav_a_current">Read</a>
+        <a href="update_variant.jsp?number=<%=number%>">Update</a>
+        <a href="upload_variant_screenshot.jsp?number=<%=number%>">Upload screenshot</a>
+    </span>
+
 
 
     <%
@@ -78,8 +82,8 @@
         }
     </style>
     <p class="margin_left_and_big_font">
-        <a href="update_variant.jsp?number=<%=variant.getNumber()%>">Update</a>
-        <a href="upload_variant_screenshot.jsp?number=<%=variant.getNumber()%>">Upload screenshot</a>
+ 
+        
         <a href="read_variant.jsp?number=<%=variant.getNumber() - 1%>">Previous</a>
         <a href="read_variant.jsp?number=<%=variant.getNumber() + 1%>">Next</a>
     </p>
@@ -96,7 +100,7 @@
                     try {
                         byte[] fileContent = Files.readAllBytes(file.toPath());
                         imageBase64Encoded = Base64.getEncoder().encodeToString(fileContent);
-            %><td rowspan="12"><img src="data:imiage/jpg;base64, <%=imageBase64Encoded%>" alt="screenshot" style="max-height:600px;"/></td><%
+            %><td rowspan="12"><img src="data:image/jpg;base64, <%=imageBase64Encoded%>" alt="screenshot" style="max-height:600px;"/></td><%
                 } catch (IOException e) {
                     log("Could not read file " + file, e);
                 }

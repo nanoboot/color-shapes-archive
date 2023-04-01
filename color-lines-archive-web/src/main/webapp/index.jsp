@@ -34,7 +34,7 @@
 
        <span class="nav"><a href="index.jsp" class="nav_a_current">Home</a>
         >> <a href="websites.jsp">Websites</a>
-        || <a href="variants.jsp">Variants</a></span>
+        <a href="variants.jsp">Variants</a></span>
 
 </body>
 </html>

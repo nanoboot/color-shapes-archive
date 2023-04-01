@@ -38,7 +38,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>Upload Variant screenshot - Color Lines Archive</title>
+        <title>Upload File - Color Lines Archive</title>
         <link rel="stylesheet" type="text/css" href="styles/color-lines-archive.css">
         <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="32x32">
     </head>
@@ -47,7 +47,7 @@
 
         <a href="index.jsp" id="main_title">Color Lines Archive</a></span>
 
-        <%
+    <%
         String number = request.getParameter("number");
         boolean formToBeProcessed = request.getContentType() != null && request.getContentType().indexOf("multipart/form-data") >= 0;
         if (!formToBeProcessed && (number == null || number.isEmpty())) {
@@ -56,31 +56,37 @@
     <%
             throw new javax.servlet.jsp.SkipPageException();
         }
-%>
+    %>
 
-<% if(number != null) {%>
+    <% if (number != null) {%>
     <span class="nav"><a href="index.jsp">Home</a>
-        >> <a href="variants.jsp">Variants</a>
-        >> 
-        <a href="read_variant.jsp?number=<%=number%>">Read</a>
-        <a href="update_variant.jsp?number=<%=number%>">Update</a>
-        <a href="upload_variant_screenshot.jsp?number=<%=number%>" class="nav_a_current">Upload screenshot</a>
+        >> <a href="websites.jsp">Websites</a>
+        >>         <a href="read_website.jsp?number=<%=number%>">Read</a>
+
+        <a href="update_website.jsp?number=<%=number%>">Update</a>
+
+
+        <a href="show_content.jsp?number=<%=number%>">Show</a>
+        <a href="edit_content.jsp?number=<%=number%>">Edit</a>
+        <a href="list_files.jsp?number=<%=number%>">List</a>
+        <a href="upload_file.jsp?number=<%=number%>" class="nav_a_current">Upload</a>
+
     </span>
-<% } %>
+    <% } %>
 
-<%
-        String param_variant_screenshot = request.getParameter("variant_screenshot");
+    <%
+        String param_file = request.getParameter("file");
 
-//param_variant_screenshot != null && !param_variant_screenshot.isEmpty();
+    //param_variant_screenshot != null && !param_variant_screenshot.isEmpty();
     %>
 
     <% if (!formToBeProcessed) {%>
-    <form action="upload_variant_screenshot.jsp"  method = "post" enctype = "multipart/form-data">
+    <form action="upload_file.jsp"  method = "post" enctype = "multipart/form-data">
         Select a file to upload: <br />
 
-        <input type = "file" name = "variant_screenshot" size = "50" />
+        <input type = "file" name = "file" size = "50" />
         <br /><br />
-        <input type = "submit" value = "Upload screenshot" />
+        <input type = "submit" value = "Upload file" />
         <input type="hidden" name="number" value="<%=number%>" />
     </form>
 
@@ -92,7 +98,7 @@
         int maxFileSize = 5000 * 1024;
         int maxMemSize = 5000 * 1024;
         ServletContext context = pageContext.getServletContext();
-        String filePath = System.getProperty("color-lines-archive.confpath") + "/" + "variantsScreenshots/";
+        String filePath = System.getProperty("color-lines-archive.confpath") + "/" + "websitesFormatted/";
 
         // Verify the content type
         String contentType = request.getContentType();
@@ -118,38 +124,39 @@
                 // Process the uploaded file items
                 Iterator i = fileItems.iterator();
 
-                String tmpFileName = "tmp_file_" + String.valueOf(((int)(Math.random() * 1000000))) + String.valueOf(((int)(Math.random() * 1000000))) + ".jpg";
+                String tmpFileName = filePath + "tmp_file_" + String.valueOf(((int) (Math.random() * 1000000))) + String.valueOf(((int) (Math.random() * 1000000)));
+
+                String origFileName = null;
                 while (i.hasNext()) {
                     FileItem fi = (FileItem) i.next();
                     if (!fi.isFormField()) {
                         // Get the uploaded file parameters
                         String fieldName = fi.getFieldName();
                         String fileName = fi.getName();
-                        if (!fileName.endsWith(".jpg")) {
-                            out.println("<span style=\"color:red\">Error: File name must end with \".jpg\".</span>");
-                            out.println("<p>No file uploaded</p>");
-                            break;
-                        }
+
                         boolean isInMemory = fi.isInMemory();
                         long sizeInBytes = fi.getSize();
-
+                        origFileName = fileName;
                         fileName = tmpFileName;
-                        
                         // Write the file
                         if (fileName.lastIndexOf("\\") >= 0) {
-                            file = new File(filePath
-                                    + fileName.substring(fileName.lastIndexOf("\\")));
+                            file = new File(fileName.substring(fileName.lastIndexOf("\\")));
                         } else {
-                            file = new File(filePath
-                                    + fileName.substring(fileName.lastIndexOf("\\") + 1));
+                            file = new File(fileName.substring(fileName.lastIndexOf("\\") + 1));
                         }
                         fi.write(file);
-                        out.println("<span class=\"margin_left_and_big_font\">Uploaded screenshot.</span><br>");
+                        out.println("<span class=\"margin_left_and_big_font\">Uploaded file.</span><br>");
                     }
                     if (fi.isFormField()) {
                         if (fi.getFieldName().equals("number")) {
+
                             number = fi.getString();
-                            new File(filePath, tmpFileName).renameTo(new File(filePath, number + ".jpg"));
+                            if (origFileName == null) {
+                            System.err.println("Uploading file failed.");
+                            } else {
+                                new File(tmpFileName).renameTo(new File(filePath + number + "/" + origFileName));
+                            }
+
                         }
                     }
                 }
@@ -168,8 +175,8 @@
 
 
     <% }
-    
-    out.println("<a href=\"read_variant.jsp?number="+ number +"\">Back to variant</a>");
+
+        out.println("<a href=\"read_website.jsp?number=" + number + "\">Back to website</a>");
     %>
 
 </body>
