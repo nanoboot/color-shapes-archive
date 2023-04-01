@@ -31,7 +31,15 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     </bean>
 
 <bean id="websiteRepoImplMock" class="org.nanoboot.colorlinesarchive.persistence.impl.mock.WebsiteRepoImplMock"></bean>
-
 <bean id="variantRepoImplMock" class="org.nanoboot.colorlinesarchive.persistence.impl.mock.VariantRepoImplMock"></bean>
+
+
+<bean id="sqliteConnectionFactory" class="org.nanoboot.colorlinesarchive.persistence.impl.sqlite.SqliteConnectionFactory"></bean>
+<bean id="websiteRepoImplSqlite" class="org.nanoboot.colorlinesarchive.persistence.impl.sqlite.WebsiteRepoImplSqlite">
+    <property name="sqliteConnectionFactory" ref="sqliteConnectionFactory" />
+</bean>
+<bean id="variantRepoImplSqlite" class="org.nanoboot.colorlinesarchive.persistence.impl.sqlite.VariantRepoImplSqlite">
+    <property name="sqliteConnectionFactory" ref="sqliteConnectionFactory" />
+</bean>
 
 </beans>

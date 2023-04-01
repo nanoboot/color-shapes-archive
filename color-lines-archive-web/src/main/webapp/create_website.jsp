@@ -41,7 +41,7 @@
 
     <%
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-        WebsiteRepo websiteRepo = context.getBean("websiteRepoImplMock", WebsiteRepo.class);
+        WebsiteRepo websiteRepo = context.getBean("websiteRepoImplSqlite", WebsiteRepo.class);
     %>
 
 

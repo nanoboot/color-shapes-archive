@@ -22,14 +22,20 @@
  * @author <a href="mailto:robertvokac@nanoboot.org">Robert Vokac</a>
  * @since 0.0.0
  */
-module colorlinesarchive.web {
+module colorlinesarchive.persistence.impl.sqlite {
+    exports org.nanoboot.colorlinesarchive.persistence.impl.sqlite;
+
     requires colorlinesarchive.entity;
     requires colorlinesarchive.persistence.api;
-    requires colorlinesarchive.persistence.impl.mock;
-    requires spring.context;
-    requires javax.servlet.api;
-    requires lombok;
-    requires spring.web;
+    requires java.sql;
+    requires spring.jdbc;
+    requires powerframework.json;
     requires powerframework.time;
+    requires powerframework.utils;
+    requires powerframework.reflection;
+    requires powerframework.sql;
+    requires lombok;
+    requires org.apache.logging.log4j.core;
+    requires org.apache.logging.log4j;
     requires org.xerial.sqlitejdbc;
 }

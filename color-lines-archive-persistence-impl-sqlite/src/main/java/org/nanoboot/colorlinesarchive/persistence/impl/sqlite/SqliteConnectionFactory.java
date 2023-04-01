@@ -16,20 +16,30 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ///////////////////////////////////////////////////////////////////////////////////////////////
+package org.nanoboot.colorlinesarchive.persistence.impl.sqlite;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author <a href="mailto:robertvokac@nanoboot.org">Robert Vokac</a>
- * @since 0.0.0
+ * @author robertvokac
  */
-module colorlinesarchive.web {
-    requires colorlinesarchive.entity;
-    requires colorlinesarchive.persistence.api;
-    requires colorlinesarchive.persistence.impl.mock;
-    requires spring.context;
-    requires javax.servlet.api;
-    requires lombok;
-    requires spring.web;
-    requires powerframework.time;
-    requires org.xerial.sqlitejdbc;
+public class SqliteConnectionFactory {
+    private final String jdbcUrl= "jdbc:sqlite:" + System.getProperty("color-lines-archive.confpath") + "/" + "color_lines_archive.sqlite";
+    public Connection createConnection() throws ClassNotFoundException  {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            return DriverManager.getConnection(jdbcUrl);
+            
+        } catch (SQLException ex) {
+            if(true) throw new RuntimeException(ex);
+            Logger.getLogger(SqliteConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
 }

@@ -65,7 +65,7 @@
 
     <%
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-        VariantRepo variantRepo = context.getBean("variantRepoImplMock", VariantRepo.class);
+        VariantRepo variantRepo = context.getBean("variantRepoImplSqlite", VariantRepo.class);
         Variant variant = variantRepo.read(Integer.valueOf(number));
 
         if (variant == null) {

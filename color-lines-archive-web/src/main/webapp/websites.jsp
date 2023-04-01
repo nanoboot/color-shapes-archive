@@ -43,7 +43,7 @@
 
     <%
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-        WebsiteRepo websiteRepo = context.getBean("websiteRepoImplMock", WebsiteRepo.class);
+        WebsiteRepo websiteRepo = context.getBean("websiteRepoImplSqlite", WebsiteRepo.class);
     %>
 
 
@@ -59,61 +59,62 @@
             margin-right:20px;
         }
     </style>
-            <%
-            final String EMPTY = "[empty]";
-            String number = request.getParameter("number");
-            String url = request.getParameter("url");
-            String downloaded = request.getParameter("downloaded");
-            String formatted = request.getParameter("formatted");
-            String verified = request.getParameter("verified");
-            String pageNumber = request.getParameter("pageNumber");
-            int pageNumberInt = pageNumber == null || pageNumber.isEmpty() ? 1 : Integer.valueOf(pageNumber);
+    <%
+        final String EMPTY = "[empty]";
+        String number = request.getParameter("number");
+        String url = request.getParameter("url");
+        String downloaded = request.getParameter("downloaded");
+        String formatted = request.getParameter("formatted");
+        String verified = request.getParameter("verified");
+        String pageNumber = request.getParameter("pageNumber");
+        int pageNumberInt = pageNumber == null || pageNumber.isEmpty() ? 1 : Integer.valueOf(pageNumber);
 
-        %>
+    %>
 
-        
+
     <form action="websites.jsp" method="get">
 
-        <label for="pageNumber">Page </label><input type="text" name="pageNumber" value="<%=pageNumberInt %>" size="4" style="margin-right:10px;">
-        <label for="number">Number </label><input type="text" name="number" value="<%=number != null ? number : "" %>" size="5" style="margin-right:10px;">
-        <label for="url">Url </label><input type="text" name="url" value="<%=url != null ? url : "" %>" style="margin-right:10px;">
-        <label for="downloaded">Downloaded</label><input type="checkbox" name="downloaded" <%=downloaded != null && downloaded.equals("1") ? "checked " : "" %> value="1">
-        <label for="formatted">Formatted</label><input type="checkbox" name="formatted" <%=formatted != null && formatted.equals("1") ? "checked " : "" %> value="1">
-        <label for="verified">Verified</label><input type="checkbox" name="verified"  <%=verified != null && verified.equals("1") ? "checked " : "" %>value="1">
+        <label for="pageNumber">Page </label><input type="text" name="pageNumber" value="<%=pageNumberInt%>" size="4" style="margin-right:10px;">
+        <label for="number">Number </label><input type="text" name="number" value="<%=number != null ? number : ""%>" size="5" style="margin-right:10px;">
+        <label for="url">Url </label><input type="text" name="url" value="<%=url != null ? url : ""%>" style="margin-right:10px;">
+        <label for="downloaded">Downloaded</label><input type="checkbox" name="downloaded" <%=downloaded != null && downloaded.equals("1") ? "checked " : ""%> value="1">
+        <label for="formatted">Formatted</label><input type="checkbox" name="formatted" <%=formatted != null && formatted.equals("1") ? "checked " : ""%> value="1">
+        <label for="verified">Verified</label><input type="checkbox" name="verified"  <%=verified != null && verified.equals("1") ? "checked " : ""%>value="1">
         <input type="submit" value="Filter" style="margin-left:20px;height:40px;">
     </form>
 
-        <%
-            List<Website> websites = websiteRepo.list(
-            pageNumberInt, 
-            10, 
-            downloaded == null ? null : Boolean.valueOf(downloaded.equals("1")),
-            formatted == null? null : Boolean.valueOf(formatted.equals("1")),
-            verified == null ? null : Boolean.valueOf(verified.equals("1")),
-            number == null || number.isEmpty() ? null : Integer.valueOf(number),
-            url == null || url.isEmpty() ? null : url
-            );
-            
-if(websites.isEmpty()) {
-       
+    <%
+        List<Website> websites = websiteRepo.list(
+                pageNumberInt,
+                10,
+                downloaded == null ? null : Boolean.valueOf(downloaded.equals("1")),
+                formatted == null ? null : Boolean.valueOf(formatted.equals("1")),
+                verified == null ? null : Boolean.valueOf(verified.equals("1")),
+                number == null || number.isEmpty() ? null : Integer.valueOf(number),
+                url == null || url.isEmpty() ? null : url
+        );
+
+        if (websites.isEmpty()) {
+
     %><span style="font-weight:bold;color:orange;" class="margin_left_and_big_font">Warning: Nothing found.</span>
 
-    <%
-            throw new javax.servlet.jsp.SkipPageException();
+    <%            throw new javax.servlet.jsp.SkipPageException();
         }
     %>
-        
+
     <table>
-        <tr>
-            <th title="Number">#</th>
-            <th style="width:100px;"></th>
-            <th>Url</th>
-            <th>Language</th>
-            <th>Variant</th>
-            <th>Flags</th>
-        </tr>
+        <thead>
+            <tr>
+                <th title="Number">#</th>
+                <th style="width:100px;"></th>
+                <th>Url</th>
+                <th>Language</th>
+                <th>Variant</th>
+                <th>Flags</th>
+            </tr>
+        </thead>
 
-
+        <tbody>
 
         <style>
 
@@ -132,12 +133,11 @@ if(websites.isEmpty()) {
                 padding-right:0;
             }
         </style>
-        
-        
+
+
         <%
-            
             for (Website w : websites) {
-            %>
+        %>
         <tr>
             <td><%=w.getNumber()%></td>
             <td>
@@ -151,9 +151,14 @@ if(websites.isEmpty()) {
                 }
                 //example:
                 //https://web.archive.org/web/20080521061635if_/http://linez.varten.net:80
-%>
+                String urlToBeShown = w.getUrl();
+                if (urlToBeShown.length() > 60) {
+                    urlToBeShown = urlToBeShown.substring(0, 60) + "...";
+                }
+            %>
 
-            <td><a href="<%=finalUrl%>"  target="_blank"><%=w.getUrl()%></a></td>
+
+            <td><a href="<%=finalUrl%>" target="_blank"><%=urlToBeShown%></a></td>
             <td><%=w.getLanguage() == null ? EMPTY : w.getLanguage()%></td>
             <td><%=w.getVariantNumber() == null ? EMPTY : w.getVariantNumber()%></td>
             <td>
@@ -167,7 +172,7 @@ if(websites.isEmpty()) {
         <%
             }
         %>
-
-    </table>
+    </tbody>
+</table>
 </body>
 </html>
