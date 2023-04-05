@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <!--
-     Color Lines Archive.
+     Color Shapes Archive.
      Copyright (C) 2023-2023 the original author or authors.
     
      This program is free software; you can redistribute it and/or
@@ -30,24 +30,24 @@
     </parent>
 
     <groupId>org.nanoboot.colorshapes</groupId>
-    <artifactId>color-lines-archive-parent</artifactId>
+    <artifactId>color-shapes-archive-parent</artifactId>
     <version>0.0.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
-    <name>color-lines-archive</name>
-    <description>color-lines-archive</description>
+    <name>color-shapes-archive</name>
+    <description>color-shapes-archive</description>
     <modules>
-        <module>color-lines-archive-entity/pom.xml</module>
-        <module>color-lines-archive-persistence-api/pom.xml</module>
-        <module>color-lines-archive-persistence-impl-mock/pom.xml</module>
-        <module>color-lines-archive-persistence-impl-sqlite/pom.xml</module>
-        <module>color-lines-archive-web/pom.xml</module>
+        <module>color-shapes-archive-entity/pom.xml</module>
+        <module>color-shapes-archive-persistence-api/pom.xml</module>
+        <module>color-shapes-archive-persistence-impl-mock/pom.xml</module>
+        <module>color-shapes-archive-persistence-impl-sqlite/pom.xml</module>
+        <module>color-shapes-archive-web/pom.xml</module>
 
 
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <color-lines-archive.version>0.0.0-SNAPSHOT</color-lines-archive.version>
+        <color-shapes-archive.version>0.0.0-SNAPSHOT</color-shapes-archive.version>
         <power.version>2.0.0-SNAPSHOT</power.version>
         <log4j.version>2.17.0</log4j.version>
         <springframework.version>5.3.17</springframework.version>
@@ -236,32 +236,32 @@
                 <version>${springframework.version}</version>
             </dependency>
 
-            <!-- Color Lines Archive modules -->
+            <!-- Color Shapes Archive modules -->
             <dependency>
                 <groupId>org.nanoboot.colorshapes</groupId>
-                <artifactId>color-lines-archive-entity</artifactId>
-                <version>${color-lines-archive.version}</version>
+                <artifactId>color-shapes-archive-entity</artifactId>
+                <version>${color-shapes-archive.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.nanoboot.colorshapes</groupId>
-                <artifactId>color-lines-archive-persistence-api</artifactId>
-                <version>${color-lines-archive.version}</version>
+                <artifactId>color-shapes-archive-persistence-api</artifactId>
+                <version>${color-shapes-archive.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.nanoboot.colorshapes</groupId>
-                <artifactId>color-lines-archive-persistence-impl-mock</artifactId>
-                <version>${color-lines-archive.version}</version>
+                <artifactId>color-shapes-archive-persistence-impl-mock</artifactId>
+                <version>${color-shapes-archive.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.nanoboot.colorshapes</groupId>
-                <artifactId>color-lines-archive-persistence-impl-sqlite</artifactId>
-                <version>${color-lines-archive.version}</version>
+                <artifactId>color-shapes-archive-persistence-impl-sqlite</artifactId>
+                <version>${color-shapes-archive.version}</version>
             </dependency>
             <!--                   
             <dependency>
                 <groupId>org.nanoboot.colorshapes</groupId>
-                <artifactId>color-lines-archive-html</artifactId>
-                <version>${color-lines-archive.version}</version>
+                <artifactId>color-shapes-archive-html</artifactId>
+                <version>${color-shapes-archive.version}</version>
             </dependency>-->
            
 

@@ -1,6 +1,6 @@
 # place in /bin directory of Tomcat installation
 
-COLOR_LINES_ARCHIVE_CONFPATH="{path to confpath directory}"
+COLOR_SHAPES_ARCHIVE_CONFPATH="{path to confpath directory}"
 
-export JAVA_OPTS="$JAVA_OPTS -Dcolor-lines-archive.confpath=${COLOR_LINES_ARCHIVE_CONFPATH}"
+export JAVA_OPTS="$JAVA_OPTS -Dcolor-shapes-archive.confpath=${COLOR_SHAPES_ARCHIVE_CONFPATH}"
 
