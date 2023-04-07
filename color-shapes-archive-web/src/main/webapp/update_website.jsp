@@ -166,12 +166,18 @@
 
     %>
 
-
+    <script>
+        function redirectToRead() {  
+window.location.href = 'read_website.jsp?number=<%=number%>'
+}  
+redirectToRead();
+</script>
+<!--
     <p style="margin-left:20px;font-size:130%;">Updated website with number <%=updatedWebsite.getNumber()%>:<br><br>
         <a href="read_website.jsp?number=<%=updatedWebsite.getNumber()%>"><%=updatedWebsite.getUrl()%></a>
 
     </p>
-
+-->
 
 
     <% }%>

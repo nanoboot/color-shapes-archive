@@ -91,7 +91,13 @@
 
 
     </p>
-    <table>
+<script>  
+function redirectToUpdate() {  
+window.location.href = 'update_website.jsp?number=<%=number%>'
+}
+
+</script>  
+    <table ondblclick = "redirectToUpdate()">
         <tr>
             <th>Number</th><td><%=website.getNumber()%></td></tr>
         <tr><th>Url</th><td><a href="<%=website.getUrl()%>"><%=website.getUrl()%></a></td></tr>
