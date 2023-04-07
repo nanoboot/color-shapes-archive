@@ -120,7 +120,7 @@
         if (param_language != null && param_language.isEmpty()) {
             param_language = null;
         }
-        
+
         if (param_language != null && param_language.isEmpty()) {
             param_language = null;
         }
@@ -135,16 +135,16 @@
                 param_verified == null ? false : param_verified.equals("1"),
                 (param_variantNumber == null || param_variantNumber.isEmpty()) ? null : Integer.valueOf(param_variantNumber));
 
-        websiteRepo.create(newWebsite);
+        int numberOfNewWebsite = websiteRepo.create(newWebsite);
 
-
+        newWebsite.setNumber(numberOfNewWebsite);
     %>
 
 
     <p style="margin-left:20px;font-size:130%;">Created new website with number <%=newWebsite.getNumber()%>:<br><br>
         <a href="read_website.jsp?number=<%=newWebsite.getNumber()%>"><%=newWebsite.getUrl()%></a>
-       
-        </p>
+
+    </p>
     number = <%=newWebsite.getNumber()%><br>
     url = <%=param_url%><br>
     webArchiveSnapshot = <%=param_webArchiveSnapshot%><br>

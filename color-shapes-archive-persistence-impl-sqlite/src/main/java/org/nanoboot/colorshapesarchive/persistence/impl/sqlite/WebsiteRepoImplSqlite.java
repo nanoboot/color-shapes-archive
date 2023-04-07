@@ -36,11 +36,8 @@ import org.nanoboot.colorshapesarchive.persistence.api.WebsiteRepo;
  */
 public class WebsiteRepoImplSqlite implements WebsiteRepo {
 
-    private final List<Website> internalList = new ArrayList<>();
-
     @Setter
     private SqliteConnectionFactory sqliteConnectionFactory;
-    private int nextNumber = 1;
 
     @Override
     public List<Website> list(int pageNumber, int pageSize, Boolean downloaded, Boolean formatted, Boolean verified, Integer number, String url) {
@@ -145,9 +142,61 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
 
     @Override
     public int create(Website website) {
-        website.setNumber(nextNumber++);
-        internalList.add(website);
-        return website.getNumber();
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append("INSERT INTO ")
+                .append(WebsiteTable.TABLE_NAME)
+                .append("(")
+                .append(WebsiteTable.URL).append(",")
+                .append(WebsiteTable.WEB_ARCHIVE_SNAPSHOT).append(",")
+                .append(WebsiteTable.LANGUAGE).append(",")
+                //
+                .append(WebsiteTable.DOWNLOADED).append(",")
+                .append(WebsiteTable.FORMATTED).append(",")
+                .append(WebsiteTable.VERIFIED);
+        if (website.getVariantNumber() != null) {
+            sb.append(",").append(WebsiteTable.VARIANT_NUMBER);
+        }
+        sb.append(")")
+                .append(" VALUES (?,?,?,  ?,?,?");
+        if (website.getVariantNumber() != null) {
+            sb.append(",?");
+        }
+        sb.append(")");
+
+        String sql = sb.toString();
+        System.err.println(sql);
+        try (
+                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+            int i = 0;
+            stmt.setString(++i, website.getUrl());
+            stmt.setString(++i, website.getWebArchiveSnapshot());
+            stmt.setString(++i, website.getLanguage());
+            //
+            stmt.setInt(++i, website.getDownloaded() ? 1 : 0);
+            stmt.setInt(++i, website.getFormatted() ? 1 : 0);
+            stmt.setInt(++i, website.getVerified() ? 1 : 0);
+            if (website.getVariantNumber() != null) {
+                stmt.setInt(++i, website.getVariantNumber());
+            }
+            //
+
+            stmt.execute();
+            System.out.println(stmt.toString());
+            ResultSet rs = connection.createStatement().executeQuery("select last_insert_rowid() as last");
+            while (rs.next()) {
+                int numberOfNewWebsite = rs.getInt("last");
+                System.out.println("numberOfNewWebsite=" + numberOfNewWebsite);
+                return numberOfNewWebsite;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.err.println("Error.");
+        return 0;
     }
 
     @Override

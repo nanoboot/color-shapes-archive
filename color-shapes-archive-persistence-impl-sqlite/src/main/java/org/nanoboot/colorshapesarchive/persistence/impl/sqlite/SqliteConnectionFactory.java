@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * @author robertvokac
  */
 public class SqliteConnectionFactory {
-    private final String jdbcUrl= "jdbc:sqlite:" + System.getProperty("color-shapes-archive.confpath") + "/" + "color_lines_archive.sqlite";
+    private final String jdbcUrl= "jdbc:sqlite:" + System.getProperty("color-shapes-archive.confpath") + "/" + "color_shapes_archive.sqlite";
     public Connection createConnection() throws ClassNotFoundException  {
         try {
             Class.forName("org.sqlite.JDBC");
