@@ -117,7 +117,7 @@
         <tr><th>Licence</th><td><%=Utils.formatToHtml(variant.getLicence())%></td></tr>
         <tr><th>User interface</th><td><%=Utils.formatToHtml(variant.getUserInterface())%></td></tr>
         <tr><th>Programming language</th><td><%=Utils.formatToHtml(variant.getProgrammingLanguage())%></td></tr>
-        <tr><th>Binaries</th><td><%=Utils.formatToHtml(variant.getBinariesAvailable())%></td></tr>
+        <tr><th>Binaries</th><td><%=Utils.formatToHtml(variant.getBinaries())%></td></tr>
         <tr><th>Open source</th><td><%=Utils.formatToHtml(variant.getOpenSource())%></td></tr>
         <tr><th>Last update</th><td><%=Utils.formatToHtml(variant.getLastUpdate())%></td></tr>
         <tr><th>Last version</th><td><%=Utils.formatToHtml(variant.getLastVersion())%></td></tr>

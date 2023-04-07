@@ -34,7 +34,6 @@ import org.nanoboot.powerframework.time.moment.LocalDate;
 @ToString
 public class Variant {
     private Integer number;
-    //
     private String name;
     private String note;
     private String status;
@@ -44,8 +43,8 @@ public class Variant {
     private Boolean openSource;
     private String userInterface;
     private String programmingLanguage;
+    private Boolean binaries;
     
-    private Boolean binariesAvailable;
     private LocalDate lastUpdate;
     private String lastVersion;
     

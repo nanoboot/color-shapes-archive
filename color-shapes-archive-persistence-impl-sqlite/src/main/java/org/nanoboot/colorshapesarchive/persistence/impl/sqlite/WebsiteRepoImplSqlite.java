@@ -89,7 +89,6 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 stmt.setInt(++i, numberEnd);
             }
 
-            //Boolean downloaded, Boolean formatted, Boolean verified, Integer number, String url
             if (downloaded != null) {
                 stmt.setInt(++i, downloaded ? 1 : 0);
             }

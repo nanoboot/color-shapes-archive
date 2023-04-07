@@ -66,6 +66,15 @@
         final String EMPTY = "[empty]";
         String number = request.getParameter("number");
         String pageNumber = request.getParameter("pageNumber");
+        String previousNextPage = request.getParameter("PreviousNextPage");
+                if (previousNextPage != null && !previousNextPage.isEmpty()) {
+            if (previousNextPage.equals("Previous page")) {
+                pageNumber = String.valueOf(Integer.valueOf(pageNumber) - 1);
+            }
+            if (previousNextPage.equals("Next page")) {
+                pageNumber = String.valueOf(Integer.valueOf(pageNumber) + 1);
+            }
+        }
         int pageNumberInt = pageNumber == null || pageNumber.isEmpty() ? 1 : Integer.valueOf(pageNumber);
 
     %>
@@ -77,6 +86,11 @@
         <label for="number">Number </label><input type="text" name="number" value="<%=number != null ? number : ""%>" size="5" style="margin-right:10px;">
 
         <input type="submit" value="Filter" style="margin-left:20px;height:40px;">
+        <br>
+        <br>
+
+        <input type="submit" name="PreviousNextPage" value="Previous page" style="margin-left:20px;height:40px;">
+        <input type="submit" name="PreviousNextPage" value="Next page" style="margin-left:20px;height:40px;">
     </form>
 
     <%
@@ -170,7 +184,7 @@
             </td>
 
             <td>
-                <%=Utils.formatToHtml(v.getBinariesAvailable())%>
+                <%=Utils.formatToHtml(v.getBinaries())%>
             </td>
             <td>
                 <%=v.getLastUpdate()== null ? EMPTY :v.getLastUpdate().toString()%>
