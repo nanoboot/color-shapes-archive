@@ -54,14 +54,13 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(WebsiteTable.TABLE_NAME)
                 .append(" WHERE ");
         boolean pagingIsEnabled = downloaded == null && formatted == null && verified == null && number == null && url == null;
-              
-        
-        if(pagingIsEnabled) {
+
+        if (pagingIsEnabled) {
             sb.append(WebsiteTable.NUMBER)
-                .append(" BETWEEN ? AND ? ");
-        } else{
-        sb.append("1=1");
-    }
+                    .append(" BETWEEN ? AND ? ");
+        } else {
+            sb.append("1=1");
+        }
         if (downloaded != null) {
             sb.append(" AND ").append(WebsiteTable.DOWNLOADED)
                     .append("=?");
@@ -88,25 +87,25 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
         ResultSet rs = null;
         try (
                  Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
-            if(pagingIsEnabled) {
-            stmt.setInt(++i, numberStart);
-            stmt.setInt(++i, numberEnd);
+            if (pagingIsEnabled) {
+                stmt.setInt(++i, numberStart);
+                stmt.setInt(++i, numberEnd);
             }
-            
+
             //Boolean downloaded, Boolean formatted, Boolean verified, Integer number, String url
-            if(downloaded != null)       {
+            if (downloaded != null) {
                 stmt.setInt(++i, downloaded ? 1 : 0);
             }
-            if(formatted != null)       {
+            if (formatted != null) {
                 stmt.setInt(++i, formatted ? 1 : 0);
             }
-            if(verified != null)       {
+            if (verified != null) {
                 stmt.setInt(++i, verified ? 1 : 0);
             }
-            if(number != null)       {
+            if (number != null) {
                 stmt.setInt(++i, number);
             }
-            if(url != null)       {
+            if (url != null) {
                 stmt.setString(++i, url);
             }
             System.err.println(stmt.toString());
@@ -153,9 +152,43 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
 
     @Override
     public Website read(Integer number) {
-        for (Website w : internalList) {
-            if (w.getNumber().intValue() == number.intValue()) {
-                return w;
+
+        if (number == null) {
+            throw new RuntimeException("number is null");
+        }
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append("SELECT * FROM ")
+                .append(WebsiteTable.TABLE_NAME)
+                .append(" WHERE ")
+                .append(WebsiteTable.NUMBER)
+                .append("=?");
+
+        String sql = sb.toString();
+        int i = 0;
+        ResultSet rs = null;
+        try (
+                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+       
+
+                stmt.setInt(++i, number);
+          
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                return extractWebsiteFromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
