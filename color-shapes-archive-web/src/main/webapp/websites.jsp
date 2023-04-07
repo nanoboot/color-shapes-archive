@@ -67,6 +67,15 @@
         String formatted = request.getParameter("formatted");
         String verified = request.getParameter("verified");
         String pageNumber = request.getParameter("pageNumber");
+        String previousNextPage = request.getParameter("PreviousNextPage");
+        if (previousNextPage != null && !previousNextPage.isEmpty()) {
+            if (previousNextPage.equals("Previous page")) {
+                pageNumber = String.valueOf(Integer.valueOf(pageNumber) - 1);
+            }
+            if (previousNextPage.equals("Next page")) {
+                pageNumber = String.valueOf(Integer.valueOf(pageNumber) + 1);
+            }
+        }
         int pageNumberInt = pageNumber == null || pageNumber.isEmpty() ? 1 : Integer.valueOf(pageNumber);
 
     %>
@@ -81,6 +90,12 @@
         <label for="formatted">Formatted</label><input type="checkbox" name="formatted" <%=formatted != null && formatted.equals("1") ? "checked " : ""%> value="1">
         <label for="verified">Verified</label><input type="checkbox" name="verified"  <%=verified != null && verified.equals("1") ? "checked " : ""%>value="1">
         <input type="submit" value="Filter" style="margin-left:20px;height:40px;">
+        <input type="submit" value="Filter" style="margin-left:20px;height:40px;">
+        <br>
+        <br>
+
+        <input type="submit" name="PreviousNextPage" value="Previous page" style="margin-left:20px;height:40px;">
+        <input type="submit" name="PreviousNextPage" value="Next page" style="margin-left:20px;height:40px;">
     </form>
 
     <%
@@ -101,6 +116,7 @@
     <%            throw new javax.servlet.jsp.SkipPageException();
         }
     %>
+
 
     <table>
         <thead>

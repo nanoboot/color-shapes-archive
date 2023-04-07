@@ -22,7 +22,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -47,108 +46,89 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
     public List<Website> list(int pageNumber, int pageSize, Boolean downloaded, Boolean formatted, Boolean verified, Integer number, String url) {
         int numberEnd = pageSize * pageNumber;
         int numberStart = numberEnd - pageSize + 1;
-        {
-            List<Website> result = new ArrayList<>();
-            String sql = "SELECT * FROM " + WebsiteTable.TABLE_NAME + " WHERE " + WebsiteTable.NUMBER + " BETWEEN ? AND ?";
-            int i = 0;
-            ResultSet rs = null;
-            try (
-                     Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
-                stmt.setInt(++i, numberStart);
-                stmt.setInt(++i, numberEnd);
-                rs = stmt.executeQuery();
 
-                while (rs.next()) {
-                    result.add(extractWebsiteFromResultSet(rs));
+        List<Website> result = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append("SELECT * FROM ")
+                .append(WebsiteTable.TABLE_NAME)
+                .append(" WHERE ");
+        boolean pagingIsEnabled = downloaded == null && formatted == null && verified == null && number == null && url == null;
+              
+        
+        if(pagingIsEnabled) {
+            sb.append(WebsiteTable.NUMBER)
+                .append(" BETWEEN ? AND ? ");
+        } else{
+        sb.append("1=1");
+    }
+        if (downloaded != null) {
+            sb.append(" AND ").append(WebsiteTable.DOWNLOADED)
+                    .append("=?");
+        }
+        if (formatted != null) {
+            sb.append(" AND ").append(WebsiteTable.FORMATTED)
+                    .append("=?");
+        }
+        if (verified != null) {
+            sb.append(WebsiteTable.VERIFIED)
+                    .append("=?");
+        }
+        if (number != null) {
+            sb.append(" AND ").append(WebsiteTable.NUMBER)
+                    .append("=?");
+        }
+        if (url != null) {
+            sb.append(" AND ").append(WebsiteTable.URL)
+                    .append(" LIKE '%' || ? || '%'");
+        }
+        String sql = sb.toString();
+        System.err.println(sql);
+        int i = 0;
+        ResultSet rs = null;
+        try (
+                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+            if(pagingIsEnabled) {
+            stmt.setInt(++i, numberStart);
+            stmt.setInt(++i, numberEnd);
+            }
+            
+            //Boolean downloaded, Boolean formatted, Boolean verified, Integer number, String url
+            if(downloaded != null)       {
+                stmt.setInt(++i, downloaded ? 1 : 0);
+            }
+            if(formatted != null)       {
+                stmt.setInt(++i, formatted ? 1 : 0);
+            }
+            if(verified != null)       {
+                stmt.setInt(++i, verified ? 1 : 0);
+            }
+            if(number != null)       {
+                stmt.setInt(++i, number);
+            }
+            if(url != null)       {
+                stmt.setString(++i, url);
+            }
+            System.err.println(stmt.toString());
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                result.add(extractWebsiteFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
                 }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            } catch (ClassNotFoundException ex) {
+            } catch (SQLException ex) {
                 Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                try {
-                    if (rs != null) {
-                        rs.close();
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (true) {
-                return result;
             }
         }
-
-        if (internalList.isEmpty()) {
-            for (int i = 0; i < 50; i++) {
-                internalList.add(
-                        new Website(
-                                nextNumber++,
-                                "http://colorshapes.nanoboot.org",
-                                "abc",
-                                "en",
-                                true,
-                                true,
-                                true,
-                                null));
-            }
-        }
-        List<Website> finalList = new ArrayList<>();
-        for (Website w : internalList) {
-            if (w.getNumber() < numberStart || w.getNumber() > numberEnd) {
-                continue;
-            }
-
-            if (number != null) {
-                if (w.getNumber().intValue() == number.intValue()) {
-                    finalList.add(w);
-                    break;
-                } else {
-                    continue;
-                }
-            }
-            if (url != null) {
-                if (w.getUrl().contains(url)) {
-                    finalList.add(w);
-                    continue;
-                } else {
-                    continue;
-                }
-            }
-
-            if (downloaded != null) {
-                if (w.getDownloaded().booleanValue() && !downloaded) {
-                    continue;
-                }
-
-                if (!w.getDownloaded().booleanValue() && downloaded) {
-                    continue;
-                }
-            }
-
-            if (formatted != null) {
-                if (w.getFormatted().booleanValue() && !formatted) {
-                    continue;
-                }
-
-                if (!w.getFormatted().booleanValue() && formatted) {
-                    continue;
-                }
-            }
-
-            if (verified != null) {
-                if (w.getVerified().booleanValue() && !verified) {
-                    continue;
-                }
-
-                if (!w.getVerified().booleanValue() && verified) {
-                    continue;
-                }
-            }
-            finalList.add(w);
-
-        }
-        return finalList;
+        return result;
     }
 
     private static Website extractWebsiteFromResultSet(final ResultSet rs) throws SQLException {
