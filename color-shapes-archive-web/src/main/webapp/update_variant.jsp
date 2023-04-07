@@ -31,6 +31,7 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 
+<%@ page session="false" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -44,7 +45,7 @@
 
         <a href="index.jsp" id="main_title">Color Shapes Archive</a></span>
 
-    
+
     <%
         String number = request.getParameter("number");
         if (number == null || number.isEmpty()) {
@@ -53,16 +54,22 @@
     <%
             throw new javax.servlet.jsp.SkipPageException();
         }
-%>
+    %>
 
     <span class="nav"><a href="index.jsp">Home</a>
         >> <a href="variants.jsp">Variants</a>
         >> <a href="read_variant.jsp?number=<%=number%>">Read</a>
-    <a href="update_variant.jsp?number=<%=number%>" class="nav_a_current">Update</a>
+        <a href="update_variant.jsp?number=<%=number%>" class="nav_a_current">Update</a>
         <a href="upload_variant_screenshot.jsp?number=<%=number%>">Upload screenshot</a>
     </span>
 
-<%
+    <%
+        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
+            out.println("Access forbidden");
+            throw new javax.servlet.jsp.SkipPageException();
+        }
+    %>
+    <%
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         VariantRepo variantRepo = context.getBean("variantRepoImplSqlite", VariantRepo.class);
         Variant variant = variantRepo.read(Integer.valueOf(number));
@@ -111,7 +118,7 @@
                     <input type="checkbox" name="openSource" value="1" <%=variant.getOpenSource().booleanValue() ? "checked" : ""%> >
                 </td>
             </tr>
-            
+
             <tr>
                 <td><label for="userInterface">User interface</label></td>
                 <td><input type="text" name="userInterface" value="<%=variant.getUserInterface() == null ? "" : variant.getUserInterface()%>"></td>
@@ -127,7 +134,7 @@
                     <input type="checkbox" name="binariesAvailable" value="1" <%=variant.getBinaries().booleanValue() ? "checked" : ""%> >
                 </td>
             </tr>
-                        
+
             <tr>
                 <td><label for="lastUpdate">Last update</label></td>
                 <td><input type="text" name="lastUpdate" value="<%=variant.getLastUpdate() == null ? "" : variant.getLastUpdate().toString()%>"></td>
@@ -206,19 +213,19 @@
 
     %>
 
-    
-    <script>
-        function redirectToRead() {  
-window.location.href = 'read_variant.jsp?number=<%=number%>'
-}  
-redirectToRead();
-</script>
-<!--
-    <p style="margin-left:20px;font-size:130%;">Updated variant with number <%=updatedVariant.getNumber()%>:<br><br>
-        <a href="read_variant.jsp?number=<%=updatedVariant.getNumber()%>"><%=updatedVariant.getName()%></a>
 
-    </p>
--->
+    <script>
+        function redirectToRead() {
+            window.location.href = 'read_variant.jsp?number=<%=number%>'
+        }
+        redirectToRead();
+    </script>
+    <!--
+        <p style="margin-left:20px;font-size:130%;">Updated variant with number <%=updatedVariant.getNumber()%>:<br><br>
+            <a href="read_variant.jsp?number=<%=updatedVariant.getNumber()%>"><%=updatedVariant.getName()%></a>
+    
+        </p>
+    -->
 
 
 

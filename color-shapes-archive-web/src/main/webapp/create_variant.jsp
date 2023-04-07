@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <%@page import="org.nanoboot.powerframework.time.moment.LocalDate"%>
 <!--
  Color Shapes Archive.
@@ -45,7 +46,13 @@
         >> <a href="variants.jsp">Variants</a>
         >> <a href="create_variant.jsp" class="nav_a_current">Add Variant</a></span>
 
-
+    <%
+        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
+            out.println("Access forbidden");
+            throw new javax.servlet.jsp.SkipPageException();
+        }
+    %>
+    
     <%
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         VariantRepo variantRepo = context.getBean("variantRepoImplSqlite", VariantRepo.class);

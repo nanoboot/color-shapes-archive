@@ -4,6 +4,7 @@
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
 <!DOCTYPE>
+<%@ page session="false" %>
 
 <!--
  Color Shapes Archive.
@@ -52,13 +53,17 @@
         >> 
         <a href="read_website.jsp?number=<%=number%>" class="nav_a_current">Read</a>
         
+        
+                    <% boolean canUpdate = org.nanoboot.colorshapesarchive.web.misc.utils.Utils.canUpdate(request); %>
+<% if(canUpdate) { %>
         <a href="update_website.jsp?number=<%=number%>">Update</a>
-        
-        
         <a href="show_content.jsp?number=<%=number%>">Show</a>
         <a href="edit_content.jsp?number=<%=number%>">Edit</a>
         <a href="list_files.jsp?number=<%=number%>">List</a>
         <a href="upload_file.jsp?number=<%=number%>">Upload</a>
+<% } %>
+
+
         
         
     </span>
@@ -92,8 +97,12 @@
 
     </p>
 <script>  
-function redirectToUpdate() {  
+function redirectToUpdate() {
+    
+    <% if(canUpdate) { %>
 window.location.href = 'update_website.jsp?number=<%=number%>'
+<% } %>
+
 }
 
 </script>  

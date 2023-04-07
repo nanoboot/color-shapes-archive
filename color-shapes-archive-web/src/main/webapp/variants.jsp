@@ -26,6 +26,7 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 
+<%@ page session="false" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -41,7 +42,14 @@
 
     <span class="nav"><a href="index.jsp">Home</a>
         >> <a href="variants.jsp" class="nav_a_current">Variants</a>
-        >> <a href="create_variant.jsp">Add Variant</a>
+        
+        
+                
+            <% boolean canUpdate = org.nanoboot.colorshapesarchive.web.misc.utils.Utils.canUpdate(request); %>
+<% if(canUpdate) { %>
+>> <a href="create_variant.jsp">Add Variant</a>
+<% } %>
+        
     </span>
 
     <%
@@ -154,7 +162,7 @@
             <td><%=v.getNumber()%></td>
             <td>
                 <a href="read_variant.jsp?number=<%=v.getNumber()%>"><img src="images/read.png" title="View" /></a>
-                <a href="update_variant.jsp?number=<%=v.getNumber()%>"><img src="images/update.png" title="Update" /></a>
+                <% if(canUpdate) { %><a href="update_variant.jsp?number=<%=v.getNumber()%>"><img src="images/update.png" title="Update" /></a><%}%>
             </td>
 
             <td>

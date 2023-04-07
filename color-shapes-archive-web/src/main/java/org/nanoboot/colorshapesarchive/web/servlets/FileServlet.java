@@ -41,15 +41,19 @@ public class FileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(req)) {
+            resp.getOutputStream().println("Access forbidden");
+            return;
+        }
         //resp.setContentType("text/plain");
         //resp.setHeader("Content-disposition", "attachment; filename=sample.txt");
-        
+
         String requestUri = req.getRequestURI();
         String contextPath = req.getContextPath();
         requestUri = requestUri.replace(contextPath, "");
         requestUri = requestUri.replace("/FileServlet/", "");
         String[] requestUriArray = requestUri.split("/");
-        if(requestUriArray.length != 2) {
+        if (requestUriArray.length != 2) {
             resp.getOutputStream().println("out.println(requestUriArray.length != 2)");
             return;
         }

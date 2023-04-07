@@ -33,13 +33,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.springframework.web.HttpRequestHandler;
 
 @WebServlet(
         name = "LoginServlet",
         urlPatterns = "/LoginServlet"
 )
-public class LoginServlet extends HttpServlet implements HttpRequestHandler {
+public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
@@ -50,43 +49,40 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
         String expectedUser = "";
         String expectedPassword = "";
 
-        String octConfpath = System.getProperty("oct.datapath");
-        if (octConfpath == null || octConfpath.isEmpty()) {
-            String msg = "Octagon configuration is broken : " + "oct.datapath + oct.datapath=" + octConfpath;
+        String csaConfPath = System.getProperty("color-shapes-archive.confpath");
+        if (csaConfPath == null || csaConfPath.isEmpty()) {
+            String msg = "csa configuration is broken : " + "color-shapes-archive.confpath=" + csaConfPath;
             returnError(response, request, msg);
             return;
         }
-        File octagonProperties = new File(octConfpath + "/octagon.properties");
+        File csaProperties = new File(csaConfPath + "/color-shapes-archive.properties");
 
         String authentication = "";
-        boolean anonymous = false;
-        try ( InputStream input = new FileInputStream(octagonProperties.getAbsolutePath())) {
+        try ( InputStream input = new FileInputStream(csaProperties.getAbsolutePath())) {
 
             Properties properties = new Properties();
             properties.load(input);
             authentication = properties.getProperty("authentication");
-            anonymous = authentication.equals("anonymous");
 
         } catch (IOException ex) {
             ex.printStackTrace();
-            returnError(response, request, "Loading octagon.properties failed.");
+            returnError(response, request, "Loading csa properties failed.");
             return;
         }
         
-        if (!anonymous && authentication != null && !authentication.isBlank()) {
+        if (authentication != null && !authentication.isBlank()) {
             String[] authenticationArray = authentication.split("/");
             if (authenticationArray.length != 2) {
-                returnError(response, request, "Octagon configuration is broken (array.length != 2). Contact Octagon administrator.");
+                returnError(response, request, "csa configuration is broken (array.length != 2). Contact csa administrator.");
                 return;
             }
             expectedUser = authenticationArray[0];
             expectedPassword = authenticationArray[1];
         }
 
-        String sendRedirect = request.getParameter("sendRedirect");
-        sendRedirect = (sendRedirect != null && sendRedirect.isBlank()) ? null : sendRedirect;
+      
 
-        if (anonymous || (expectedUser.equals(returnedUser) && expectedPassword.equals(returnedPassword))) {
+        if (expectedUser.equals(returnedUser) && expectedPassword.equals(returnedPassword)) {
             HttpSession oldSession = request.getSession(false);
             //invalidate old session
             if (oldSession != null) {
@@ -95,24 +91,24 @@ public class LoginServlet extends HttpServlet implements HttpRequestHandler {
             //new session
             HttpSession newSession = request.getSession(true);
 
+            System.out.println("Created new session " + newSession.toString());
+            newSession.setAttribute("canUpdate", "true");
+            
+            System.err.println("canUpdate&& = " + newSession.getAttribute("canUpdate"));
             newSession.setMaxInactiveInterval(120 * 60);
 
-            response.sendRedirect(sendRedirect == null ? "index.html" : sendRedirect);
+            response.sendRedirect("index.jsp");
         } else {
             returnError(response, request, "Either user or password is wrong.");
         }
     }
 
     private void returnError(HttpServletResponse response, HttpServletRequest request, String error) throws ServletException, IOException {
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/loginPage.html");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
 
         PrintWriter out = response.getWriter();
         out.println("<font color=red>" + error + " </font>");
         rd.include(request, response);
     }
 
-    @Override
-    public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
-    }
 }

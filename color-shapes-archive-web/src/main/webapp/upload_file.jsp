@@ -34,6 +34,7 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 
+<%@ page session="false" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -72,6 +73,14 @@
         <a href="upload_file.jsp?number=<%=number%>" class="nav_a_current">Upload</a>
 
     </span>
+        
+    <%
+        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
+            out.println("Access forbidden");
+            throw new javax.servlet.jsp.SkipPageException();
+        }
+    %>
+    
     <% } %>
 
     <%

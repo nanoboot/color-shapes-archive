@@ -19,6 +19,7 @@
 package org.nanoboot.colorshapesarchive.web.misc.utils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -51,5 +52,23 @@ public class Utils {
             return b.booleanValue() ? "YES" : "NO";
         }
         return o.toString();
+    }
+
+
+    public static boolean cannotUpdate(HttpServletRequest request) {
+        return !canUpdate(request);
+    }
+    public static boolean canUpdate(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return false;
+        }
+        Object canUpdateAttribute = session.getAttribute("canUpdate");
+        if (canUpdateAttribute == null) {
+            return false;
+        }
+        return canUpdateAttribute.equals("true");
+
     }
 }

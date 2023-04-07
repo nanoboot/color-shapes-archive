@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <%@page import="java.io.FileWriter"%>
 <%@page import="java.io.BufferedWriter"%>
 <!DOCTYPE html>
@@ -80,7 +81,12 @@
         
         </span>
 
-
+    <%
+        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
+            out.println("Access forbidden");
+            throw new javax.servlet.jsp.SkipPageException();
+        }
+    %>
 
         <%
             String submit_button_save_changes = request.getParameter("submit_button_save_changes");

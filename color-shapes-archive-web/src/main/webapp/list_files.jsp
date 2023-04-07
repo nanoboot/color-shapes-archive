@@ -5,6 +5,7 @@
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
 <!DOCTYPE>
+<%@ page session="false" %>
 
 <!--
  Color Shapes Archive.
@@ -61,7 +62,12 @@
         
     </span>
 
-
+    <%
+        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
+            out.println("Access forbidden");
+            throw new javax.servlet.jsp.SkipPageException();
+        }
+    %>
 
 
     <%

@@ -21,7 +21,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-    
+<%@ page session="false" %>
+
 <%@page import="java.util.Scanner"%>
 <%@page import="java.io.File"%>
 <%@page import="org.nanoboot.colorshapesarchive.web.misc.utils.Utils"%>
@@ -64,7 +65,12 @@
         
     </span>
 
-
+    <%
+        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
+            out.println("Access forbidden");
+            throw new javax.servlet.jsp.SkipPageException();
+        }
+    %>
 
  
     <%

@@ -19,6 +19,7 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 
+<%@ page session="false" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -35,6 +36,14 @@
        <span class="nav"><a href="index.jsp" class="nav_a_current">Home</a>
         >> <a href="websites.jsp">Websites</a>
         <a href="variants.jsp">Variants</a></span>
+
+
+    <% boolean canUpdate = org.nanoboot.colorshapesarchive.web.misc.utils.Utils.canUpdate(request); %>
+<% if(canUpdate) { %>
+<form action="<%=request.getContextPath()%>/LogoutServlet" method="post" style="display:inline;margin-left:20px;">
+<input type="submit" value="Logout" >
+</form>
+<% } %>
 
 </body>
 </html>

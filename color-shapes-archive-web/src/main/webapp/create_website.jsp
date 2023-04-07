@@ -16,6 +16,7 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
+<%@ page session="false" %>
 
 <%@page import="org.nanoboot.colorshapesarchive.persistence.api.WebsiteRepo"%>
 <%@page import="org.nanoboot.colorshapesarchive.entity.Website"%>
@@ -37,8 +38,14 @@
     <span class="nav"><a href="index.jsp">Home</a>
         >> <a href="websites.jsp">Websites</a>
         >> <a href="create_website.jsp" class="nav_a_current">Add Website</a></span>
-
-
+        
+    <%
+        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
+            out.println("Access forbidden");
+            throw new javax.servlet.jsp.SkipPageException();
+        }
+    %>
+    
     <%
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         WebsiteRepo websiteRepo = context.getBean("websiteRepoImplSqlite", WebsiteRepo.class);

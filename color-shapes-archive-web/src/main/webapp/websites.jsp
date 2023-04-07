@@ -4,6 +4,8 @@
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
 <!DOCTYPE>
+<%@ page session="false" %>
+
 <!--
  Color Shapes Archive.
  Copyright (C) 2023-2023 the original author or authors.
@@ -38,7 +40,15 @@
 
     <span class="nav"><a href="index.jsp">Home</a>
         >> <a href="websites.jsp" class="nav_a_current">Websites</a>
-        >> <a href="create_website.jsp">Add Website</a>
+        
+                
+            <% boolean canUpdate = org.nanoboot.colorshapesarchive.web.misc.utils.Utils.canUpdate(request); %>
+<% if(canUpdate) { %>
+>> <a href="create_website.jsp">Add Website</a>
+<% } %>
+
+
+        
     </span>
 
     <%
@@ -158,7 +168,7 @@
             <td><%=w.getNumber()%></td>
             <td>
                 <a href="read_website.jsp?number=<%=w.getNumber()%>"><img src="images/read.png" title="View" /></a>
-                <a href="update_website.jsp?number=<%=w.getNumber()%>"><img src="images/update.png" title="Update" /></a>
+                <% if(canUpdate) { %><a href="update_website.jsp?number=<%=w.getNumber()%>"><img src="images/update.png" title="Update" /></a><%}%>
             </td>
             <%
                 String finalUrl = w.getUrl();
