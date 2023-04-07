@@ -59,6 +59,7 @@ public class Utils {
         return !canUpdate(request);
     }
     public static boolean canUpdate(HttpServletRequest request) {
+        //if(true)return true;
 
         HttpSession session = request.getSession(false);
         if (session == null) {

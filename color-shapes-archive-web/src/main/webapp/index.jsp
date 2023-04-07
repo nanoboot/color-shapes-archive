@@ -43,7 +43,12 @@
 <form action="<%=request.getContextPath()%>/LogoutServlet" method="post" style="display:inline;margin-left:20px;">
 <input type="submit" value="Logout" >
 </form>
+
+<br>
+<br>
+<a href="CheckFilesServlet?onlyko=true" class="button">Check file checksums</a>
 <% } %>
+
 
 </body>
 </html>

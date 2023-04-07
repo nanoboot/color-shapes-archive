@@ -81,9 +81,9 @@
         <%
             File[] files = dir.listFiles();
 
-            for (File f : files) {
+            for (File f : files) {if(f.getName().endsWith(".sha512")) {continue;}
         %>
-        <li><%=f.getName() + " " + (f.isDirectory() ? "(directory)" : "(file)")%></li>
+        <li><a href="FileServlet/<%=number%>/<%=f.getName()%>"><%=f.getName()%></a> <%=(f.isDirectory() ? "(directory)" : "(file)")%></li>
 
         <%
             }

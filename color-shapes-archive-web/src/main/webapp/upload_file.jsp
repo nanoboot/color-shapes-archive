@@ -1,3 +1,9 @@
+<%@page import="java.io.FileWriter"%>
+<%@page import="java.io.FileWriter"%>
+<%@page import="java.io.BufferedWriter"%>
+<%@page import="java.security.MessageDigest"%>
+<%@page import="java.nio.file.Paths"%>
+<%@page import="java.nio.file.Files"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
 <%@page import="java.io.File"%>
@@ -73,20 +79,20 @@
         <a href="upload_file.jsp?number=<%=number%>" class="nav_a_current">Upload</a>
 
     </span>
-        
+
     <%
         if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
             out.println("Access forbidden");
             throw new javax.servlet.jsp.SkipPageException();
         }
     %>
-    
+
     <% } %>
 
     <%
         String param_file = request.getParameter("file");
 
-    //param_variant_screenshot != null && !param_variant_screenshot.isEmpty();
+        //param_variant_screenshot != null && !param_variant_screenshot.isEmpty();
     %>
 
     <% if (!formToBeProcessed) {%>
@@ -161,9 +167,24 @@
 
                             number = fi.getString();
                             if (origFileName == null) {
-                            System.err.println("Uploading file failed.");
+                                System.err.println("Uploading file failed.");
                             } else {
-                                new File(tmpFileName).renameTo(new File(filePath + number + "/" + origFileName));
+                                File newFile = new File(filePath + number + "/" + origFileName);
+                                new File(tmpFileName).renameTo(newFile);
+                                ////
+                                byte[] sha512sumByteArray = MessageDigest.getInstance("SHA-512").digest(Files.readAllBytes(Paths.get(newFile.getAbsolutePath())));
+                                StringBuilder sb = new StringBuilder(sha512sumByteArray.length * 2);
+                                for (byte b : sha512sumByteArray) {
+                                    sb.append(String.format("%02x", b));
+                                }
+                                String hexString = sb.toString();
+                                File hexFile = new File(newFile.getParentFile(), newFile.getName() + ".sha512");
+
+                                BufferedWriter writer = new BufferedWriter(new FileWriter(hexFile));
+                                writer.write(hexString);
+
+                                writer.close();
+                                ////
                             }
 
                         }
