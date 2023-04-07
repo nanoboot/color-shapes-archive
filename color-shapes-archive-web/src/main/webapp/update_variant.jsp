@@ -206,10 +206,19 @@
 
     %>
 
+    
+    <script>
+        function redirectToRead() {  
+window.location.href = 'read_variant.jsp?number=<%=number%>'
+}  
+redirectToRead();
+</script>
+<!--
     <p style="margin-left:20px;font-size:130%;">Updated variant with number <%=updatedVariant.getNumber()%>:<br><br>
         <a href="read_variant.jsp?number=<%=updatedVariant.getNumber()%>"><%=updatedVariant.getName()%></a>
 
     </p>
+-->
 
 
 
