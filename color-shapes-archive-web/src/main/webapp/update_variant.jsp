@@ -141,7 +141,7 @@
             </tr>
             <tr>
                 <td><label for="lastVersion">Last version</label></td>
-                <td><input type="text" name="lastVersion" value="<%=variant.getLastVersion() == null ? "" : variant.getLastVersion() == null%>"></td>
+                <td><input type="text" name="lastVersion" value="<%=variant.getLastVersion() == null ? "" : variant.getLastVersion()%>"></td>
             </tr>
 
 
