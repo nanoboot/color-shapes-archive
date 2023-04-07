@@ -41,7 +41,7 @@ public class VariantRepoImplSqlite implements VariantRepo {
     private SqliteConnectionFactory sqliteConnectionFactory;
 
     @Override
-    public List<Variant> list(int pageNumber,int pageSize, Integer number) {
+    public List<Variant> list(int pageNumber, int pageSize, Integer number) {
         int numberEnd = pageSize * pageNumber;
         int numberStart = numberEnd - pageSize + 1;
 
@@ -59,12 +59,12 @@ public class VariantRepoImplSqlite implements VariantRepo {
         } else {
             sb.append("1=1");
         }
-       
+
         if (number != null) {
             sb.append(" AND ").append(WebsiteTable.NUMBER)
                     .append("=?");
         }
-      
+
         String sql = sb.toString();
         System.err.println(sql);
         int i = 0;
@@ -75,7 +75,7 @@ public class VariantRepoImplSqlite implements VariantRepo {
                 stmt.setInt(++i, numberStart);
                 stmt.setInt(++i, numberEnd);
             }
-         
+
             if (number != null) {
                 stmt.setInt(++i, number);
             }
@@ -115,10 +115,9 @@ public class VariantRepoImplSqlite implements VariantRepo {
                 rs.getString(VariantTable.USER_INTERFACE),
                 rs.getString(VariantTable.PROGRAMMING_LANGUAGE),
                 rs.getInt(VariantTable.BINARIES) != 0,
-                
                 //
-                
-                lastUpdateTmp == null ? null : new LocalDate(lastUpdateTmp), 
+
+                lastUpdateTmp == null ? null : new LocalDate(lastUpdateTmp),
                 rs.getString(VariantTable.LAST_VERSION)
         );
     }
@@ -227,44 +226,69 @@ public class VariantRepoImplSqlite implements VariantRepo {
 
     @Override
     public void update(Variant variant) {
-//        StringBuilder sb = new StringBuilder();
-//        sb
-//                .append("UPDATE ")
-//                .append(WebsiteTable.TABLE_NAME)
-//                .append(" SET ")
-//                .append(WebsiteTable.URL).append("=?, ")
-//                .append(WebsiteTable.WEB_ARCHIVE_SNAPSHOT).append("=?, ")
-//                .append(WebsiteTable.LANGUAGE).append("=?, ")
-//                //
-//                .append(WebsiteTable.DOWNLOADED).append("=?, ")
-//                .append(WebsiteTable.FORMATTED).append("=?, ")
-//                .append(WebsiteTable.VERIFIED).append("=?, ")
-//                .append(WebsiteTable.VARIANT_NUMBER).append("=? ")
-//                .append(" WHERE ").append(WebsiteTable.NUMBER).append("=?");
-//
-//        String sql = sb.toString();
-//        System.err.println(sql);
-//        try (
-//                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
-//            int i = 0;
-//            stmt.setString(++i, website.getUrl());
-//            stmt.setString(++i, website.getWebArchiveSnapshot());
-//            stmt.setString(++i, website.getLanguage());
-//            //
-//            stmt.setInt(++i, website.getDownloaded() ? 1 : 0);
-//            stmt.setInt(++i, website.getFormatted() ? 1 : 0);
-//            stmt.setInt(++i, website.getVerified() ? 1 : 0);
-//            stmt.setInt(++i, website.getVariantNumber());
-//            //
-//            stmt.setInt(++i, website.getNumber());
-//
-//            int numberOfUpdatedRows = stmt.executeUpdate();
-//            System.out.println("numberOfUpdatedRows=" + numberOfUpdatedRows);
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append("UPDATE ")
+                .append(VariantTable.TABLE_NAME)
+                .append(" SET ")
+                .append(VariantTable.NAME).append("=?, ")
+                .append(VariantTable.NOTE).append("=?, ")
+                .append(VariantTable.STATUS).append("=?, ")
+                .append(VariantTable.AUTHOR).append("=?, ")
+                //
+                .append(VariantTable.LICENCE).append("=?, ")
+                .append(VariantTable.OPEN_SOURCE).append("=?, ")
+                .append(VariantTable.USER_INTERFACE).append("=?, ")
+                .append(VariantTable.PROGRAMMING_LANGUAGE).append("=?, ")
+                .append(VariantTable.BINARIES).append("=?, ")
+                //
+                .append(VariantTable.LAST_UPDATE).append("=?, ")
+                .append(VariantTable.LAST_VERSION).append("=? ")
+                .append(" WHERE ").append(VariantTable.NUMBER).append("=?");
+
+        String sql = sb.toString();
+        System.err.println(sql);
+        try (
+                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+            int i = 0;
+            stmt.setString(++i, variant.getName());
+            stmt.setString(++i, variant.getNote());
+            stmt.setString(++i, variant.getStatus());
+            stmt.setString(++i, variant.getAuthor());
+            //
+            //
+            stmt.setString(++i, variant.getLicence());
+            if (variant.getOpenSource() == null) {
+                stmt.setNull(++i, java.sql.Types.INTEGER);
+            } else {
+                stmt.setInt(++i, variant.getOpenSource() ? 1 : 0);
+            }
+            stmt.setString(++i, variant.getUserInterface());
+            stmt.setString(++i, variant.getProgrammingLanguage());
+            
+                  if (variant.getBinaries() == null) {
+                stmt.setNull(++i, java.sql.Types.INTEGER);
+            } else {
+                stmt.setInt(++i, variant.getBinaries() ? 1 : 0);
+            }
+
+            //
+            if (variant.getLastUpdate() == null) {
+                stmt.setNull(++i, java.sql.Types.VARCHAR);
+            } else {
+                stmt.setString(++i, variant.getLastUpdate().toString());
+            }
+            stmt.setString(++i, variant.getLastVersion());
+            //
+            stmt.setInt(++i, variant.getNumber());
+
+            int numberOfUpdatedRows = stmt.executeUpdate();
+            System.out.println("numberOfUpdatedRows=" + numberOfUpdatedRows);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

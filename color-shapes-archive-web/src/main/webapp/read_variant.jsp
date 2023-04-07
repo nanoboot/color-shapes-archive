@@ -87,8 +87,13 @@
         <a href="read_variant.jsp?number=<%=variant.getNumber() - 1%>">Previous</a>
         <a href="read_variant.jsp?number=<%=variant.getNumber() + 1%>">Next</a>
     </p>
+<script>  
+function redirectToUpdate() {  
+window.location.href = 'update_variant.jsp?number=<%=number%>'
+}
 
-    <table>
+</script>  
+    <table ondblclick = "redirectToUpdate()">
         <tr>
             <th>Number</th><td><%=variant.getNumber()%></td>
 

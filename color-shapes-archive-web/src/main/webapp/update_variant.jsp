@@ -124,7 +124,7 @@
             <tr>
                 <td><label for="binariesAvailable">Binaries available</label></td>
                 <td style="text-align:left;">
-                    <input type="checkbox" name="binariesAvailable" value="1" <%=variant.getBinariesAvailable().booleanValue() ? "checked" : ""%> >
+                    <input type="checkbox" name="binariesAvailable" value="1" <%=variant.getBinaries().booleanValue() ? "checked" : ""%> >
                 </td>
             </tr>
                         

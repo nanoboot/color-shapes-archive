@@ -32,10 +32,10 @@ public class VariantTable {
     public static final String AUTHOR = "AUTHOR";
     
     public static final String LICENCE = "LICENCE";
+    public static final String OPEN_SOURCE = "OPEN_SOURCE";
     public static final String USER_INTERFACE = "USER_INTERFACE";
     public static final String PROGRAMMING_LANGUAGE = "PROGRAMMING_LANGUAGE";
     public static final String BINARIES = "BINARIES";
-    public static final String OPEN_SOURCE = "OPEN_SOURCE";
     
     public static final String LAST_UPDATE = "LAST_UPDATE";
     public static final String LAST_VERSION = "LAST_VERSION";
