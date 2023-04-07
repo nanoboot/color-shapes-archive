@@ -29,6 +29,7 @@ public class WebsiteTable {
     public static final String URL = "URL";
     public static final String WEB_ARCHIVE_SNAPSHOT = "WEB_ARCHIVE_SNAPSHOT";
     public static final String LANGUAGE = "LANGUAGE";
+    //
     public static final String DOWNLOADED = "DOWNLOADED";
     public static final String FORMATTED = "FORMATTED";
     public static final String VERIFIED = "VERIFIED";

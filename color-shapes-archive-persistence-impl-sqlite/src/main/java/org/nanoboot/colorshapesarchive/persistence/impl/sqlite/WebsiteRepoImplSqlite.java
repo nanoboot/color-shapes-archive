@@ -169,10 +169,9 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
         ResultSet rs = null;
         try (
                  Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
-       
 
-                stmt.setInt(++i, number);
-          
+            stmt.setInt(++i, number);
+
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -196,20 +195,44 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
 
     @Override
     public void update(Website website) {
-        Website websiteToBeDeleted = null;
-        for (Website w : internalList) {
-            if (w.getNumber().intValue() == website.getNumber().intValue()) {
-                websiteToBeDeleted = w;
-                break;
-            }
-        }
-        if (websiteToBeDeleted == null) {
-            //nothing to do
-            return;
-        }
-        internalList.remove(websiteToBeDeleted);
-        internalList.add(website);
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append("UPDATE ")
+                .append(WebsiteTable.TABLE_NAME)
+                .append(" SET ")
+                .append(WebsiteTable.URL).append("=?, ")
+                .append(WebsiteTable.WEB_ARCHIVE_SNAPSHOT).append("=?, ")
+                .append(WebsiteTable.LANGUAGE).append("=?, ")
+                //
+                .append(WebsiteTable.DOWNLOADED).append("=?, ")
+                .append(WebsiteTable.FORMATTED).append("=?, ")
+                .append(WebsiteTable.VERIFIED).append("=?, ")
+                .append(WebsiteTable.VARIANT_NUMBER).append("=? ")
+                .append(" WHERE ").append(WebsiteTable.NUMBER).append("=?");
 
+        String sql = sb.toString();
+        System.err.println(sql);
+        try (
+                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+            int i = 0;
+            stmt.setString(++i, website.getUrl());
+            stmt.setString(++i, website.getWebArchiveSnapshot());
+            stmt.setString(++i, website.getLanguage());
+            //
+            stmt.setInt(++i, website.getDownloaded() ? 1 : 0);
+            stmt.setInt(++i, website.getFormatted() ? 1 : 0);
+            stmt.setInt(++i, website.getVerified() ? 1 : 0);
+            stmt.setInt(++i, website.getVariantNumber());
+            //
+            stmt.setInt(++i, website.getNumber());
+
+            int numberOfUpdatedRows = stmt.executeUpdate();
+            System.out.println("numberOfUpdatedRows=" + numberOfUpdatedRows);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
