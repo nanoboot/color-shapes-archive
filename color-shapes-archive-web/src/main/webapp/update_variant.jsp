@@ -90,19 +90,19 @@
             </tr>
             <tr>
                 <td><label for="note">Note:</label></td>
-                <td><input type="text" name="note" value="<%=variant.getNote()%>"></td>
+                <td><input type="text" name="note" value="<%=variant.getNote() == null ? "" : variant.getNote()%>"></td>
             </tr>
             <tr>
                 <td><label for="name">Status:</label></td>
-                <td><input type="text" name="status" value="<%=variant.getStatus()%>"></td>
+                <td><input type="text" name="status" value="<%=variant.getStatus() == null ? "" : variant.getStatus()%>"></td>
             </tr>
             <tr>
                 <td><label for="author">Author</label></td>
-                <td><input type="text" name="author" value="<%=variant.getAuthor()%>"></td>
+                <td><input type="text" name="author" value="<%=variant.getAuthor() == null ? "" : variant.getAuthor()%>"></td>
             </tr>
             <tr>
                 <td><label for="licence">Licence</label></td>
-                <td><input type="text" name="licence" value="<%=variant.getLicence()%>"></td>
+                <td><input type="text" name="licence" value="<%=variant.getLicence() == null ? "" : variant.getLicence()%>"></td>
             </tr>
 
             <tr>
@@ -114,11 +114,11 @@
             
             <tr>
                 <td><label for="userInterface">User interface</label></td>
-                <td><input type="text" name="userInterface" value="<%=variant.getUserInterface()%>"></td>
+                <td><input type="text" name="userInterface" value="<%=variant.getUserInterface() == null ? "" : variant.getUserInterface()%>"></td>
             </tr>
             <tr>
                 <td><label for="programmingLanguage">Programming language</label></td>
-                <td><input type="text" name="programmingLanguage" value="<%=variant.getProgrammingLanguage()%>"></td>
+                <td><input type="text" name="programmingLanguage" value="<%=variant.getProgrammingLanguage() == null ? "" : variant.getProgrammingLanguage()%>"></td>
             </tr>
 
             <tr>
@@ -134,7 +134,7 @@
             </tr>
             <tr>
                 <td><label for="lastVersion">Last version</label></td>
-                <td><input type="text" name="lastVersion" value="<%=variant.getLastVersion()%>"></td>
+                <td><input type="text" name="lastVersion" value="<%=variant.getLastVersion() == null ? "" : variant.getLastVersion() == null%>"></td>
             </tr>
 
 

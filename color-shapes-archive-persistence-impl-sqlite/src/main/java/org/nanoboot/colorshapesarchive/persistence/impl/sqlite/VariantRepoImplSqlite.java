@@ -120,179 +120,191 @@ public class VariantRepoImplSqlite implements VariantRepo {
                 lastUpdateTmp == null ? null : new LocalDate(lastUpdateTmp),
                 rs.getString(VariantTable.LAST_VERSION)
         );
-    }
-
-    @Override
-    public int create(Variant variant) {
-        StringBuilder sb = new StringBuilder();
-        sb
-                .append("INSERT INTO ")
-                .append(VariantTable.TABLE_NAME)
-                .append("(")
-                .append(VariantTable.NAME).append(",")
-                .append(VariantTable.NOTE).append(",")
-                .append(VariantTable.STATUS).append(",")
-                .append(VariantTable.AUTHOR).append(",")
-                //
-                .append(VariantTable.LICENCE).append(",")
-                .append(VariantTable.OPEN_SOURCE).append(",")
-                .append(VariantTable.USER_INTERFACE).append(",")
-                .append(VariantTable.PROGRAMMING_LANGUAGE).append(",")
-                .append(VariantTable.BINARIES).append(",")
-                //
-                .append(VariantTable.LAST_UPDATE).append(",")
-                .append(VariantTable.LAST_VERSION);
-        //
-
-        sb.append(")")
-          .append(" VALUES (?,?,?,? ,?,?,?,?,? ,?,?)");
-
-        String sql = sb.toString();
-        System.err.println(sql);
-        try (
-                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
-            int i = 0;
-            stmt.setString(++i, variant.getName());
-            stmt.setString(++i, variant.getNote());
-            stmt.setString(++i, variant.getStatus());
-            stmt.setString(++i, variant.getAuthor());
-            //
-            stmt.setString(++i, variant.getLicence());
-            stmt.setInt(++i, variant.getOpenSource() ? 1 : 0);
-            stmt.setString(++i, variant.getUserInterface());
-            stmt.setString(++i, variant.getProgrammingLanguage());
-            stmt.setInt(++i, variant.getBinaries() ? 1 : 0);
-            //
-            stmt.setString(++i, variant.getLastUpdate() == null ? null : variant.getLastUpdate().toString());
-            stmt.setString(++i, variant.getLastVersion());
-            //
-
-            stmt.execute();
-            System.out.println(stmt.toString());
-            ResultSet rs = connection.createStatement().executeQuery("select last_insert_rowid() as last");
-            while (rs.next()) {
-                int numberOfNewVariant = rs.getInt("last");
-                System.out.println("numberOfNewVariant=" + numberOfNewVariant);
-                return numberOfNewVariant;
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.err.println("Error.");
-        return 0;
-    }
 
-    @Override
-    public Variant read(Integer number) {
+        @Override
+        public int create
+        (Variant variant
+        
+        
+            ) {
+        StringBuilder sb = new StringBuilder();
+            sb
+                    .append("INSERT INTO ")
+                    .append(VariantTable.TABLE_NAME)
+                    .append("(")
+                    .append(VariantTable.NAME).append(",")
+                    .append(VariantTable.NOTE).append(",")
+                    .append(VariantTable.STATUS).append(",")
+                    .append(VariantTable.AUTHOR).append(",")
+                    //
+                    .append(VariantTable.LICENCE).append(",")
+                    .append(VariantTable.OPEN_SOURCE).append(",")
+                    .append(VariantTable.USER_INTERFACE).append(",")
+                    .append(VariantTable.PROGRAMMING_LANGUAGE).append(",")
+                    .append(VariantTable.BINARIES).append(",")
+                    //
+                    .append(VariantTable.LAST_UPDATE).append(",")
+                    .append(VariantTable.LAST_VERSION);
+            //
+
+            sb.append(")")
+                    .append(" VALUES (?,?,?,? ,?,?,?,?,? ,?,?)");
+
+            String sql = sb.toString();
+            System.err.println(sql);
+            try (
+                     Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+                int i = 0;
+                stmt.setString(++i, variant.getName());
+                stmt.setString(++i, variant.getNote());
+                stmt.setString(++i, variant.getStatus());
+                stmt.setString(++i, variant.getAuthor());
+                //
+                stmt.setString(++i, variant.getLicence());
+                stmt.setInt(++i, variant.getOpenSource() ? 1 : 0);
+                stmt.setString(++i, variant.getUserInterface());
+                stmt.setString(++i, variant.getProgrammingLanguage());
+                stmt.setInt(++i, variant.getBinaries() ? 1 : 0);
+                //
+                stmt.setString(++i, variant.getLastUpdate() == null ? null : variant.getLastUpdate().toString());
+                stmt.setString(++i, variant.getLastVersion());
+                //
+
+                stmt.execute();
+                System.out.println(stmt.toString());
+                ResultSet rs = connection.createStatement().executeQuery("select last_insert_rowid() as last");
+                while (rs.next()) {
+                    int numberOfNewVariant = rs.getInt("last");
+                    System.out.println("numberOfNewVariant=" + numberOfNewVariant);
+                    return numberOfNewVariant;
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.err.println("Error.");
+            return 0;
+        }
+
+        @Override
+        public Variant read
+        (Integer number
+        
+        
+            ) {
 
         if (number == null) {
-            throw new RuntimeException("number is null");
-        }
-        StringBuilder sb = new StringBuilder();
-        sb
-                .append("SELECT * FROM ")
-                .append(VariantTable.TABLE_NAME)
-                .append(" WHERE ")
-                .append(VariantTable.NUMBER)
-                .append("=?");
-
-        String sql = sb.toString();
-        int i = 0;
-        ResultSet rs = null;
-        try (
-                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
-
-            stmt.setInt(++i, number);
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                return extractVariantFromResultSet(rs);
+                throw new RuntimeException("number is null");
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
+            StringBuilder sb = new StringBuilder();
+            sb
+                    .append("SELECT * FROM ")
+                    .append(VariantTable.TABLE_NAME)
+                    .append(" WHERE ")
+                    .append(VariantTable.NUMBER)
+                    .append("=?");
+
+            String sql = sb.toString();
+            int i = 0;
+            ResultSet rs = null;
+            try (
+                     Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+
+                stmt.setInt(++i, number);
+
+                rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    return extractVariantFromResultSet(rs);
                 }
-            } catch (SQLException ex) {
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    if (rs != null) {
+                        rs.close();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public void update
+        (Variant variant
+        
+        
+            ) {
+        StringBuilder sb = new StringBuilder();
+            sb
+                    .append("UPDATE ")
+                    .append(VariantTable.TABLE_NAME)
+                    .append(" SET ")
+                    .append(VariantTable.NAME).append("=?, ")
+                    .append(VariantTable.NOTE).append("=?, ")
+                    .append(VariantTable.STATUS).append("=?, ")
+                    .append(VariantTable.AUTHOR).append("=?, ")
+                    //
+                    .append(VariantTable.LICENCE).append("=?, ")
+                    .append(VariantTable.OPEN_SOURCE).append("=?, ")
+                    .append(VariantTable.USER_INTERFACE).append("=?, ")
+                    .append(VariantTable.PROGRAMMING_LANGUAGE).append("=?, ")
+                    .append(VariantTable.BINARIES).append("=?, ")
+                    //
+                    .append(VariantTable.LAST_UPDATE).append("=?, ")
+                    .append(VariantTable.LAST_VERSION).append("=? ")
+                    .append(" WHERE ").append(VariantTable.NUMBER).append("=?");
+
+            String sql = sb.toString();
+            System.err.println(sql);
+            try (
+                     Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+                int i = 0;
+                stmt.setString(++i, variant.getName());
+                stmt.setString(++i, variant.getNote());
+                stmt.setString(++i, variant.getStatus());
+                stmt.setString(++i, variant.getAuthor());
+                //
+                //
+                stmt.setString(++i, variant.getLicence());
+                if (variant.getOpenSource() == null) {
+                    stmt.setNull(++i, java.sql.Types.INTEGER);
+                } else {
+                    stmt.setInt(++i, variant.getOpenSource() ? 1 : 0);
+                }
+                stmt.setString(++i, variant.getUserInterface());
+                stmt.setString(++i, variant.getProgrammingLanguage());
+
+                if (variant.getBinaries() == null) {
+                    stmt.setNull(++i, java.sql.Types.INTEGER);
+                } else {
+                    stmt.setInt(++i, variant.getBinaries() ? 1 : 0);
+                }
+
+                //
+                if (variant.getLastUpdate() == null) {
+                    stmt.setNull(++i, java.sql.Types.VARCHAR);
+                } else {
+                    stmt.setString(++i, variant.getLastUpdate().toString());
+                }
+                stmt.setString(++i, variant.getLastVersion());
+                //
+                stmt.setInt(++i, variant.getNumber());
+
+                int numberOfUpdatedRows = stmt.executeUpdate();
+                System.out.println("numberOfUpdatedRows=" + numberOfUpdatedRows);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return null;
+
     }
-
-    @Override
-    public void update(Variant variant) {
-        StringBuilder sb = new StringBuilder();
-        sb
-                .append("UPDATE ")
-                .append(VariantTable.TABLE_NAME)
-                .append(" SET ")
-                .append(VariantTable.NAME).append("=?, ")
-                .append(VariantTable.NOTE).append("=?, ")
-                .append(VariantTable.STATUS).append("=?, ")
-                .append(VariantTable.AUTHOR).append("=?, ")
-                //
-                .append(VariantTable.LICENCE).append("=?, ")
-                .append(VariantTable.OPEN_SOURCE).append("=?, ")
-                .append(VariantTable.USER_INTERFACE).append("=?, ")
-                .append(VariantTable.PROGRAMMING_LANGUAGE).append("=?, ")
-                .append(VariantTable.BINARIES).append("=?, ")
-                //
-                .append(VariantTable.LAST_UPDATE).append("=?, ")
-                .append(VariantTable.LAST_VERSION).append("=? ")
-                .append(" WHERE ").append(VariantTable.NUMBER).append("=?");
-
-        String sql = sb.toString();
-        System.err.println(sql);
-        try (
-                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
-            int i = 0;
-            stmt.setString(++i, variant.getName());
-            stmt.setString(++i, variant.getNote());
-            stmt.setString(++i, variant.getStatus());
-            stmt.setString(++i, variant.getAuthor());
-            //
-            //
-            stmt.setString(++i, variant.getLicence());
-            if (variant.getOpenSource() == null) {
-                stmt.setNull(++i, java.sql.Types.INTEGER);
-            } else {
-                stmt.setInt(++i, variant.getOpenSource() ? 1 : 0);
-            }
-            stmt.setString(++i, variant.getUserInterface());
-            stmt.setString(++i, variant.getProgrammingLanguage());
-
-            if (variant.getBinaries() == null) {
-                stmt.setNull(++i, java.sql.Types.INTEGER);
-            } else {
-                stmt.setInt(++i, variant.getBinaries() ? 1 : 0);
-            }
-
-            //
-            if (variant.getLastUpdate() == null) {
-                stmt.setNull(++i, java.sql.Types.VARCHAR);
-            } else {
-                stmt.setString(++i, variant.getLastUpdate().toString());
-            }
-            stmt.setString(++i, variant.getLastVersion());
-            //
-            stmt.setInt(++i, variant.getNumber());
-
-            int numberOfUpdatedRows = stmt.executeUpdate();
-            System.out.println("numberOfUpdatedRows=" + numberOfUpdatedRows);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-}

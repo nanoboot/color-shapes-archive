@@ -162,25 +162,25 @@
             </td>
             
             <td>
-                <%=v.getNote()%>
+                <%=Utils.formatToHtml(v.getNote())%>
             </td>
             <td>
-                <%=v.getStatus()%>
+                <%=Utils.formatToHtml(v.getStatus())%>
             </td>
             <td>
-                <%=v.getAuthor()%>
+                <%=Utils.formatToHtml(v.getAuthor())%>
             </td>
             <td>
-                <%=v.getLicence()%>
+                <%=Utils.formatToHtml(v.getLicence())%>
             </td>
             <td>
                 <%=Utils.formatToHtml(v.getOpenSource())%>
             </td>
             <td>
-                <%=v.getUserInterface()%>
+                <%=Utils.formatToHtml(v.getUserInterface())%>
             </td>
             <td>
-                <%=v.getProgrammingLanguage()%>
+                <%=Utils.formatToHtml(v.getProgrammingLanguage())%>
             </td>
 
             <td>
@@ -190,7 +190,7 @@
                 <%=v.getLastUpdate()== null ? EMPTY :v.getLastUpdate().toString()%>
             </td>
             <td>
-                <%=v.getLastVersion()%>
+                <%=Utils.formatToHtml(v.getLastVersion())%>
             </td>
 
         </tr>
