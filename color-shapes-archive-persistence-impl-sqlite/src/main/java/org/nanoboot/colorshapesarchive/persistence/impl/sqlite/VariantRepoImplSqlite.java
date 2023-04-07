@@ -124,60 +124,64 @@ public class VariantRepoImplSqlite implements VariantRepo {
 
     @Override
     public int create(Variant variant) {
-//        StringBuilder sb = new StringBuilder();
-//        sb
-//                .append("INSERT INTO ")
-//                .append(WebsiteTable.TABLE_NAME)
-//                .append("(")
-//                .append(WebsiteTable.URL).append(",")
-//                .append(WebsiteTable.WEB_ARCHIVE_SNAPSHOT).append(",")
-//                .append(WebsiteTable.LANGUAGE).append(",")
-//                //
-//                .append(WebsiteTable.DOWNLOADED).append(",")
-//                .append(WebsiteTable.FORMATTED).append(",")
-//                .append(WebsiteTable.VERIFIED);
-//        if (variant.getVariantNumber() != null) {
-//            sb.append(",").append(WebsiteTable.VARIANT_NUMBER);
-//        }
-//        sb.append(")")
-//                .append(" VALUES (?,?,?,  ?,?,?");
-//        if (variant.getVariantNumber() != null) {
-//            sb.append(",?");
-//        }
-//        sb.append(")");
-//
-//        String sql = sb.toString();
-//        System.err.println(sql);
-//        try (
-//                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
-//            int i = 0;
-//            stmt.setString(++i, variant.getUrl());
-//            stmt.setString(++i, variant.getWebArchiveSnapshot());
-//            stmt.setString(++i, variant.getLanguage());
-//            //
-//            stmt.setInt(++i, variant.getDownloaded() ? 1 : 0);
-//            stmt.setInt(++i, variant.getFormatted() ? 1 : 0);
-//            stmt.setInt(++i, variant.getVerified() ? 1 : 0);
-//            if (variant.getVariantNumber() != null) {
-//                stmt.setInt(++i, variant.getVariantNumber());
-//            }
-//            //
-//
-//            stmt.execute();
-//            System.out.println(stmt.toString());
-//            ResultSet rs = connection.createStatement().executeQuery("select last_insert_rowid() as last");
-//            while (rs.next()) {
-//                int numberOfNewWebsite = rs.getInt("last");
-//                System.out.println("numberOfNewWebsite=" + numberOfNewWebsite);
-//                return numberOfNewWebsite;
-//            }
-//
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        System.err.println("Error.");
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append("INSERT INTO ")
+                .append(VariantTable.TABLE_NAME)
+                .append("(")
+                .append(VariantTable.NAME).append(",")
+                .append(VariantTable.NOTE).append(",")
+                .append(VariantTable.STATUS).append(",")
+                .append(VariantTable.AUTHOR).append(",")
+                //
+                .append(VariantTable.LICENCE).append(",")
+                .append(VariantTable.OPEN_SOURCE).append(",")
+                .append(VariantTable.USER_INTERFACE).append(",")
+                .append(VariantTable.PROGRAMMING_LANGUAGE).append(",")
+                .append(VariantTable.BINARIES).append(",")
+                //
+                .append(VariantTable.LAST_UPDATE).append(",")
+                .append(VariantTable.LAST_VERSION);
+        //
+
+        sb.append(")")
+          .append(" VALUES (?,?,?,? ,?,?,?,?,? ,?,?)");
+
+        String sql = sb.toString();
+        System.err.println(sql);
+        try (
+                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+            int i = 0;
+            stmt.setString(++i, variant.getName());
+            stmt.setString(++i, variant.getNote());
+            stmt.setString(++i, variant.getStatus());
+            stmt.setString(++i, variant.getAuthor());
+            //
+            stmt.setString(++i, variant.getLicence());
+            stmt.setInt(++i, variant.getOpenSource() ? 1 : 0);
+            stmt.setString(++i, variant.getUserInterface());
+            stmt.setString(++i, variant.getProgrammingLanguage());
+            stmt.setInt(++i, variant.getBinaries() ? 1 : 0);
+            //
+            stmt.setString(++i, variant.getLastUpdate() == null ? null : variant.getLastUpdate().toString());
+            stmt.setString(++i, variant.getLastVersion());
+            //
+
+            stmt.execute();
+            System.out.println(stmt.toString());
+            ResultSet rs = connection.createStatement().executeQuery("select last_insert_rowid() as last");
+            while (rs.next()) {
+                int numberOfNewVariant = rs.getInt("last");
+                System.out.println("numberOfNewVariant=" + numberOfNewVariant);
+                return numberOfNewVariant;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(VariantRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.err.println("Error.");
         return 0;
     }
 
@@ -265,8 +269,8 @@ public class VariantRepoImplSqlite implements VariantRepo {
             }
             stmt.setString(++i, variant.getUserInterface());
             stmt.setString(++i, variant.getProgrammingLanguage());
-            
-                  if (variant.getBinaries() == null) {
+
+            if (variant.getBinaries() == null) {
                 stmt.setNull(++i, java.sql.Types.INTEGER);
             } else {
                 stmt.setInt(++i, variant.getBinaries() ? 1 : 0);

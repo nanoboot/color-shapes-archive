@@ -94,8 +94,8 @@
                 <td style="text-align:left;"><input type="text" name="programmingLanguage" value="" size="5" ></td>
             </tr>
             <tr>
-                <td><label for="binariesAvailable">Binaries available</label></td>
-                <td style="text-align:left;"><input type="checkbox" name="binariesAvailable" value="1" ></td>
+                <td><label for="binariesAvailable">Binaries</label></td>
+                <td style="text-align:left;"><input type="checkbox" name="binaries" value="1" ></td>
             </tr>
 
             <tr>
@@ -136,7 +136,7 @@
         String param_openSource = request.getParameter("openSource");
         String param_userInterface = request.getParameter("userInterface");
         String param_programmingLanguage = request.getParameter("programmingLanguage");
-        String param_binariesAvailable = request.getParameter("binariesAvailable");
+        String param_binaries = request.getParameter("binaries");
         String param_lastUpdate = request.getParameter("lastUpdate");
         String param_lastVersion = request.getParameter("lastVersion");
         //
@@ -152,12 +152,13 @@
                 param_openSource == null ? null : Boolean.valueOf(param_openSource.equals("1")),
                 param_userInterface,
                 param_programmingLanguage,
-                param_binariesAvailable == null ? false : param_binariesAvailable.equals("1"),
+                param_binaries == null ? false : param_binaries.equals("1"),
                 param_lastUpdate == null || param_lastUpdate.isEmpty() ? null : new LocalDate(param_lastUpdate),
                 param_lastVersion);
 
-        variantRepo.create(newVariant);
+        int numberOfNewVariant = variantRepo.create(newVariant);
 
+        newVariant.setNumber(numberOfNewVariant);
 
     %>
 
