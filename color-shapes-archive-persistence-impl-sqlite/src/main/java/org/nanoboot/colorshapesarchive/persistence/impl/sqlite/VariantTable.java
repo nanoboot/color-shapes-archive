@@ -22,20 +22,26 @@ package org.nanoboot.colorshapesarchive.persistence.impl.sqlite;
  *
  * @author robertvokac
  */
-public class WebsiteTable {
-    public static final String TABLE_NAME = "WEBSITE";
+public class VariantTable {
+    public static final String TABLE_NAME = "VARIANT";
     
     public static final String NUMBER = "NUMBER";
-    public static final String URL = "URL";
-    public static final String WEB_ARCHIVE_SNAPSHOT = "WEB_ARCHIVE_SNAPSHOT";
-    public static final String LANGUAGE = "LANGUAGE";
-    public static final String DOWNLOADED = "DOWNLOADED";
-    public static final String FORMATTED = "FORMATTED";
-    public static final String VERIFIED = "VERIFIED";
-    public static final String VARIANT_NUMBER = "VARIANT_NUMBER";
+    public static final String NAME = "NAME";
+    public static final String NOTE = "NOTE";
+    public static final String STATUS = "STATUS";
+    public static final String AUTHOR = "AUTHOR";
+    
+    public static final String LICENCE = "LICENCE";
+    public static final String USER_INTERFACE = "USER_INTERFACE";
+    public static final String PROGRAMMING_LANGUAGE = "PROGRAMMING_LANGUAGE";
+    public static final String BINARIES = "BINARIES";
+    public static final String OPEN_SOURCE = "OPEN_SOURCE";
+    
+    public static final String LAST_UPDATE = "LAST_UPDATE";
+    public static final String LAST_VERSION = "LAST_VERSION";
     
     
-    private WebsiteTable() {
+    private VariantTable() {
         //Not meant to be instantiated.
     }
     

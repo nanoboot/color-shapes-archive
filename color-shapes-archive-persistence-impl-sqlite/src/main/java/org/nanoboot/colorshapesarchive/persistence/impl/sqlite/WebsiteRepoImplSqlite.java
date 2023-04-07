@@ -19,6 +19,7 @@
 package org.nanoboot.colorshapesarchive.persistence.impl.sqlite;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -48,8 +49,14 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
         int numberStart = numberEnd - pageSize + 1;
         {
             List<Website> result = new ArrayList<>();
-            String sql = "SELECT * FROM " + WebsiteTable.TABLE_NAME + " WHERE " + WebsiteTable.NUMBER + " BETWEEN "  + numberStart + " AND " + numberEnd;
-            try ( Connection connection = sqliteConnectionFactory.createConnection();  Statement stmt = connection.createStatement();  ResultSet rs = stmt.executeQuery(sql)) {
+            String sql = "SELECT * FROM " + WebsiteTable.TABLE_NAME + " WHERE " + WebsiteTable.NUMBER + " BETWEEN ? AND ?";
+            int i = 0;
+            ResultSet rs = null;
+            try (
+                     Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+                stmt.setInt(++i, numberStart);
+                stmt.setInt(++i, numberEnd);
+                rs = stmt.executeQuery();
 
                 while (rs.next()) {
                     result.add(extractWebsiteFromResultSet(rs));
@@ -58,6 +65,14 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 System.out.println(e.getMessage());
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    if (rs != null) {
+                        rs.close();
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             if (true) {
                 return result;
