@@ -100,7 +100,6 @@
         <label for="formatted">Formatted</label><input type="checkbox" name="formatted" <%=formatted != null && formatted.equals("1") ? "checked " : ""%> value="1">
         <label for="verified">Verified</label><input type="checkbox" name="verified"  <%=verified != null && verified.equals("1") ? "checked " : ""%>value="1">
         <input type="submit" value="Filter" style="margin-left:20px;height:40px;">
-        <input type="submit" value="Filter" style="margin-left:20px;height:40px;">
         <br>
         <br>
 

@@ -67,7 +67,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                     .append("=?");
         }
         if (verified != null) {
-            sb.append(WebsiteTable.VERIFIED)
+            sb.append(" AND ").append(WebsiteTable.VERIFIED)
                     .append("=?");
         }
         if (number != null) {
