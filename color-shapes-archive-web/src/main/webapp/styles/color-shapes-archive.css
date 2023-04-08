@@ -1,5 +1,6 @@
 * {
     font-family: Arial;
+    color:blue;
 }
 body {
     padding-left:0px;
@@ -153,8 +154,7 @@ form input, form label {
 input[type="checkbox"] {
     width:35px;
     height:35px;
-    content: "\f00d";
-    
+    content: "\f00d";    
 }
 
 ._select {
@@ -213,5 +213,14 @@ form table, form table th, form table td {
     padding-bottom:10px;
     font-size:130%;
     display:block; 
+}
+* {color:orange;}
+#footer {
+    color:red;
+display:block;
+padding: 10px;
+padding-left: 30px;
+font-size:120%;
+background:#9F9;
 }
 

@@ -84,6 +84,9 @@ public class CheckFilesServlet extends HttpServlet {
                 if (file.getName().endsWith(".sha512")) {
                     continue;
                 }
+                if(file.isDirectory()) {
+                    continue;
+                }
                 sb.append("<tr>");
                 {
                     ////

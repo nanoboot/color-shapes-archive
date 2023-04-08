@@ -110,7 +110,8 @@
     <%
 
         File file;
-        int maxFileSize = 5000 * 1024;
+        int maxFileSize = 40 * 1024 * 1024;
+        int maxRequestSize = 50 * 1024 * 1024;
         int maxMemSize = 5000 * 1024;
         ServletContext context = pageContext.getServletContext();
         String filePath = System.getProperty("color-shapes-archive.confpath") + "/" + "websitesFormatted/";
@@ -123,14 +124,12 @@
             // maximum size that will be stored in memory
             factory.setSizeThreshold(maxMemSize);
 
-            // Location to save data that is larger than maxMemSize.
             factory.setRepository(new File("c:\\temp"));
-
-            // Create a new file upload handler
+            
             ServletFileUpload upload = new ServletFileUpload(factory);
-
-            // maximum file size to be uploaded.
-            upload.setSizeMax(maxFileSize);
+            upload.setSizeMax(maxRequestSize);
+            upload.setFileSizeMax(maxRequestSize);
+            
 
             try {
                 // Parse the request to get file items.
@@ -202,11 +201,16 @@
 
 
 
-
+    <script>
+        function redirectToRead() {  
+window.location.href = 'list_files.jsp?number=<%=number%>'
+}  
+redirectToRead();
+</script>
 
     <% }
 
-        out.println("<a href=\"read_website.jsp?number=" + number + "\">Back to website</a>");
+        
     %>
 
 </body>

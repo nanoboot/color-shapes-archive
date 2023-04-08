@@ -91,8 +91,8 @@
     <p class="margin_left_and_big_font">
  
         
-        <a href="read_variant.jsp?number=<%=variant.getNumber() - 1%>">Previous</a>
-        <a href="read_variant.jsp?number=<%=variant.getNumber() + 1%>">Next</a>
+        <a href="read_variant.jsp?number=<%=variant.getNumber() - 1%>" class="button">Previous</a>
+        <a href="read_variant.jsp?number=<%=variant.getNumber() + 1%>" class="button">Next</a>
     </p>
 <script>  
 function redirectToUpdate() {

@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page session="false" %>
 <%@page import="java.io.FileWriter"%>
 <%@page import="java.io.BufferedWriter"%>
@@ -54,13 +56,12 @@
 
             if (number == null || number.isEmpty()) {
         %><span style="font-weight:bold;color:red;" class="margin_left_and_big_font">Error: Parameter "number" is required </span>
-        
+
         <%
                 throw new javax.servlet.jsp.SkipPageException();
             }
         %>
         <%
-          
             try {
                 Integer.valueOf(number);
             } catch (Exception e) {
@@ -70,28 +71,34 @@
         <span class="nav"><a href="index.jsp">Home</a>
             >> <a href="websites.jsp">Websites</a>
             >> <a href="read_website.jsp?number=<%=number%>">Read</a>
-        
-        <a href="update_website.jsp?number=<%=number%>">Update</a>
-        
-        
-        <a href="show_content.jsp?number=<%=number%>">Show</a>
-        <a href="edit_content.jsp?number=<%=number%>" class="nav_a_current">Edit</a>
-        <a href="list_files.jsp?number=<%=number%>">List</a>
-        <a href="upload_file.jsp?number=<%=number%>">Upload</a>
-        
+
+            <a href="update_website.jsp?number=<%=number%>">Update</a>
+
+
+            <a href="show_content.jsp?number=<%=number%>">Show</a>
+            <a href="edit_content.jsp?number=<%=number%>" class="nav_a_current">Edit</a>
+            <a href="list_files.jsp?number=<%=number%>">List</a>
+            <a href="upload_file.jsp?number=<%=number%>">Upload</a>
+
         </span>
 
-    <%
-        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
-            out.println("Access forbidden");
-            throw new javax.servlet.jsp.SkipPageException();
-        }
-    %>
+        <%
+            if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
+                out.println("Access forbidden");
+                throw new javax.servlet.jsp.SkipPageException();
+            }
+        %>
 
         <%
             String submit_button_save_changes = request.getParameter("submit_button_save_changes");
             String submit_button_preview = request.getParameter("submit_button_preview");
-        %>
+            String submit_button_cancel = request.getParameter("submit_button_cancel");
+
+            if (submit_button_cancel != null) {%><script>function redirectToShow() {
+                    window.location.href = 'show_content.jsp?number=<%=number%>'
+                }
+                redirectToShow();</script><% }
+            %>
 
         <%
             String contentString = null;
@@ -122,22 +129,26 @@
             }
         %>
 
-<% //if(submit_button_save_changes == null) { %>
+        <% //if(submit_button_save_changes == null) { %>
         <form action="edit_content.jsp" method="post">
             <input type="submit" name="submit_button_save_changes" value="Save Changes">&nbsp;&nbsp;
-            <input type="submit" name="submit_button_preview" value="Preview">
+            <input type="submit" name="submit_button_preview" value="Preview">&nbsp;&nbsp;
+            <input type="submit" name="submit_button_cancel" value="Cancel">&nbsp;&nbsp;
             <input type="hidden" name="number" value="<%=number%>">
             <br>
             <textarea id="content" name="content" lang="en" dir="ltr" rows="20"
-                      onChange="flgChange = true;" onKeyPress="flgChange = true;" style="width:100%;font-family:monospace;font-size:125%;margin-top:10px;"><%=contentString%></textarea>
+                      onChange="flgChange = true;" onKeyPress="flgChange = true;" style="width:100%;font-family:monospace;font-size:150%;margin-top:10px;"><%=contentString%></textarea>
         </form>
-<% //} %>
+        <% //} %>
 
         <% if (submit_button_preview != null) {
                 out.println("<div>" + (contentString.replace("[[FILE]]", "FileServlet/" + number + "/")) + "</div>");
             }
         %>
-        <% if (submit_button_save_changes != null) {
+        <% if (submit_button_save_changes
+
+            
+                != null) {
 
                 String filePath = System.getProperty("color-shapes-archive.confpath") + "/" + "websitesFormatted/" + number;
                 File dir = new File(filePath);
@@ -147,17 +158,49 @@
 
                 File content = new File(dir, "website.html");
 
+                if (content.exists()) {
+
+                    Scanner sc = new Scanner(content);
+
+                    // we just need to use \\Z as delimiter
+                    sc.useDelimiter("\\Z");
+
+                    String contentString2 = sc.next();
+                    SimpleDateFormat dt = new SimpleDateFormat("yyyyMMdd.hhmmss");
+                    Date currentDate = new Date();
+                    File contentBackupDir = new File(content.getParentFile().getAbsolutePath() + "/content_backup/");
+                    if (!contentBackupDir.exists()) {
+                        contentBackupDir.mkdir();
+                    }
+                    String backupFileName = content.getName() + "." + dt.format(currentDate) + ".backup";
+                    File backupFile = new File(contentBackupDir, backupFileName);
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(backupFile));
+                    writer.write(contentString2);
+
+                    writer.close();
+
+                }
+
                 String str = contentString;
                 BufferedWriter writer = new BufferedWriter(new FileWriter(content));
                 writer.write(str);
 
                 writer.close();
+
+        %>
+        <script>
+            function redirectToRead() {
+                window.location.href = 'show_content.jsp?number=<%=number%>'
+            }
+            redirectToRead();
+        </script>
+
+
+        <%
             }
 
         %>
 
-
-        <p><a href="read_website.jsp?number=<%=number%>">Back to website</a></p>
 
     </body>
 </html>

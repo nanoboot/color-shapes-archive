@@ -61,6 +61,10 @@ public class Utils {
     public static boolean canUpdate(HttpServletRequest request) {
         //if(true)return true;
 
+        String allcanupdate = System.getProperty("color-shapes-archive.allcanupdate");
+        if(allcanupdate != null && allcanupdate.equals("true")) {
+            return true;
+        }
         HttpSession session = request.getSession(false);
         if (session == null) {
             return false;

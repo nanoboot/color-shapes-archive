@@ -95,7 +95,7 @@ public class LoginServlet extends HttpServlet {
             newSession.setAttribute("canUpdate", "true");
             
             System.err.println("canUpdate&& = " + newSession.getAttribute("canUpdate"));
-            newSession.setMaxInactiveInterval(120 * 60);
+            newSession.setMaxInactiveInterval(6 * 60 * 60);
 
             response.sendRedirect("index.jsp");
         } else {
