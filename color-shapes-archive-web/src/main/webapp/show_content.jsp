@@ -51,7 +51,7 @@
                 throw new javax.servlet.jsp.SkipPageException();
             }
         %>
-        <span class="nav" style="margin-bottom:0;padding-top:0;padding-bottom:0;"><a href="index.jsp">Home</a>
+        <span class="nav" style="margin-bottom:0;"><a href="index.jsp">Home</a>
             >> <a href="websites.jsp">Websites</a>
             >> <a href="read_website.jsp?number=<%=number%>">Read</a>
 
@@ -63,8 +63,7 @@
             <a href="list_files.jsp?number=<%=number%>">List</a>
             <a href="upload_file.jsp?number=<%=number%>">Upload</a>
 
-            <a href="show_content.jsp?number=<%=numberInteger - 1%>" class="button" style="font-size:90%;">Previous</a> 
-            <a href="show_content.jsp?number=<%=numberInteger + 1%>" class="button" style="font-size:90%;">Next</a>
+
         </span>
         <script>
             function redirectToEdit() {
@@ -81,7 +80,11 @@
             }
         %>
 
-
+        <p class="margin_left_and_big_font" style="background:white;margin:0;padding-top:20px;">
+            <a href="show_content.jsp?number=<%=numberInteger - 1%>" class="button">Previous</a> 
+            <a href="show_content.jsp?number=<%=numberInteger + 1%>" class="button">Next</a>
+        </p>
+        
         <%
             String filePath = System.getProperty("color-shapes-archive.confpath") + "/" + "websitesFormatted/" + number;
             File dir = new File(filePath);
