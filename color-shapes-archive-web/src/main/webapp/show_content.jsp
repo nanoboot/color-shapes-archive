@@ -43,7 +43,7 @@
         <a href="index.jsp" id="main_title">Color Shapes Archive</a>
         <%
             String number = request.getParameter("number");
-            Integer.valueOf(number);
+            Integer numberInteger = Integer.valueOf(number);
             if (number == null || number.isEmpty()) {
         %><span style="font-weight:bold;color:red;" class="margin_left_and_big_font">Error: Parameter "number" is required </span>
 
@@ -51,7 +51,7 @@
                 throw new javax.servlet.jsp.SkipPageException();
             }
         %>
-        <span class="nav"><a href="index.jsp">Home</a>
+        <span class="nav" style="margin-bottom:0;padding-top:0;padding-bottom:0;"><a href="index.jsp">Home</a>
             >> <a href="websites.jsp">Websites</a>
             >> <a href="read_website.jsp?number=<%=number%>">Read</a>
 
@@ -63,6 +63,8 @@
             <a href="list_files.jsp?number=<%=number%>">List</a>
             <a href="upload_file.jsp?number=<%=number%>">Upload</a>
 
+            <a href="show_content.jsp?number=<%=numberInteger - 1%>" class="button" style="font-size:90%;">Previous</a> 
+            <a href="show_content.jsp?number=<%=numberInteger + 1%>" class="button" style="font-size:90%;">Next</a>
         </span>
         <script>
             function redirectToEdit() {
@@ -71,7 +73,7 @@
             }
 
         </script>  
-        
+
         <%
             if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
                 out.println("Access forbidden");
@@ -104,7 +106,6 @@
             }
         %>
 
-        <div id="footer">Content available under a Creative Commons Attribution-ShareAlike 4.0 International License. <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License."><img alt="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License." style="border-width:0" src="images/creative_commons_attribution_share_alike_4.0_international_licence_88x31.png" /></a></div>
-        
+
     </body>
 </html>

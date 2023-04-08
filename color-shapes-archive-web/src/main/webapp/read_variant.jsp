@@ -141,5 +141,9 @@ window.location.href = 'update_variant.jsp?number=<%=number%>'
         <tr><th>Last version</th><td><%=Utils.formatToHtml(variant.getLastVersion())%></td></tr>
 
     </table>
+        
+        
+<div id="footer">Content available under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License.">Creative Commons Attribution-ShareAlike 4.0 International License</a> <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License."><img alt="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License." style="border-width:0" src="images/creative_commons_attribution_share_alike_4.0_international_licence_88x31.png" /></a></div>
+
 </body>
 </html>
