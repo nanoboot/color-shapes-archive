@@ -49,7 +49,7 @@ public class Utils {
         }
         if (o instanceof Boolean) {
             Boolean b = (Boolean) o;
-            return b.booleanValue() ? "YES" : "NO";
+            return b.booleanValue() ? "<span style=\"color:#00CC00;font-weight:bold;\">YES</span>" : "<span style=\"color:red;font-weight:bold;\">NO</span>";
         }
         return o.toString();
     }

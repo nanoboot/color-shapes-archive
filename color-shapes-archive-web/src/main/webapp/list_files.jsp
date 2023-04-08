@@ -147,7 +147,7 @@
                     continue;
                 }
         %>
-        <li><a href="FileServlet/<%=number%>/<%=f.getName()%>" class="button"><%=f.getName()%></a> <%=(f.isDirectory() ? "(directory)" : "(file)")%></li>
+        <li><a href="FileServlet/<%=number%>/<%=f.getName()%>" class="button"><%=f.getName()%></a> <%=(f.isDirectory() ? "(directory)" : ("(file " + f.length() / 1024 ))%> kB )</li>
 
         <%
             }
