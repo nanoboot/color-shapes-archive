@@ -27,7 +27,7 @@ module colorshapesarchive.web {
     requires colorshapesarchive.persistence.api;
     requires colorshapesarchive.persistence.impl.mock;
     requires spring.context;
-    requires javax.servlet.api;
+    requires jakarta.jakartaee.web.api;
     requires lombok;
     requires spring.web;
     requires powerframework.time;

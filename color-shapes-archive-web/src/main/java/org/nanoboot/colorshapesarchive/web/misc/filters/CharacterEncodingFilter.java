@@ -19,7 +19,7 @@
 
 package org.nanoboot.colorshapesarchive.web.misc.filters;
 
-import javax.servlet.*;
+import jakarta.servlet.*;
 import java.io.IOException;
 
 /**

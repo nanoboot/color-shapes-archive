@@ -58,7 +58,7 @@
         %><span style="font-weight:bold;color:red;" class="margin_left_and_big_font">Error: Parameter "number" is required </span>
 
         <%
-                throw new javax.servlet.jsp.SkipPageException();
+                throw new jakarta.servlet.jsp.SkipPageException();
             }
         %>
         <%
@@ -85,7 +85,7 @@
         <%
             if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
                 out.println("Access forbidden");
-                throw new javax.servlet.jsp.SkipPageException();
+                throw new jakarta.servlet.jsp.SkipPageException();
             }
         %>
 

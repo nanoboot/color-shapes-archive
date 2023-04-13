@@ -52,7 +52,7 @@
     %><span style="font-weight:bold;color:red;" class="margin_left_and_big_font">Error: Parameter "number" is required</span>
 
     <%
-            throw new javax.servlet.jsp.SkipPageException();
+            throw new jakarta.servlet.jsp.SkipPageException();
         }
     %>
 
@@ -66,7 +66,7 @@
     <%
         if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
             out.println("Access forbidden");
-            throw new javax.servlet.jsp.SkipPageException();
+            throw new jakarta.servlet.jsp.SkipPageException();
         }
     %>
     <%
@@ -78,7 +78,7 @@
     %><span style="font-weight:bold;color:red;" class="margin_left_and_big_font">Error: Variant with number <%=number%> was not found.</span>
 
     <%
-            throw new javax.servlet.jsp.SkipPageException();
+            throw new jakarta.servlet.jsp.SkipPageException();
         }
         String param_name = request.getParameter("name");
         boolean formToBeProcessed = param_name != null && !param_name.isEmpty();

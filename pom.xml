@@ -24,7 +24,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.nanoboot.common</groupId>
+        <groupId>org.nanoboot.essential</groupId>
         <artifactId>nanoboot-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
@@ -37,11 +37,11 @@
     <name>color-shapes-archive</name>
     <description>color-shapes-archive</description>
     <modules>
-        <module>color-shapes-archive-entity/pom.xml</module>
-        <module>color-shapes-archive-persistence-api/pom.xml</module>
-        <module>color-shapes-archive-persistence-impl-mock/pom.xml</module>
-        <module>color-shapes-archive-persistence-impl-sqlite/pom.xml</module>
-        <module>color-shapes-archive-web/pom.xml</module>
+        <module>color-shapes-archive-entity</module>
+        <module>color-shapes-archive-persistence-api</module>
+        <module>color-shapes-archive-persistence-impl-mock</module>
+        <module>color-shapes-archive-persistence-impl-sqlite</module>
+        <module>color-shapes-archive-web</module>
 
 
     </modules>
@@ -50,7 +50,7 @@
         <color-shapes-archive.version>0.0.0-SNAPSHOT</color-shapes-archive.version>
         <power.version>2.0.0-SNAPSHOT</power.version>
         <log4j.version>2.17.0</log4j.version>
-        <springframework.version>5.3.17</springframework.version>
+        <springframework.version>6.0.7</springframework.version>
         <checkstyle.skip>true</checkstyle.skip><!-- TODO: make false-->
         <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
         <db-migration-core.version>0.1.0-SNAPSHOT</db-migration-core.version>
@@ -315,9 +315,10 @@
             </dependency>
 
             <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
+                <groupId>jakarta.platform</groupId>
+                <artifactId>jakarta.jakartaee-web-api</artifactId>
+                <version>9.1.0</version>
+                <scope>provided</scope>
             </dependency>
 
         </dependencies>

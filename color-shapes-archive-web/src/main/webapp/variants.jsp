@@ -113,7 +113,7 @@
 
     %><span style="font-weight:bold;color:orange;" class="margin_left_and_big_font">Warning: Nothing found.</span>
 
-    <%            throw new javax.servlet.jsp.SkipPageException();
+    <%            throw new jakarta.servlet.jsp.SkipPageException();
         }
     %>
 
