@@ -133,11 +133,11 @@
             <groupId>org.nanoboot.colorshapes</groupId>
             <artifactId>color-shapes-archive-persistence-impl-sqlite</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.nanoboot.commons-fileupload</groupId>
+         <dependency>
+            <groupId>org.nanoboot.forks.commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>1.5.1-SNAPSHOT</version>
-        </dependency>
+            <version>1.5.jakartaee</version>
+         </dependency>
         
         <dependency>
             <groupId>commons-io</groupId>
