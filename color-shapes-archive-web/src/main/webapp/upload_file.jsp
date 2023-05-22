@@ -169,6 +169,10 @@
                                 System.err.println("Uploading file failed.");
                             } else {
                                 File newFile = new File(filePath + number + "/" + origFileName);
+                                File parentDir = new File(filePath);
+                                if(!parentDir.exists()) {
+                                    parentDir.mkdirs();
+                                }
                                 new File(tmpFileName).renameTo(newFile);
                                 ////
                                 byte[] sha512sumByteArray = MessageDigest.getInstance("SHA-512").digest(Files.readAllBytes(Paths.get(newFile.getAbsolutePath())));
