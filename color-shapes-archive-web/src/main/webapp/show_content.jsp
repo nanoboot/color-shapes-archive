@@ -93,6 +93,7 @@
             }
 
             File content = new File(dir, "website.html");
+            boolean isAdoc = false;
             if (content.exists()) {
 
                 Scanner sc = new Scanner(content);
@@ -101,8 +102,10 @@
                 sc.useDelimiter("\\Z");
 
                 String contentString = sc.next();
+                isAdoc = contentString.startsWith("_adoc_");
                 contentString = Utils.convertToAsciidocIfNeeded(contentString.replace("[[FILE]]", "FileServlet/" + number + "/"));
-
+            
+                if(isAdoc) {out.println("<style>" + org.nanoboot.colorshapesarchive.web.misc.utils.Constants.ASCIIDOC_CSS + "</style>");}
                 out.println("<div id=\"content\" ondblclick = \"redirectToEdit()\" style=\"padding-left:20px;padding-right:20px;\">" + contentString + "</div>");
             } else {
                 out.println("<p>No content found</p>");

@@ -142,6 +142,9 @@
         <% //} %>
 
         <% if (submit_button_preview != null) {
+            boolean isAdoc = false;
+            isAdoc = contentString.startsWith("_adoc_");
+            if(isAdoc) {out.println("<style>" + org.nanoboot.colorshapesarchive.web.misc.utils.Constants.ASCIIDOC_CSS + "</style>");}
                 out.println("<div>" + Utils.convertToAsciidocIfNeeded(contentString.replace("[[FILE]]", "FileServlet/" + number + "/")) + "</div>");
             }
         %>

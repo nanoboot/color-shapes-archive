@@ -86,8 +86,8 @@ public class Utils {
         if (!isAsciiDoc) {
             return text;
         }
-        text = text.substring(6);
-        
+        text = "." + text.substring(7);
+
         Asciidoctor asciidoctor = create();
 
         String asciidocCompiled = asciidoctor
