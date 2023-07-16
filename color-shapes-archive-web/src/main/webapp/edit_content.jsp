@@ -142,7 +142,7 @@
         <% //} %>
 
         <% if (submit_button_preview != null) {
-                out.println("<div>" + (contentString.replace("[[FILE]]", "FileServlet/" + number + "/")) + "</div>");
+                out.println("<div>" + Utils.convertToAsciidocIfNeeded(contentString.replace("[[FILE]]", "FileServlet/" + number + "/")) + "</div>");
             }
         %>
         <% if (submit_button_save_changes

@@ -32,4 +32,6 @@ module colorshapesarchive.web {
     requires spring.web;
     requires powerframework.time;
     requires org.xerial.sqlitejdbc;
+    requires asciidoctorj;
+    requires asciidoctorj.api;
 }

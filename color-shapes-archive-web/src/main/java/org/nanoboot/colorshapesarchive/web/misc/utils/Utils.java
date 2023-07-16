@@ -20,6 +20,9 @@ package org.nanoboot.colorshapesarchive.web.misc.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import java.util.HashMap;
+import org.asciidoctor.Asciidoctor;
+import static org.asciidoctor.Asciidoctor.Factory.create;
 
 /**
  *
@@ -54,15 +57,15 @@ public class Utils {
         return o.toString();
     }
 
-
     public static boolean cannotUpdate(HttpServletRequest request) {
         return !canUpdate(request);
     }
+
     public static boolean canUpdate(HttpServletRequest request) {
         //if(true)return true;
 
         String allcanupdate = System.getProperty("color-shapes-archive.allcanupdate");
-        if(allcanupdate != null && allcanupdate.equals("true")) {
+        if (allcanupdate != null && allcanupdate.equals("true")) {
             return true;
         }
         HttpSession session = request.getSession(false);
@@ -75,5 +78,21 @@ public class Utils {
         }
         return canUpdateAttribute.equals("true");
 
+    }
+
+    public static String convertToAsciidocIfNeeded(String text) {
+
+        boolean isAsciiDoc = !text.lines().limit(1).filter(l -> l.equals("_adoc_")).toList().isEmpty();
+        if (!isAsciiDoc) {
+            return text;
+        }
+        text = text.substring(6);
+        
+        Asciidoctor asciidoctor = create();
+
+        String asciidocCompiled = asciidoctor
+                .convert(text, new HashMap<String, Object>());
+        
+        return "\n\n\n" + asciidocCompiled + "\n\n\n";
     }
 }

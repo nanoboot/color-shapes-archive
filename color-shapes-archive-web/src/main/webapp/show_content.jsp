@@ -101,7 +101,7 @@
                 sc.useDelimiter("\\Z");
 
                 String contentString = sc.next();
-                contentString = contentString.replace("[[FILE]]", "FileServlet/" + number + "/");
+                contentString = Utils.convertToAsciidocIfNeeded(contentString.replace("[[FILE]]", "FileServlet/" + number + "/"));
 
                 out.println("<div id=\"content\" ondblclick = \"redirectToEdit()\" style=\"padding-left:20px;padding-right:20px;\">" + contentString + "</div>");
             } else {
