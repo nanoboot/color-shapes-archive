@@ -162,7 +162,7 @@ public class VariantRepoImplSqlite implements VariantRepo {
                 stmt.setString(++i, variant.getAuthor());
                 //
                 stmt.setString(++i, variant.getLicence());
-                stmt.setInt(++i, variant.getOpenSource() ? 1 : 0);
+                stmt.setInt(++i, variant.getOpenSource() != null && variant.getOpenSource() ? 1 : 0);
                 stmt.setString(++i, variant.getUserInterface());
                 stmt.setString(++i, variant.getProgrammingLanguage());
                 stmt.setInt(++i, variant.getBinaries() ? 1 : 0);
