@@ -122,6 +122,7 @@ window.location.href = 'update_website.jsp?number=<%=number%>'
         <tr><th>Formatted</th><td><%=Utils.formatToHtml(website.getFormatted())%></td></tr>
         <tr><th>Verified</th><td><%=Utils.formatToHtml(website.getVerified())%></td></tr>
         <tr><th>Variant</th><td><a href="read_variant.jsp?number=<%=Utils.formatToHtml(website.getVariantNumber())%>" >Variant #<%=Utils.formatToHtml(website.getVariantNumber())%></a></td></tr>
+        <tr><th>Comment</th><td><%=Utils.formatToHtml(website.getComment())%></td></tr>
 
     </table>
         

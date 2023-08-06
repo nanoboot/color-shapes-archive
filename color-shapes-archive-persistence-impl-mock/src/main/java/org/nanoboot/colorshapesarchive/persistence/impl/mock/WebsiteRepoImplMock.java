@@ -36,18 +36,19 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
     @Override
     public List<Website> list(int pageNumber, int pageSize, Boolean downloaded, Boolean formatted, Boolean verified, Integer number, String url) {
         if (internalList.isEmpty()) {
-            for(int i = 0;i< 50;i++) {
-            internalList.add(
-                    new Website(
-                            nextNumber++,
-                            "http://colorshapes.nanoboot.org",
-                            null,
-                            "abc",
-                            "en",
-                            true,
-                            true,
-                            true,
-                            null));
+            for (int i = 0; i < 50; i++) {
+                internalList.add(
+                        new Website(
+                                nextNumber++,
+                                "http://colorshapes.nanoboot.org",
+                                null,
+                                "abc",
+                                "en",
+                                true,
+                                true,
+                                true,
+                                null,
+                                ""));
             }
         }
         List<Website> finalList = new ArrayList<>();

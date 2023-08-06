@@ -149,7 +149,8 @@
                 param_downloaded == null ? false : param_downloaded.equals("1"),
                 param_formatted == null ? false : param_formatted.equals("1"),
                 param_verified == null ? false : param_verified.equals("1"),
-                (param_variantNumber == null || param_variantNumber.isEmpty()) ? null : Integer.valueOf(param_variantNumber));
+                (param_variantNumber == null || param_variantNumber.isEmpty()) ? null : Integer.valueOf(param_variantNumber),
+        "");
 
         int numberOfNewWebsite = websiteRepo.create(newWebsite);
 

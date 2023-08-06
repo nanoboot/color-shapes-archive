@@ -129,6 +129,10 @@
                 <td><label for="variantNumber">Variant:</label></td>
                 <td style="text-align:left;"><input type="text" name="variantNumber" value="<%=website.getVariantNumber() == null ? "" : website.getVariantNumber()%>" size="5" ></td>
             </tr>
+            <tr>
+                <td><label for="comment">Comment</label></td>
+                <td style="text-align:left;"><input type="text" name="comment" value="<%=website.getComment() == null ? "" : website.getComment()%>" size="50" ></td>
+            </tr>
 
             <tr>
                 <td><a href="websites.jsp" style="font-size:130%;background:#dddddd;border:2px solid #bbbbbb;padding:2px;text-decoration:none;">Cancel</a></td>
@@ -155,6 +159,7 @@
         String param_formatted = request.getParameter("formatted");
         String param_verified = request.getParameter("verified");
         String param_variantNumber = request.getParameter("variantNumber");
+        String param_comment = request.getParameter("comment");
         //
         if (param_webArchiveSnapshot != null && param_webArchiveSnapshot.isEmpty()) {
             param_webArchiveSnapshot = null;
@@ -166,6 +171,9 @@
         if (param_language != null && param_language.isEmpty()) {
             param_language = null;
         }
+        if (param_comment == null) {
+            param_comment = "";
+        }
         //
         Website updatedWebsite = new Website(
                 Integer.valueOf(number),
@@ -176,7 +184,8 @@
                 param_downloaded == null ? false : param_downloaded.equals("1"),
                 param_formatted == null ? false : param_formatted.equals("1"),
                 param_verified == null ? false : param_verified.equals("1"),
-                (param_variantNumber == null || param_variantNumber.isEmpty()) ? null : Integer.valueOf(param_variantNumber));
+                (param_variantNumber == null || param_variantNumber.isEmpty()) ? null : Integer.valueOf(param_variantNumber),
+                param_comment);
 
         websiteRepo.update(updatedWebsite);
 

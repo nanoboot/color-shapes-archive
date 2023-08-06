@@ -35,6 +35,7 @@ public class WebsiteTable {
     public static final String FORMATTED = "FORMATTED";
     public static final String VERIFIED = "VERIFIED";
     public static final String VARIANT_NUMBER = "VARIANT_NUMBER";
+    public static final String COMMENT = "COMMENT";
     
     
     private WebsiteTable() {

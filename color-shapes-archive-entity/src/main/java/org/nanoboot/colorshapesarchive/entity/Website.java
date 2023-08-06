@@ -43,6 +43,7 @@ public class Website {
     private Boolean formatted;
     private Boolean verified;
     private Integer variantNumber;
+    private String comment;
     public Boolean getDeadUrl() {
         return this.webArchiveSnapshot != null;
     }

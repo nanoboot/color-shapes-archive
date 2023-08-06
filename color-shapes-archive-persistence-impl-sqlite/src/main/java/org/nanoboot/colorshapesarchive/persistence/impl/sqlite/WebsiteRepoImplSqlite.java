@@ -136,7 +136,8 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 rs.getInt(WebsiteTable.DOWNLOADED) != 0,
                 rs.getInt(WebsiteTable.FORMATTED) != 0,
                 rs.getInt(WebsiteTable.VERIFIED) != 0,
-                rs.getInt(WebsiteTable.VARIANT_NUMBER)
+                rs.getInt(WebsiteTable.VARIANT_NUMBER),
+                rs.getString(WebsiteTable.COMMENT)
         );
     }
 
@@ -154,12 +155,13 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 //
                 .append(WebsiteTable.DOWNLOADED).append(",")
                 .append(WebsiteTable.FORMATTED).append(",")
-                .append(WebsiteTable.VERIFIED);
+                .append(WebsiteTable.VERIFIED).append(",")
+                .append(WebsiteTable.COMMENT);
         if (website.getVariantNumber() != null) {
             sb.append(",").append(WebsiteTable.VARIANT_NUMBER);
         }
         sb.append(")")
-                .append(" VALUES (?,?,?,?,  ?,?,?");
+                .append(" VALUES (?,?,?,?,  ?,?,?,?");
         if (website.getVariantNumber() != null) {
             sb.append(",?");
         }
@@ -178,6 +180,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             stmt.setInt(++i, website.getDownloaded() ? 1 : 0);
             stmt.setInt(++i, website.getFormatted() ? 1 : 0);
             stmt.setInt(++i, website.getVerified() ? 1 : 0);
+            stmt.setString(++i, website.getComment() == null ? "" : website.getComment());
             if (website.getVariantNumber() != null) {
                 stmt.setInt(++i, website.getVariantNumber());
             }
@@ -259,7 +262,8 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(WebsiteTable.DOWNLOADED).append("=?, ")
                 .append(WebsiteTable.FORMATTED).append("=?, ")
                 .append(WebsiteTable.VERIFIED).append("=?, ")
-                .append(WebsiteTable.VARIANT_NUMBER).append("=? ")
+                .append(WebsiteTable.VARIANT_NUMBER).append("=?, ")
+                .append(WebsiteTable.COMMENT).append("=? ")
                 .append(" WHERE ").append(WebsiteTable.NUMBER).append("=?");
 
         String sql = sb.toString();
@@ -276,6 +280,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             stmt.setInt(++i, website.getFormatted() ? 1 : 0);
             stmt.setInt(++i, website.getVerified() ? 1 : 0);
             stmt.setInt(++i, website.getVariantNumber());
+            stmt.setString(++i, website.getComment());
             //
             stmt.setInt(++i, website.getNumber());
 
