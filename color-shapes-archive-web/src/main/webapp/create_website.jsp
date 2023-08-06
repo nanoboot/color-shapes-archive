@@ -54,6 +54,10 @@
 
     <%
         String param_url = request.getParameter("url");
+        String param_archiveUrl = request.getParameter("archiveUrl");
+        if(param_archiveUrl != null && param_archiveUrl.isEmpty()) {
+        param_archiveUrl = null;
+        }
         boolean formToBeProcessed = param_url != null && !param_url.isEmpty();
     %>
 
@@ -67,6 +71,10 @@
             <tr>
                 <td><label for="url">Url <b style="color:red;font-size:130%;">*</b>:</label></td>
                 <td><input type="text" name="url" value=""></td>
+            </tr>
+            <tr>
+                <td><label for="url">Archive url:</label></td>
+                <td><input type="text" name="archiveUrl" value=""></td>
             </tr>
             <tr>
                 <td><label for="webArchiveSnapshot">Web archive snapshot:</label></td>
@@ -135,6 +143,7 @@
         Website newWebsite = new Website(
                 0,
                 param_url,
+                param_archiveUrl, 
                 param_webArchiveSnapshot,
                 param_language,
                 param_downloaded == null ? false : param_downloaded.equals("1"),
@@ -154,6 +163,7 @@
     </p>
     number = <%=newWebsite.getNumber()%><br>
     url = <%=param_url%><br>
+    archiveUrl = <%=param_archiveUrl%><br>
     webArchiveSnapshot = <%=param_webArchiveSnapshot%><br>
     language = <%=param_language%><br>
     downloaded = <%=param_downloaded%><br>

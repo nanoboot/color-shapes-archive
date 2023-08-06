@@ -130,6 +130,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
         return new Website(
                 rs.getInt(WebsiteTable.NUMBER),
                 rs.getString(WebsiteTable.URL),
+                rs.getString(WebsiteTable.ARCHIVE_URL),
                 rs.getString(WebsiteTable.WEB_ARCHIVE_SNAPSHOT),
                 rs.getString(WebsiteTable.LANGUAGE),
                 rs.getInt(WebsiteTable.DOWNLOADED) != 0,
@@ -147,6 +148,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(WebsiteTable.TABLE_NAME)
                 .append("(")
                 .append(WebsiteTable.URL).append(",")
+                .append(WebsiteTable.ARCHIVE_URL).append(",")
                 .append(WebsiteTable.WEB_ARCHIVE_SNAPSHOT).append(",")
                 .append(WebsiteTable.LANGUAGE).append(",")
                 //
@@ -157,7 +159,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             sb.append(",").append(WebsiteTable.VARIANT_NUMBER);
         }
         sb.append(")")
-                .append(" VALUES (?,?,?,  ?,?,?");
+                .append(" VALUES (?,?,?,?,  ?,?,?");
         if (website.getVariantNumber() != null) {
             sb.append(",?");
         }
@@ -169,6 +171,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                  Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
             int i = 0;
             stmt.setString(++i, website.getUrl());
+            stmt.setString(++i, website.getArchiveUrl());
             stmt.setString(++i, website.getWebArchiveSnapshot());
             stmt.setString(++i, website.getLanguage());
             //
@@ -249,6 +252,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(WebsiteTable.TABLE_NAME)
                 .append(" SET ")
                 .append(WebsiteTable.URL).append("=?, ")
+                .append(WebsiteTable.ARCHIVE_URL).append("=?, ")
                 .append(WebsiteTable.WEB_ARCHIVE_SNAPSHOT).append("=?, ")
                 .append(WebsiteTable.LANGUAGE).append("=?, ")
                 //
@@ -264,6 +268,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                  Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
             int i = 0;
             stmt.setString(++i, website.getUrl());
+            stmt.setString(++i, website.getArchiveUrl());
             stmt.setString(++i, website.getWebArchiveSnapshot());
             stmt.setString(++i, website.getLanguage());
             //

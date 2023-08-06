@@ -36,6 +36,7 @@ public class Website {
 
     private Integer number;
     private String url;
+    private String archiveUrl;
     private String webArchiveSnapshot;
     private String language;
     private Boolean downloaded;

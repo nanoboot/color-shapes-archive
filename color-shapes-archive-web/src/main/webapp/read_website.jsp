@@ -109,6 +109,13 @@ window.location.href = 'update_website.jsp?number=<%=number%>'
         <tr>
             <th>Number</th><td><%=website.getNumber()%></td></tr>
         <tr><th>Url</th><td><a href="<%=website.getUrl()%>"><%=website.getUrl()%></a></td></tr>
+        <tr><th>Archive url</th><td>
+                <%
+                    if(website.getArchiveUrl() != null) {%>
+                    <a href="<%=Utils.formatToHtml(website.getArchiveUrl())%>"><%=Utils.formatToHtml(website.getArchiveUrl())%></a>
+                    <% } else {%><%=Utils.formatToHtml(website.getArchiveUrl())%><%}
+            %>
+            </td></tr>
         <tr><th>Web archive snapshot</th><td><%=Utils.formatToHtml(website.getWebArchiveSnapshot())%></td></tr>
         <tr><th>Language</th><td><%=Utils.formatToHtml(website.getLanguage())%></td></tr>
         <tr><th>Downloaded</th><td><%=Utils.formatToHtml(website.getDownloaded())%></td></tr>

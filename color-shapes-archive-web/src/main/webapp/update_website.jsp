@@ -96,6 +96,10 @@
                 <td><input type="text" name="url" value="<%=website.getUrl()%>"></td>
             </tr>
             <tr>
+                <td><label for="url">Archive url <b style="color:red;font-size:130%;">*</b>:</label></td>
+                <td><input type="text" name="archiveUrl" value="<%=website.getArchiveUrl() == null ? "" : website.getArchiveUrl()%>"></td>
+            </tr>
+            <tr>
                 <td><label for="webArchiveSnapshot">Web archive snapshot:</label></td>
                 <td><input type="text" name="webArchiveSnapshot" value="<%=(website.getWebArchiveSnapshot() == null ? "" : website.getWebArchiveSnapshot())%>"></td>
             </tr>
@@ -139,6 +143,10 @@
     <% } else { %>
 
     <%
+        String param_archiveUrl = request.getParameter("archiveUrl");
+        if(param_archiveUrl != null &&  param_archiveUrl.isEmpty()) {
+        param_archiveUrl = null;
+        }
         String param_webArchiveSnapshot = request.getParameter("webArchiveSnapshot");
 
         String param_language = request.getParameter("language");
@@ -162,6 +170,7 @@
         Website updatedWebsite = new Website(
                 Integer.valueOf(number),
                 param_url,
+                param_archiveUrl,
                 param_webArchiveSnapshot,
                 param_language,
                 param_downloaded == null ? false : param_downloaded.equals("1"),

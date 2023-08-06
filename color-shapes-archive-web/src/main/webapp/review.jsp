@@ -93,7 +93,7 @@
                         imageBase64Encoded = Base64.getEncoder().encodeToString(fileContent);
             %>
     <a href="read_variant.jsp?number=<%=v.getNumber()%>" target="_blank" title="<%=v.getName()%>" >
-            <img alt="<%=v.getName()%>" style="max-height:600px;max-width:400px;" src="data:image/jpg;base64, <%=imageBase64Encoded%>" />
+            <img alt="<%=v.getName()%>" style="max-height:600px;max-width:200px;" src="data:image/jpg;base64, <%=imageBase64Encoded%>" />
     </a>
     
             <%

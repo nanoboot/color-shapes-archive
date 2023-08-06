@@ -73,6 +73,7 @@
         final String EMPTY = "[empty]";
         String number = request.getParameter("number");
         String url = request.getParameter("url");
+//        String archiveUrl = request.getParameter("archiveUrl");
         String downloaded = request.getParameter("downloaded");
         String formatted = request.getParameter("formatted");
         String verified = request.getParameter("verified");
@@ -96,6 +97,7 @@
         <label for="pageNumber">Page </label><input type="text" name="pageNumber" value="<%=pageNumberInt%>" size="4" style="margin-right:10px;">
         <label for="number">Number </label><input type="text" name="number" value="<%=number != null ? number : ""%>" size="5" style="margin-right:10px;">
         <label for="url">Url </label><input type="text" name="url" value="<%=url != null ? url : ""%>" style="margin-right:10px;">
+
         <label for="downloaded">Downloaded</label><input type="checkbox" name="downloaded" <%=downloaded != null && downloaded.equals("1") ? "checked " : ""%> value="1">
         <label for="formatted">Formatted</label><input type="checkbox" name="formatted" <%=formatted != null && formatted.equals("1") ? "checked " : ""%> value="1">
         <label for="verified">Verified</label><input type="checkbox" name="verified"  <%=verified != null && verified.equals("1") ? "checked " : ""%>value="1">
@@ -133,6 +135,7 @@
                 <th title="Number">#</th>
                 <th style="width:100px;"></th>
                 <th>Url</th>
+                <th>Archive url</th>
                 <th>Language</th>
                 <th>Variant</th>
                 <th>Flags</th>
@@ -180,10 +183,15 @@
                 if (urlToBeShown.length() > 60) {
                     urlToBeShown = urlToBeShown.substring(0, 60) + "...";
                 }
+                String archiveUrl = w.getArchiveUrl();
+                if(archiveUrl == null) {
+                archiveUrl="";
+                }
             %>
 
 
             <td><a href="<%=finalUrl%>" target="_blank"><%=urlToBeShown%></a></td>
+            <td><a href="<%=archiveUrl%>" target="_blank"><%=archiveUrl.isEmpty()?"":"Link"%></a></td>
             <td><%=w.getLanguage() == null ? EMPTY : w.getLanguage()%></td>
             <td><%=w.getVariantNumber() == null ? EMPTY : w.getVariantNumber()%></td>
             <td>
