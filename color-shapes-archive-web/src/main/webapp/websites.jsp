@@ -139,6 +139,7 @@
                 <th>Language</th>
                 <th>Variant</th>
                 <th>Flags</th>
+                <th>Comment</th>
             </tr>
         </thead>
 
@@ -200,6 +201,7 @@
                 <%=w.getFormatted().booleanValue() ? "<span class=\"orange_flag\" title=\"Formatted\">F</span>" : ""%>
                 <%=w.getVerified().booleanValue() ? "<span class=\"green_flag\" title=\"Verified\">V</span>" : ""%>
             </td>
+            <td><%=w.getComment() == null ? EMPTY : (w.getComment().length() > 16 ? w.getComment().substring(0,16) + "..." : w.getComment())%></td>
 
         </tr>
         <%
