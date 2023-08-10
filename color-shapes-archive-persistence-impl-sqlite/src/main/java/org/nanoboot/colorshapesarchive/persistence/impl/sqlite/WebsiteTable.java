@@ -27,7 +27,7 @@ public class WebsiteTable {
     
     public static final String NUMBER = "NUMBER";
     public static final String URL = "URL";
-    public static final String ARCHIVE_URL = "ARCHIVE_URL";
+    public static final String ARCHIVES = "ARCHIVES";
     public static final String WEB_ARCHIVE_SNAPSHOT = "WEB_ARCHIVE_SNAPSHOT";
     public static final String LANGUAGE = "LANGUAGE";
     //

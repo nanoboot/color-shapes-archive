@@ -59,6 +59,7 @@
         <a href="edit_content.jsp?number=<%=number%>">Edit</a>
         <a href="list_files.jsp?number=<%=number%>">List</a>
         <a href="upload_file.jsp?number=<%=number%>">Upload</a>
+        <a href="add_archive.jsp?number=<%=number%>">Add archive</a>
         
     </span>
 
@@ -86,6 +87,7 @@
 
     <% if (!formToBeProcessed) {%>
     <form action="update_website.jsp" method="post">
+        
         <table>
             <tr>
                 <td><label for="number">Number <b style="color:red;font-size:130%;">*</b>:</label></td>
@@ -95,10 +97,12 @@
                 <td><label for="url">Url <b style="color:red;font-size:130%;">*</b>:</label></td>
                 <td><input type="text" name="url" value="<%=website.getUrl()%>"></td>
             </tr>
-            <tr>
-                <td><label for="url">Archive url <b style="color:red;font-size:130%;">*</b>:</label></td>
-                <td><input type="text" name="archiveUrl" value="<%=website.getArchiveUrl() == null ? "" : website.getArchiveUrl()%>"></td>
+                        <tr>
+                <td><label for="archives">Archives <b style="color:red;font-size:130%;"></b>:</label></td>
+                <td><input type="text" name="archives" value="<%=Utils.formatToHtmlWithoutEmptyWord(website.getArchives())%>"></td>
             </tr>
+            
+            
             <tr>
                 <td><label for="webArchiveSnapshot">Web archive snapshot:</label></td>
                 <td><input type="text" name="webArchiveSnapshot" value="<%=(website.getWebArchiveSnapshot() == null ? "" : website.getWebArchiveSnapshot())%>"></td>
@@ -147,9 +151,9 @@
     <% } else { %>
 
     <%
-        String param_archiveUrl = request.getParameter("archiveUrl");
-        if(param_archiveUrl != null &&  param_archiveUrl.isEmpty()) {
-        param_archiveUrl = null;
+        String param_archives = request.getParameter("archives");
+        if(param_archives != null &&  param_archives.isEmpty()) {
+        param_archives = null;
         }
         String param_webArchiveSnapshot = request.getParameter("webArchiveSnapshot");
 
@@ -178,7 +182,7 @@
         Website updatedWebsite = new Website(
                 Integer.valueOf(number),
                 param_url,
-                param_archiveUrl,
+                param_archives,
                 param_webArchiveSnapshot,
                 param_language,
                 param_downloaded == null ? false : param_downloaded.equals("1"),

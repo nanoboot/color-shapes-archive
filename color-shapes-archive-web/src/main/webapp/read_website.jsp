@@ -61,6 +61,7 @@
         <a href="edit_content.jsp?number=<%=number%>">Edit</a>
         <a href="list_files.jsp?number=<%=number%>">List</a>
         <a href="upload_file.jsp?number=<%=number%>">Upload</a>
+        <a href="add_archive.jsp?number=<%=number%>">Add archive</a>
 <% } %>
 
 
@@ -111,7 +112,7 @@ window.location.href = 'update_website.jsp?number=<%=number%>'
         <tr><th>Url</th><td><a href="<%=website.getUrl()%>"><%=website.getUrl()%></a></td></tr>
         <tr><th>Archive url</th><td>
                 <%
-                    if(website.getArchiveUrl() != null) {%>
+                    if(website.getArchiveUrl() != null && !website.getArchiveUrl().isEmpty()) {%>
                     <a href="<%=Utils.formatToHtml(website.getArchiveUrl())%>"><%=Utils.formatToHtml(website.getArchiveUrl())%></a>
                     <% } else {%><%=Utils.formatToHtml(website.getArchiveUrl())%><%}
             %>

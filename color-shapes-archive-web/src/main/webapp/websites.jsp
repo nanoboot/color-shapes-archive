@@ -184,6 +184,7 @@
                 if (urlToBeShown.length() > 60) {
                     urlToBeShown = urlToBeShown.substring(0, 60) + "...";
                 }
+                
                 String archiveUrl = w.getArchiveUrl();
                 if(archiveUrl == null) {
                 archiveUrl="";

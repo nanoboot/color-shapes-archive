@@ -79,6 +79,7 @@
             <a href="edit_content.jsp?number=<%=number%>" class="nav_a_current">Edit</a>
             <a href="list_files.jsp?number=<%=number%>">List</a>
             <a href="upload_file.jsp?number=<%=number%>">Upload</a>
+        <a href="add_archive.jsp?number=<%=number%>">Add archive</a>
 
         </span>
 

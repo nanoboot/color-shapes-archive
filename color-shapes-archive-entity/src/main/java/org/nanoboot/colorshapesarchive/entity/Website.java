@@ -36,7 +36,7 @@ public class Website {
 
     private Integer number;
     private String url;
-    private String archiveUrl;
+    private String archives;
     private String webArchiveSnapshot;
     private String language;
     private Boolean downloaded;
@@ -44,6 +44,18 @@ public class Website {
     private Boolean verified;
     private Integer variantNumber;
     private String comment;
+    public String getArchiveUrl() {
+        String archiveWebUrl = System.getProperty("color-shapes-archive.archiveWebUrl");
+        
+        if(archiveWebUrl.isEmpty()) {
+            return "";
+        }
+        if(archives != null && !archives.isEmpty()) {
+            return archiveWebUrl + "/" + getUrl();
+        } else {
+            return "";
+        }
+    }
     public Boolean getDeadUrl() {
         return this.webArchiveSnapshot != null;
     }
