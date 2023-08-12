@@ -21,15 +21,13 @@
  * Save Page WE (Firefox add-on)
  * SimpleScreenRecorder
  * Easy Youtube Video Downloader
- * Web Archvie (Firefox add-on)
+ * Web Archive (Firefox add-on)
  
-## How to convert single HTML file to WARC
+## How to
 
-warcit http://www.iana.org/ ./www.iana.org/
-
-## How to create WARC files
-
- * Install PyWB
- * Install Redis and run redis-server
- * ... (TODO)
-
+ * How to create WARC files? Install PyWB. Install Redis and run redis-server.wb-manager init lines-{website number}
+ * How to convert single HTML file to WARC? warcit http://www.iana.org/ ./www.iana.org/ 
+ * How to merge WARC files into one? cat *.warc.gz > tmp&&mv tmp tmp.warc.gz
+ * How to clear Redis? redis-cli FLUSHALL
+ * Where to view WARC file? https://replayweb.page
+ 
