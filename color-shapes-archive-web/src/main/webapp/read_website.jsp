@@ -117,7 +117,6 @@ window.location.href = 'update_website.jsp?number=<%=number%>'
                     <% } else {%><%=Utils.formatToHtml(website.getArchiveUrl())%><%}
             %>
             </td></tr>
-        <tr><td colspan="2" style="text-align:center;"><a href="list_archives.jsp?number=<%=website.getNumber()%>" target="_blank">List archives</a></td></tr>
         <tr><th>Web archive snapshot</th><td><%=Utils.formatToHtml(website.getWebArchiveSnapshot())%></td></tr>
         <tr><th>Language</th><td><%=Utils.formatToHtml(website.getLanguage())%></td></tr>
         <tr><th>Formatted</th><td><%=Utils.formatToHtml(website.getFormatted())%> <b>⚠OBSOLETE ATTRIBUTE⚠</b></td></tr>
@@ -128,7 +127,7 @@ window.location.href = 'update_website.jsp?number=<%=number%>'
         <tr><th>Comment</th><td><%=Utils.formatToHtml(website.getComment())%></td></tr>
 
     </table>
-        
+        <p class="margin_left_and_big_font"><a href="list_archives.jsp?number=<%=website.getNumber()%>" target="_blank">List archives</a></p>
         
         <div id="footer">Content available under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License.">Creative Commons Attribution-ShareAlike 4.0 International License</a> <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License."><img alt="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License." style="border-width:0" src="images/creative_commons_attribution_share_alike_4.0_international_licence_88x31.png" /></a></div>
 </body>
