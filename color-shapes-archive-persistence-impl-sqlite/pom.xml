@@ -39,6 +39,32 @@
     <build>
 
         <plugins>
+            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-resource</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/db_migrations/sqlite/colorshapesarchive</directory>
+                                    <targetPath>db_migrations/sqlite/colorshapesarchive</targetPath>
+                                    <includes>
+                                        <include>*.sql</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -87,7 +113,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
         </dependency>
-        
+                <dependency>
+            <groupId>org.nanoboot.tools.dbmigration</groupId>
+            <artifactId>db-migration-core</artifactId>
+            <version>${db-migration-core.version}</version>
+        </dependency>
 
     </dependencies>
     <repositories>

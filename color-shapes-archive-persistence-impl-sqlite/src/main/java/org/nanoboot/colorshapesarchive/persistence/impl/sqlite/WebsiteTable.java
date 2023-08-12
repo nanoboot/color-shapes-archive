@@ -31,9 +31,11 @@ public class WebsiteTable {
     public static final String WEB_ARCHIVE_SNAPSHOT = "WEB_ARCHIVE_SNAPSHOT";
     public static final String LANGUAGE = "LANGUAGE";
     //
-    public static final String DOWNLOADED = "DOWNLOADED";
     public static final String FORMATTED = "FORMATTED";
     public static final String VERIFIED = "VERIFIED";
+    public static final String CONTENT_VERIFIED = "CONTENT_VERIFIED";
+    public static final String ARCHIVE_VERIFIED = "ARCHIVE_VERIFIED";
+    //
     public static final String VARIANT_NUMBER = "VARIANT_NUMBER";
     public static final String COMMENT = "COMMENT";
     

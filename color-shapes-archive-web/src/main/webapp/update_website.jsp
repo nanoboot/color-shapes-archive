@@ -112,21 +112,27 @@
                 <td style="text-align:left;"><input type="text" name="language" value="<%=Utils.formatToHtmlWithoutEmptyWord(website.getLanguage())%>" size="4" ></td>
             </tr>
             <tr>
-                <td><label for="downloaded">Downloaded:</label></td>
-                <td style="text-align:left;">
-                    <input type="checkbox" name="downloaded" value="1" <%=website.getDownloaded().booleanValue() ? "checked" : ""%> >
-                </td>
-            </tr>
-            <tr>
                 <td><label for="formatted">Formatted:</label></td>
                 <td style="text-align:left;">
-                    <input type="checkbox" name="formatted" value="1" <%=website.getFormatted().booleanValue() ? "checked" : ""%>>
+                    <input type="checkbox" name="formatted" value="1" <%=website.getFormatted().booleanValue() ? "checked" : ""%>> <b>⚠OBSOLETE ATTRIBUTE⚠</b>
                 </td>
             </tr>
             <tr>
                 <td><label for="verified">Verified:</label></td>
                 <td style="text-align:left;">
-                    <input type="checkbox" name="verified" value="1"<%=website.getVerified().booleanValue() ? "checked" : ""%> >
+                    <input type="checkbox" name="verified" value="1"<%=website.getVerified().booleanValue() ? "checked" : ""%> > <b>⚠OBSOLETE ATTRIBUTE⚠</b>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="verified">Content verified:</label></td>
+                <td style="text-align:left;">
+                    <input type="checkbox" name="contentVerified" value="1"<%=website.getContentVerified().booleanValue() ? "checked" : ""%> >
+                </td>
+            </tr>
+            <tr>
+                <td><label for="verified">Archive verified:</label></td>
+                <td style="text-align:left;">
+                    <input type="checkbox" name="archiveVerified" value="1"<%=website.getArchiveVerified().booleanValue() ? "checked" : ""%> >
                 </td>
             </tr>
             <tr>
@@ -159,9 +165,11 @@
 
         String param_language = request.getParameter("language");
 
-        String param_downloaded = request.getParameter("downloaded");
+        
         String param_formatted = request.getParameter("formatted");
         String param_verified = request.getParameter("verified");
+        String param_contentVerified = request.getParameter("contentVerified");
+        String param_archiveVerified = request.getParameter("archiveVerified");
         String param_variantNumber = request.getParameter("variantNumber");
         String param_comment = request.getParameter("comment");
         //
@@ -185,15 +193,14 @@
                 param_archives,
                 param_webArchiveSnapshot,
                 param_language,
-                param_downloaded == null ? false : param_downloaded.equals("1"),
                 param_formatted == null ? false : param_formatted.equals("1"),
                 param_verified == null ? false : param_verified.equals("1"),
+                param_contentVerified == null ? false : param_contentVerified.equals("1"),
+                param_archiveVerified == null ? false : param_archiveVerified.equals("1"),
                 (param_variantNumber == null || param_variantNumber.isEmpty()) ? null : Integer.valueOf(param_variantNumber),
                 param_comment);
 
         websiteRepo.update(updatedWebsite);
-
-
     %>
 
     <script>

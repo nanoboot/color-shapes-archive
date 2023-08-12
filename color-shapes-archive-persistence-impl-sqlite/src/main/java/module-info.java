@@ -38,4 +38,5 @@ module colorshapesarchive.persistence.impl.sqlite {
     requires org.apache.logging.log4j.core;
     requires org.apache.logging.log4j;
     requires org.xerial.sqlitejdbc;
+    requires dbmigration.core;
 }

@@ -40,7 +40,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
     private SqliteConnectionFactory sqliteConnectionFactory;
 
     @Override
-    public List<Website> list(int pageNumber, int pageSize, Boolean downloaded, Boolean formatted, Boolean verified, Integer number, String url) {
+    public List<Website> list(int pageNumber, int pageSize, Boolean contentVerified, Boolean archiveVerified, Integer number, String url) {
         int numberEnd = pageSize * pageNumber;
         int numberStart = numberEnd - pageSize + 1;
 
@@ -50,7 +50,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append("SELECT * FROM ")
                 .append(WebsiteTable.TABLE_NAME)
                 .append(" WHERE ");
-        boolean pagingIsEnabled = downloaded == null && formatted == null && verified == null && number == null && url == null;
+        boolean pagingIsEnabled = contentVerified == null && archiveVerified == null && number == null && url == null;
 
         if (pagingIsEnabled) {
             sb.append(WebsiteTable.NUMBER)
@@ -58,18 +58,15 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
         } else {
             sb.append("1=1");
         }
-        if (downloaded != null) {
-            sb.append(" AND ").append(WebsiteTable.DOWNLOADED)
+        if (contentVerified != null) {
+            sb.append(" AND ").append(WebsiteTable.CONTENT_VERIFIED)
                     .append("=?");
         }
-        if (formatted != null) {
-            sb.append(" AND ").append(WebsiteTable.FORMATTED)
+        if (archiveVerified != null) {
+            sb.append(" AND ").append(WebsiteTable.ARCHIVE_VERIFIED)
                     .append("=?");
         }
-        if (verified != null) {
-            sb.append(" AND ").append(WebsiteTable.VERIFIED)
-                    .append("=?");
-        }
+
         if (number != null) {
             sb.append(" AND ").append(WebsiteTable.NUMBER)
                     .append("=?");
@@ -89,14 +86,11 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 stmt.setInt(++i, numberEnd);
             }
 
-            if (downloaded != null) {
-                stmt.setInt(++i, downloaded ? 1 : 0);
+            if (contentVerified != null) {
+                stmt.setInt(++i, contentVerified ? 1 : 0);
             }
-            if (formatted != null) {
-                stmt.setInt(++i, formatted ? 1 : 0);
-            }
-            if (verified != null) {
-                stmt.setInt(++i, verified ? 1 : 0);
+            if (archiveVerified != null) {
+                stmt.setInt(++i, archiveVerified ? 1 : 0);
             }
             if (number != null) {
                 stmt.setInt(++i, number);
@@ -133,9 +127,10 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 rs.getString(WebsiteTable.ARCHIVES),
                 rs.getString(WebsiteTable.WEB_ARCHIVE_SNAPSHOT),
                 rs.getString(WebsiteTable.LANGUAGE),
-                rs.getInt(WebsiteTable.DOWNLOADED) != 0,
                 rs.getInt(WebsiteTable.FORMATTED) != 0,
                 rs.getInt(WebsiteTable.VERIFIED) != 0,
+                rs.getInt(WebsiteTable.CONTENT_VERIFIED) != 0,
+                rs.getInt(WebsiteTable.ARCHIVE_VERIFIED) != 0,
                 rs.getInt(WebsiteTable.VARIANT_NUMBER),
                 rs.getString(WebsiteTable.COMMENT)
         );
@@ -153,15 +148,17 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(WebsiteTable.WEB_ARCHIVE_SNAPSHOT).append(",")
                 .append(WebsiteTable.LANGUAGE).append(",")
                 //
-                .append(WebsiteTable.DOWNLOADED).append(",")
+                
                 .append(WebsiteTable.FORMATTED).append(",")
                 .append(WebsiteTable.VERIFIED).append(",")
+                .append(WebsiteTable.CONTENT_VERIFIED).append(",")
+                .append(WebsiteTable.ARCHIVE_VERIFIED).append(",")
                 .append(WebsiteTable.COMMENT);
         if (website.getVariantNumber() != null) {
             sb.append(",").append(WebsiteTable.VARIANT_NUMBER);
         }
         sb.append(")")
-                .append(" VALUES (?,?,?,?,  ?,?,?,?");
+                .append(" VALUES (?,?,?,?,  ?,?,?,?,?");
         if (website.getVariantNumber() != null) {
             sb.append(",?");
         }
@@ -177,9 +174,11 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             stmt.setString(++i, website.getWebArchiveSnapshot());
             stmt.setString(++i, website.getLanguage());
             //
-            stmt.setInt(++i, website.getDownloaded() ? 1 : 0);
+            
             stmt.setInt(++i, website.getFormatted() ? 1 : 0);
             stmt.setInt(++i, website.getVerified() ? 1 : 0);
+            stmt.setInt(++i, website.getContentVerified()? 1 : 0);
+            stmt.setInt(++i, website.getArchiveVerified()? 1 : 0);
             stmt.setString(++i, website.getComment() == null ? "" : website.getComment());
             if (website.getVariantNumber() != null) {
                 stmt.setInt(++i, website.getVariantNumber());
@@ -259,9 +258,11 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(WebsiteTable.WEB_ARCHIVE_SNAPSHOT).append("=?, ")
                 .append(WebsiteTable.LANGUAGE).append("=?, ")
                 //
-                .append(WebsiteTable.DOWNLOADED).append("=?, ")
+                
                 .append(WebsiteTable.FORMATTED).append("=?, ")
                 .append(WebsiteTable.VERIFIED).append("=?, ")
+                .append(WebsiteTable.CONTENT_VERIFIED).append("=?, ")
+                .append(WebsiteTable.ARCHIVE_VERIFIED).append("=?, ")
                 .append(WebsiteTable.VARIANT_NUMBER).append("=?, ")
                 .append(WebsiteTable.COMMENT).append("=? ")
                 .append(" WHERE ").append(WebsiteTable.NUMBER).append("=?");
@@ -276,9 +277,10 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             stmt.setString(++i, website.getWebArchiveSnapshot());
             stmt.setString(++i, website.getLanguage());
             //
-            stmt.setInt(++i, website.getDownloaded() ? 1 : 0);
             stmt.setInt(++i, website.getFormatted() ? 1 : 0);
             stmt.setInt(++i, website.getVerified() ? 1 : 0);
+            stmt.setInt(++i, website.getContentVerified() ? 1 : 0);
+            stmt.setInt(++i, website.getArchiveVerified() ? 1 : 0);
             stmt.setInt(++i, website.getVariantNumber());
             stmt.setString(++i, website.getComment());
             //

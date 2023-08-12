@@ -39,9 +39,10 @@ public class Website {
     private String archives;
     private String webArchiveSnapshot;
     private String language;
-    private Boolean downloaded;
     private Boolean formatted;
     private Boolean verified;
+    private Boolean contentVerified;
+    private Boolean archiveVerified;
     private Integer variantNumber;
     private String comment;
     public String getArchiveUrl() {

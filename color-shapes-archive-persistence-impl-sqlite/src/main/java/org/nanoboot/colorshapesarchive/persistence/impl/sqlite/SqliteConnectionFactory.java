@@ -23,6 +23,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.nanoboot.dbmigration.core.main.MigrationResult;
 
 /**
  *
@@ -30,7 +31,15 @@ import java.util.logging.Logger;
  */
 public class SqliteConnectionFactory {
     private final String jdbcUrl= "jdbc:sqlite:" + System.getProperty("color-shapes-archive.confpath") + "/" + "color_shapes_archive.sqlite";
+    private boolean migrated = false;
     public Connection createConnection() throws ClassNotFoundException  {
+        if(!migrated) {
+            MigrationResult migrationResult = SqliteDatabaseMigration.getInstance().migrate();
+            if(migrationResult != MigrationResult.SUCCESS) {
+                throw new RuntimeException("Database Schema migration failed.");
+            }
+            migrated = true;
+        }
         try {
             Class.forName("org.sqlite.JDBC");
             return DriverManager.getConnection(jdbcUrl);

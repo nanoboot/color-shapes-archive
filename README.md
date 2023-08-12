@@ -21,4 +21,15 @@
  * Save Page WE (Firefox add-on)
  * SimpleScreenRecorder
  * Easy Youtube Video Downloader
+ * Web Archvie (Firefox add-on)
+ 
+## How to convert single HTML file to WARC
+
+warcit http://www.iana.org/ ./www.iana.org/
+
+## How to create WARC files
+
+ * Install PyWB
+ * Install Redis and run redis-server
+ * ... (TODO)
 

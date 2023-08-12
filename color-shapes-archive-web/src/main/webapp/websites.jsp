@@ -74,9 +74,9 @@
         String number = request.getParameter("number");
         String url = request.getParameter("url");
 //        String archiveUrl = request.getParameter("archiveUrl");
-        String downloaded = request.getParameter("downloaded");
-        String formatted = request.getParameter("formatted");
-        String verified = request.getParameter("verified");
+        
+        String contentVerified = request.getParameter("contentVerified");
+        String archiveVerified = request.getParameter("archiveVerified");
         String pageNumber = request.getParameter("pageNumber");
         String previousNextPage = request.getParameter("PreviousNextPage");
         if (previousNextPage != null && !previousNextPage.isEmpty()) {
@@ -98,9 +98,8 @@
         <label for="number">Number </label><input type="text" name="number" value="<%=number != null ? number : ""%>" size="5" style="margin-right:10px;">
         <label for="url">Url </label><input type="text" name="url" value="<%=url != null ? url : ""%>" style="margin-right:10px;">
 
-        <label for="downloaded">Downloaded</label><input type="checkbox" name="downloaded" <%=downloaded != null && downloaded.equals("1") ? "checked " : ""%> value="1">
-        <label for="formatted">Formatted</label><input type="checkbox" name="formatted" <%=formatted != null && formatted.equals("1") ? "checked " : ""%> value="1">
-        <label for="verified">Verified</label><input type="checkbox" name="verified"  <%=verified != null && verified.equals("1") ? "checked " : ""%>value="1">
+        <label for="contentVerified">Content verified</label><input type="checkbox" name="contentVerified"  <%=contentVerified != null && contentVerified.equals("1") ? "checked " : ""%>value="1">
+        <label for="archiveVerified">Archive verified</label><input type="checkbox" name="archiveVerified"  <%=archiveVerified != null && archiveVerified.equals("1") ? "checked " : ""%>value="1">
         <input type="submit" value="Filter" style="margin-left:20px;height:40px;">
         <br>
         <br>
@@ -113,9 +112,8 @@
         List<Website> websites = websiteRepo.list(
                 pageNumberInt,
                 10,
-                downloaded == null ? null : Boolean.valueOf(downloaded.equals("1")),
-                formatted == null ? null : Boolean.valueOf(formatted.equals("1")),
-                verified == null ? null : Boolean.valueOf(verified.equals("1")),
+                contentVerified == null ? null : Boolean.valueOf(contentVerified.equals("1")),
+                archiveVerified == null ? null : Boolean.valueOf(archiveVerified.equals("1")),
                 number == null || number.isEmpty() ? null : Integer.valueOf(number),
                 url == null || url.isEmpty() ? null : url
         );
@@ -198,9 +196,8 @@
             <td><%=w.getVariantNumber() == null ? EMPTY : w.getVariantNumber()%></td>
             <td>
                 <%=w.getDeadUrl().booleanValue() ? "<span class=\"grey_flag\" title=\"Dead url\">†</span>" : ""%>
-                <%=w.getDownloaded().booleanValue() ? "<span class=\"yellow_flag\" title=\"Downloaded\">D</span>" : ""%>
-                <%=w.getFormatted().booleanValue() ? "<span class=\"orange_flag\" title=\"Formatted\">F</span>" : ""%>
-                <%=w.getVerified().booleanValue() ? "<span class=\"green_flag\" title=\"Verified\">V</span>" : ""%>
+                <%=w.getContentVerified().booleanValue() ? "<span class=\"orange_flag\" title=\"Content verified\">C</span>" : ""%>
+                <%=w.getArchiveVerified().booleanValue() ? "<span class=\"green_flag\" title=\"Archive verified\">A</span>" : ""%>
             </td>
             <td><%=w.getComment() == null ? EMPTY : (w.getComment().length() > 16 ? w.getComment().substring(0,16) + "..." : w.getComment())%></td>
 

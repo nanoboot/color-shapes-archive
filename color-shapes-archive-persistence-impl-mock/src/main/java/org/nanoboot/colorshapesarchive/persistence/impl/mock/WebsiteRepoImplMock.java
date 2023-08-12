@@ -34,7 +34,7 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
     private int nextNumber = 1;
 
     @Override
-    public List<Website> list(int pageNumber, int pageSize, Boolean downloaded, Boolean formatted, Boolean verified, Integer number, String url) {
+    public List<Website> list(int pageNumber, int pageSize, Boolean contentVerified, Boolean archiveVerified, Integer number, String url) {
         if (internalList.isEmpty()) {
             for (int i = 0; i < 50; i++) {
                 internalList.add(
@@ -44,6 +44,7 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
                                 null,
                                 "abc",
                                 "en",
+                                true,
                                 true,
                                 true,
                                 true,
@@ -76,32 +77,22 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
                 }
             }
 
-            if (downloaded != null) {
-                if (w.getDownloaded().booleanValue() && !downloaded) {
+            if (contentVerified != null) {
+                if (w.getContentVerified().booleanValue() && !contentVerified) {
                     continue;
                 }
 
-                if (!w.getDownloaded().booleanValue() && downloaded) {
-                    continue;
-                }
-            }
-
-            if (formatted != null) {
-                if (w.getFormatted().booleanValue() && !formatted) {
-                    continue;
-                }
-
-                if (!w.getFormatted().booleanValue() && formatted) {
+                if (!w.getContentVerified().booleanValue() && contentVerified) {
                     continue;
                 }
             }
 
-            if (verified != null) {
-                if (w.getVerified().booleanValue() && !verified) {
+            if (archiveVerified != null) {
+                if (w.getArchiveVerified().booleanValue() && !archiveVerified) {
                     continue;
                 }
 
-                if (!w.getVerified().booleanValue() && verified) {
+                if (!w.getArchiveVerified().booleanValue() && archiveVerified) {
                     continue;
                 }
             }
