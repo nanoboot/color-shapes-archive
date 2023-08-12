@@ -46,13 +46,14 @@
         <a href="index.jsp" id="main_title">Color Shapes Archive</a></span>
         <%
             String number = request.getParameter("number");
-            Integer.valueOf(number);
+            
             if (number == null || number.isEmpty()) {
         %><span style="font-weight:bold;color:red;" class="margin_left_and_big_font">Error: Parameter "number" is required</span>
 
     <%
             throw new jakarta.servlet.jsp.SkipPageException();
         }
+            Integer.valueOf(number);
     %>
     <span class="nav"><a href="index.jsp">Home</a>
         >> <a href="websites.jsp">Websites</a>

@@ -113,10 +113,11 @@ window.location.href = 'update_website.jsp?number=<%=number%>'
         <tr><th>Archive url</th><td>
                 <%
                     if(website.getArchiveUrl() != null && !website.getArchiveUrl().isEmpty()) {%>
-                    <a href="<%=Utils.formatToHtml(website.getArchiveUrl())%>"><%=Utils.formatToHtml(website.getArchiveUrl())%></a>
+                    <a href="<%=Utils.formatToHtml(website.getArchiveUrl())%>" target="_blank"><%=Utils.formatToHtml(website.getArchiveUrl())%></a>
                     <% } else {%><%=Utils.formatToHtml(website.getArchiveUrl())%><%}
             %>
             </td></tr>
+        <tr><td colspan="2" style="text-align:center;"><a href="list_archives.jsp?number=<%=website.getNumber()%>" target="_blank">List archives</a></td></tr>
         <tr><th>Web archive snapshot</th><td><%=Utils.formatToHtml(website.getWebArchiveSnapshot())%></td></tr>
         <tr><th>Language</th><td><%=Utils.formatToHtml(website.getLanguage())%></td></tr>
         <tr><th>Formatted</th><td><%=Utils.formatToHtml(website.getFormatted())%> <b>⚠OBSOLETE ATTRIBUTE⚠</b></td></tr>

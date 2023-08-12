@@ -30,10 +30,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(
-        name = "FileServlet",
-        urlPatterns = "/FileServlet/*"
+        name = "ArchiveServlet",
+        urlPatterns = "/ArchiveServlet/*"
 )
-public class FileServlet extends HttpServlet {
+public class ArchiveServlet extends HttpServlet {
 
     private final int ARBITARY_SIZE = 1048;
 
@@ -41,35 +41,39 @@ public class FileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(req)) {
-            resp.getOutputStream().println("Access forbidden");
-            return;
-        }
+//        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(req)) {
+//            resp.getOutputStream().println("Access forbidden");
+//            return;
+//        }
         //resp.setContentType("text/plain");
         //resp.setHeader("Content-disposition", "attachment; filename=sample.txt");
 
         String requestUri = req.getRequestURI();
         String contextPath = req.getContextPath();
         requestUri = requestUri.replace(contextPath, "");
-        requestUri = requestUri.replace("/FileServlet/", "");
+        requestUri = requestUri.replace("/ArchiveServlet/", "");
         String[] requestUriArray = requestUri.split("/");
-        if (requestUriArray.length != 2) {
-            throw new RuntimeException("out.println(requestUriArray.length != 2)");
+        if (requestUriArray.length != 1) {
+            throw new RuntimeException("out.println(requestUriArray.length != 1)");
         }
-        String website_number = requestUriArray[0];
-        String file_name = requestUriArray[1];
+        
+        String file_name = requestUriArray[0];
+        
 
         if (file_name == null || file_name.isEmpty()) {
             throw new RuntimeException("file_name is mandatory");
         }
+        
         if(file_name.contains("..")) {
-            throw new RuntimeException("file_name contains ... This is forbidden.");
+            throw new RuntimeException("file_name contains .. This is forbidden.");
         }
-        String filePath = System.getProperty("color-shapes-archive.confpath") + "/" + "websitesFormatted/" + website_number + "/";
+
+        String filePath = System.getProperty("color-shapes-archive.archiveDir") + "/";
 
         File file = new File(filePath + "/" + file_name);
         if (!file.exists()) {
             throw new RuntimeException("file " + file.getAbsolutePath() + " does not exist.");
+            
         }
 
         if (file.isDirectory()) {
