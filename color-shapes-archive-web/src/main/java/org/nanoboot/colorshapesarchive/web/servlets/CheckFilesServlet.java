@@ -49,7 +49,8 @@ public class CheckFilesServlet extends HttpServlet {
         }
 
         boolean onlyKO = "true".equals(req.getParameter("onlyko"));
-        File rootDir = new File(System.getProperty("color-shapes-archive.confpath") + "/" + "websitesFormatted/");
+        File fileRootDir = new File(System.getProperty("color-shapes-archive.confpath") + "/" + "websitesFormatted/");
+        File archiveDir = new File(System.getProperty("color-shapes-archive.archiveDir"));
         StringBuilder sb = new StringBuilder("<a href=\"index.jsp\">Back</a><br><br><table><tr><th>Result</th><th>#</th><th>File</th><th>Detail</th></tr>");
         sb.append("""
                   <style>
@@ -71,12 +72,13 @@ public class CheckFilesServlet extends HttpServlet {
                   """);
         String greenOK = "<span style=\"color:green;font-weight:bold\">OK</span>";
         String redKO = "<span style=\"color:red;font-weight:bold\">KO</span>";
-        System.err.println(rootDir.getAbsolutePath());
-        for (File number : rootDir.listFiles()) {
+        System.err.println(fileRootDir.getAbsolutePath());
+        for (File number : fileRootDir.listFiles()) {
             if (!number.isDirectory()) {
                 continue;
             }
             System.err.println("Processing:" + number.getAbsolutePath());
+            //
             for (File file : number.listFiles()) {
                 if (file.getName().equals("website.html")) {
                     continue;
@@ -84,7 +86,7 @@ public class CheckFilesServlet extends HttpServlet {
                 if (file.getName().endsWith(".sha512")) {
                     continue;
                 }
-                if(file.isDirectory()) {
+                if (file.isDirectory()) {
                     continue;
                 }
                 sb.append("<tr>");
@@ -110,7 +112,7 @@ public class CheckFilesServlet extends HttpServlet {
                         expectedHexString = "hexfilemissing";
                     }
                     final boolean result = expectedHexString.equals(realHexString);
-                    if(onlyKO && result) {
+                    if (onlyKO && result) {
                         //nothing to do
                         continue;
                     }
@@ -120,7 +122,7 @@ public class CheckFilesServlet extends HttpServlet {
                             .append("</td><td>")
                             .append(number.getName())
                             .append("</td><td>")
-                            .append(file.getName())
+                            .append(file.getAbsolutePath())
                             .append("</td><td>");
                     if (expectedHexString.equals("hexfilemissing")) {
                         sb.append(".sha512 File is missing");
@@ -135,10 +137,65 @@ public class CheckFilesServlet extends HttpServlet {
                 sb.append("</tr>");
             }
         }
+        for (File archive : archiveDir.listFiles()) {
+            if (archive.isDirectory()) {
+                continue;
+            }
+            System.err.println("Processing:" + archive.getAbsolutePath());
+            //
+
+     
+                sb.append("<tr>");
+                {
+                    ////
+                    byte[] sha512sumByteArray = calculateSha512(archive);
+                    StringBuilder sb2 = new StringBuilder(sha512sumByteArray.length * 2);
+                    for (byte b : sha512sumByteArray) {
+                        sb2.append(String.format("%02x", b));
+                    }
+                    String realHexString = sb2.toString();
+                    String expectedHexString = "";
+                    File hexFile = new File(archive.getParentFile().getParentFile().getAbsolutePath() + "/archiveCheckSums/", archive.getName() + ".sha512");
+
+                    if (hexFile.exists()) {
+                        Scanner sc = new Scanner(hexFile);
+
+                        // we just need to use \\Z as delimiter
+                        sc.useDelimiter("\\Z");
+
+                        expectedHexString = sc.next();
+                    } else {
+                        expectedHexString = "hexfilemissing";
+                    }
+                    final boolean result = expectedHexString.equals(realHexString);
+                    if (onlyKO && result) {
+                        //nothing to do
+                        continue;
+                    }
+                    sb
+                            .append("<td>")
+                            .append(result ? greenOK : redKO)
+                            .append("</td><td>")
+                            .append(archive.getName())
+                            .append("</td><td>")
+                            .append(archive.getName())
+                            .append("</td><td>");
+                    if (expectedHexString.equals("hexfilemissing")) {
+                        sb.append(".sha512 File is missing_");
+                    } else {
+                        if (!result) {
+                            sb.append("Calculated hash differs from the expected one.");
+                        }
+                    }
+                    sb.append("</td>");
+                    ////
+                }
+                sb.append("</tr>");
+            
+        }
 
         sb.append("</table>");
         resp.getOutputStream().println(sb.toString());
-        return;
 
     }
 
