@@ -73,6 +73,7 @@
         final String EMPTY = "[empty]";
         String number = request.getParameter("number");
         String url = request.getParameter("url");
+        String variantNumber = request.getParameter("variantNumber");
 //        String archiveUrl = request.getParameter("archiveUrl");
         
         String contentVerified = request.getParameter("contentVerified");
@@ -97,7 +98,7 @@
         <label for="pageNumber">Page </label><input type="text" name="pageNumber" value="<%=pageNumberInt%>" size="4" style="margin-right:10px;">
         <label for="number">Number </label><input type="text" name="number" value="<%=number != null ? number : ""%>" size="5" style="margin-right:10px;">
         <label for="url">Url </label><input type="text" name="url" value="<%=url != null ? url : ""%>" style="margin-right:10px;">
-
+        <label for="variantNumber">Variant number </label><input type="text" name="variantNumber" value="<%=variantNumber != null ? variantNumber : ""%>" size="5" style="margin-right:10px;">
         <label for="contentVerified">Content verified</label><input type="checkbox" name="contentVerified"  <%=contentVerified != null && contentVerified.equals("1") ? "checked " : ""%>value="1">
         <label for="archiveVerified">Archive verified</label><input type="checkbox" name="archiveVerified"  <%=archiveVerified != null && archiveVerified.equals("1") ? "checked " : ""%>value="1">
         <input type="submit" value="Filter" style="margin-left:20px;height:40px;">
@@ -115,7 +116,8 @@
                 contentVerified == null ? null : Boolean.valueOf(contentVerified.equals("1")),
                 archiveVerified == null ? null : Boolean.valueOf(archiveVerified.equals("1")),
                 number == null || number.isEmpty() ? null : Integer.valueOf(number),
-                url == null || url.isEmpty() ? null : url
+                url == null || url.isEmpty() ? null : url,
+                variantNumber == null || variantNumber.isEmpty() ? null : Integer.valueOf(variantNumber)
         );
 
         if (websites.isEmpty()) {

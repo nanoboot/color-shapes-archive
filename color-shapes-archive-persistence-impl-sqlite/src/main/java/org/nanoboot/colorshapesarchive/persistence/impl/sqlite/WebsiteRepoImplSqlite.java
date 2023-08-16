@@ -40,7 +40,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
     private SqliteConnectionFactory sqliteConnectionFactory;
 
     @Override
-    public List<Website> list(int pageNumber, int pageSize, Boolean contentVerified, Boolean archiveVerified, Integer number, String url) {
+    public List<Website> list(int pageNumber, int pageSize, Boolean contentVerified, Boolean archiveVerified, Integer number, String url, Integer variantNumber) {
         int numberEnd = pageSize * pageNumber;
         int numberStart = numberEnd - pageSize + 1;
 
@@ -50,7 +50,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append("SELECT * FROM ")
                 .append(WebsiteTable.TABLE_NAME)
                 .append(" WHERE ");
-        boolean pagingIsEnabled = contentVerified == null && archiveVerified == null && number == null && url == null;
+        boolean pagingIsEnabled = contentVerified == null && archiveVerified == null && number == null && url == null && variantNumber == null;
 
         if (pagingIsEnabled) {
             sb.append(WebsiteTable.NUMBER)
@@ -75,6 +75,10 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             sb.append(" AND ").append(WebsiteTable.URL)
                     .append(" LIKE '%' || ? || '%'");
         }
+        if (variantNumber != null) {
+            sb.append(" AND ").append(WebsiteTable.VARIANT_NUMBER)
+                    .append(" =?");
+        }
         String sql = sb.toString();
         System.err.println(sql);
         int i = 0;
@@ -97,6 +101,9 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             }
             if (url != null) {
                 stmt.setString(++i, url);
+            }
+            if (variantNumber != null) {
+                stmt.setInt(++i, variantNumber);
             }
             System.err.println(stmt.toString());
             rs = stmt.executeQuery();

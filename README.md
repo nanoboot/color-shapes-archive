@@ -22,6 +22,10 @@
  * SimpleScreenRecorder
  * Easy Youtube Video Downloader
  * Web Archive (Firefox add-on)
+ * Webrecorder ArchiveWeb.page (Google Chrome add-on)
+ * WARCreate (Google Chrome add-on)
+ * https://conifer.rhizome.org/
+ * https://ruffle.rs/
  
 ## How to
 
@@ -31,3 +35,6 @@
  * How to clear Redis? redis-cli FLUSHALL
  * Where to view WARC file? https://replayweb.page
  
+## To do
+
+Add new table: LOG
