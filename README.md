@@ -34,6 +34,7 @@
  * How to merge WARC files into one? cat *.warc.gz > tmp&&mv tmp tmp.warc.gz
  * How to clear Redis? redis-cli FLUSHALL
  * Where to view WARC file? https://replayweb.page
+ * Disable cross-origin policy in Firefox (warning: this is a security bad thing): about:config > security.fileuri.strict_origin_policy
  
 ## To do
 
