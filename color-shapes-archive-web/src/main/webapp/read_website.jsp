@@ -3,6 +3,7 @@
 <%@page import="org.nanoboot.colorshapesarchive.entity.Website"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <%@page import="org.springframework.context.ApplicationContext"%>
+<%@page import="java.io.File"%>
 <!DOCTYPE>
 <%@ page session="false" %>
 
@@ -128,16 +129,12 @@ window.location.href = 'update_website.jsp?number=<%=number%>'
         
         <tr><th>Recording</th><td>
                 
-                <% boolean recordingEnabled = website.getRecordingId() != null && !website.getRecordingId().isEmpty(); %>
+                <% boolean recordingEnabled = website.getRecordingId() != null && !website.getRecordingId().isEmpty(); 
                 
                 
-                
-                
-                
-                
-                
-                    <%
-        if (!canUpdate) { %><%=recordingEnabled?"Started":"Stopped"%><%}
+                    if (!canUpdate) { out.println(recordingEnabled?"<span style=\"color:#F08080;font-weight:bold;padding:4px;\">Started</span>":"Stopped");}
+
+boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
         if (canUpdate) {
             
     %>
@@ -147,73 +144,102 @@ window.location.href = 'update_website.jsp?number=<%=number%>'
                 <%
                   String recording_action = request.getParameter("recording_action");
                   if(recording_action != null && !recording_action.isEmpty()) {
+                  java.io.File targetArchiveDir = new java.io.File(System.getProperty("color-shapes-archive.archiveDir"));
+                      java.io.File pywbRootDir = new java.io.File(targetArchiveDir, "/../../.." );
+                      String pywbRootDirPath = pywbRootDir.getAbsolutePath();
+                      
                   
-                    
+                    //#####
                   if(recording_action.equals("Start")&&!recordingEnabled){
-                  java.util.UUID randomUUID = java.util.UUID.randomUUID();
-                  website.setRecordingId(randomUUID.toString());
-                  websiteRepo.update(website);
-                  java.io.File newDir = new java.io.File(System.getProperty("color-shapes-archive.archiveDir") + "/../" + website.getRecordingId());
-                  newDir.mkdir();
-                  
-                  
+                  website.setRecordingId(java.util.UUID.randomUUID().toString());
                   //https://www.baeldung.com/run-shell-command-in-java
                   
-                  boolean isWindows = System.getProperty("os.name")
-  .toLowerCase().startsWith("windows");
-  
-  
-  class StreamGobbler implements Runnable {
-    private java.io.InputStream inputStream;
-    private java.util.function.Consumer<String> consumer;
 
-    public StreamGobbler(java.io.InputStream inputStream, java.util.function.Consumer<String> consumer) {
-        this.inputStream = inputStream;
-        this.consumer = consumer;
+if(!org.nanoboot.colorshapesarchive.web.misc.utils.Utils.runProcess("wb-manager init " + website.getRecordingId(), pywbRootDir))
+                org.nanoboot.colorshapesarchive.web.misc.utils.Utils.throwErrorInJsp("Creating PyWB collection failed.", out);
+                
+websiteRepo.update(website);
+java.io.File tmpCollection = new java.io.File(pywbRootDirPath + "/collections/" + website.getRecordingId());
+java.io.File website_number = new java.io.File(tmpCollection, "/website_number.txt");
+
+org.nanoboot.powerframework.io.utils.FileUtils.writeTextToFile(website.getNumber().toString(), website_number);
     }
-
-    @Override
-    public void run() {
-        new java.io.BufferedReader(new java.io.InputStreamReader(inputStream)).lines()
-          .forEach(consumer);
-    }
-}
-
-                  Process process;
-if (isWindows) {
-    process = Runtime.getRuntime()
-      .exec(String.format("cmd.exe /c dir %s; md aaaaa", "."));
-} else {
-    process = Runtime.getRuntime()
-      .exec(String.format("/bin/sh -c ls %s", "."));
-}
-StreamGobbler streamGobbler = 
-  new StreamGobbler(process.getInputStream(), System.out::println);
-  java.util.concurrent.ExecutorService executorService = java.util.concurrent.Executors.newFixedThreadPool(5);
-java.util.concurrent.Future<?> future = executorService.submit(streamGobbler);
-
-int exitCode = process.waitFor();
-System.err.println("exitCode=" + exitCode);
-
-    }
-        
-                  if(recording_action.equals("Save")&&recordingEnabled){String originalRecordingId = website.getRecordingId();
+        //#####
+                  if(recording_action.equals("Save")&&recordingEnabled){
+                  if(isWindows) org.nanoboot.colorshapesarchive.web.misc.utils.Utils.throwErrorInJsp("Recording is not yet supported on Windows (reason- merging ... cat).", out);
+                
+                  String originalRecordingId = website.getRecordingId();
                   website.setRecordingId("");
-                  websiteRepo.update(website);
-                  java.io.File newDir = new java.io.File(System.getProperty("color-shapes-archive.archiveDir") + "/../" + originalRecordingId);
-//                  newDir.renameTo(new java.io.File(System.getProperty("color-shapes-archive.archiveDir") + "/../" + originalRecordingId + "_obsolete"));
+                  
+                  
+                  java.io.File tmpCollection = new java.io.File(pywbRootDirPath + "/collections/" + originalRecordingId);
+                  java.io.File tmpArchiveDir = new java.io.File(tmpCollection, "archive");
+                  
+                  
+                  java.io.File[] foundArchives = tmpArchiveDir.listFiles();
+                  if(foundArchives.length == 0) org.nanoboot.colorshapesarchive.web.misc.utils.Utils.throwErrorInJsp("Nothing was recorded. Please, record something.", out);
+                
+                    
+                    websiteRepo.update(website);
+                    
+                    
+                  java.io.File firstArchive = foundArchives[0];
+                  String firstArchiveName = firstArchive.getName();
+                  java.io.File finalWarcGz = new java.io.File(tmpArchiveDir, website.getNumber() + "." +firstArchiveName);
+                  for(java.io.File f:foundArchives) {
+                  out.println("found archive " + f.getAbsolutePath());
+                    }
+                    if(foundArchives.length> 1) {                    
+if(!org.nanoboot.colorshapesarchive.web.misc.utils.Utils.runProcess("cat *.warc.gz > tmp&&mv tmp tmp.warc.gz", tmpArchiveDir)) 
+    org.nanoboot.colorshapesarchive.web.misc.utils.Utils.throwErrorInJsp("Merging WARC files failed.", out);
+    java.io.File tmpWarcGz = new java.io.File(tmpArchiveDir, "tmp.warc.gz");
+    tmpWarcGz.renameTo(finalWarcGz);
+                    } else {
+                    firstArchive.renameTo(finalWarcGz);
+                    }
+                    
+                    java.io.File finalWarcGzInFinalCollection = new java.io.File(targetArchiveDir, finalWarcGz.getName());
+                    finalWarcGz.renameTo(finalWarcGzInFinalCollection);
+                    String hash = org.nanoboot.colorshapesarchive.web.misc.utils.Utils.calculateSHA512Hash(finalWarcGzInFinalCollection);
+                    
+                    File archiveCheckSums = new File(finalWarcGzInFinalCollection.getParentFile().getParentFile().getAbsolutePath() + "/" + "archiveCheckSums");
+                                System.err.println("archiveCheckSums=" + archiveCheckSums.getAbsolutePath());
+                                if(!archiveCheckSums.exists())archiveCheckSums.mkdir();
+                                
+                                File hexFile = new File(archiveCheckSums, finalWarcGzInFinalCollection.getName() + ".sha512");
+org.nanoboot.powerframework.io.utils.FileUtils.writeTextToFile(hash, hexFile);
+
+                                
+                                String currentArchives = website.getArchives();
+                                if(currentArchives == null) currentArchives = "";
+                                website.setArchives(currentArchives + "::::" + finalWarcGzInFinalCollection + "####" + hash);
+                                websiteRepo.update(website);
+        
+                                
+                                
+                                
+                                
+                    
+                  //tmpCollection.renameTo(new java.io.File(System.getProperty("color-shapes-archive.archiveDir") + "/../../saved___" + originalRecordingId));
 //                  System.err.println("Renaming " + new java.io.File(System.getProperty("color-shapes-archive.archiveDir") + "/../" + originalRecordingId).getAbsolutePath()
 //                  + "to " + new java.io.File(System.getProperty("color-shapes-archive.archiveDir") + "/../" + originalRecordingId + "_obsolete")
 //                  .getAbsolutePath());
-                  org.apache.commons.io.FileUtils.deleteDirectory(newDir);
-
+                  org.apache.commons.io.FileUtils.deleteDirectory(tmpCollection);
+                  %>
+                  <script>
+        function redirectToRead() {window.location.href = 'read_website.jsp?number=<%=number%>'}
+        redirectToRead()
+        </script>
+<%
     }
+    //#####
                   if(recording_action.equals("Abort")&&recordingEnabled){String originalRecordingId = website.getRecordingId();
                   website.setRecordingId("");
                   websiteRepo.update(website);
-                  java.io.File newDir = new java.io.File(System.getProperty("color-shapes-archive.archiveDir") + "/../" + originalRecordingId);
-//                  newDir.renameTo(new java.io.File(System.getProperty("color-shapes-archive.archiveDir") + "/../" + originalRecordingId + "_obsolete"));
-                  org.apache.commons.io.FileUtils.deleteDirectory(newDir);
+                  java.io.File newDir = new java.io.File(System.getProperty("color-shapes-archive.archiveDir") + "/../../" + originalRecordingId);
+                  java.io.File renamed = new java.io.File(System.getProperty("color-shapes-archive.archiveDir") + "/../../aborted___" + originalRecordingId);
+                  newDir.renameTo(renamed);
+                  org.apache.commons.io.FileUtils.deleteDirectory(renamed);
     }
 
 }
@@ -221,7 +247,7 @@ System.err.println("exitCode=" + exitCode);
                 %>
                 
                 <% recordingEnabled = website.getRecordingId() != null && !website.getRecordingId().isEmpty(); %>
-                <%=recordingEnabled?"Started":"Stopped"%>
+                <%=recordingEnabled?"<span style=\"color:#F08080;font-weight:bold;padding:4px;\">Started</span>":"Stopped"%>
                 
                 <%if(!recordingEnabled){%><form action="read_website.jsp" method="post" style="margin:0;display:inline;"><input type="hidden" name="number" value="<%=website.getNumber()%>"> <input type="submit" name="recording_action" value="Start" style="padding:4px;margin:2px;"></form><%}%>
                 <%if(recordingEnabled){%><form action="read_website.jsp" method="post" style="margin:0;display:inline;"><input type="hidden" name="number" value="<%=website.getNumber()%>"><input type="submit" name="recording_action"  value="Save" style="padding:4px;margin:2px;"></form><%}%>
@@ -229,12 +255,13 @@ System.err.println("exitCode=" + exitCode);
                 <% if(recordingEnabled) { 
                    String archiveWebUrl = System.getProperty("color-shapes-archive.archiveWebUrl");
         
-        String tmpArchiveWebUrlBase = (archiveWebUrl != null && !archiveWebUrl.isEmpty()) ? (archiveWebUrl + "/../") : null;
-           
-
+        String tmpArchiveWebUrlBase = (archiveWebUrl != null && !archiveWebUrl.isEmpty()) ? (archiveWebUrl) : null;
+        String[] tmpArray = tmpArchiveWebUrlBase.split("/");
+        tmpArchiveWebUrlBase=(tmpArchiveWebUrlBase.startsWith("localhost") ? "http://" : "") + tmpArchiveWebUrlBase.substring(0,tmpArchiveWebUrlBase.length() - tmpArray[tmpArray.length - 1 ].length() - 1);
+        
                 %>
-                <button onclick=" window.open('<%=tmpArchiveWebUrlBase + "record/" + website.getRecordingId() + "/" + website.getUrl()%>','_blank')">Record</button>
-                 <button onclick=" window.open('<%=tmpArchiveWebUrlBase + website.getRecordingId() + "/" + website.getUrl()%>','_blank')">Replay</button>
+                <button style="padding:2px;font-size:110%;margin-left:15px;" onclick=" window.open('<%=tmpArchiveWebUrlBase +"/" + website.getRecordingId() + "/record/" + website.getUrl()%>','_blank')">Record</button>
+                 <button style="padding:2px;font-size:110%;" onclick=" window.open('<%=tmpArchiveWebUrlBase +"/" + website.getRecordingId() + "/" + website.getUrl()%>','_blank')">Replay</button>
                  <% } %>
                  
                  <% } %>

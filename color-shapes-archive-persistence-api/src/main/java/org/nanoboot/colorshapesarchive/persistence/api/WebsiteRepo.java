@@ -34,7 +34,7 @@ public interface WebsiteRepo {
             int pageNumber,
             int pageSize,
             Boolean contentVerified,
-            Boolean archiveVerified,
+            String archiveVerified,
             String recording,
             Integer number,
             String url,

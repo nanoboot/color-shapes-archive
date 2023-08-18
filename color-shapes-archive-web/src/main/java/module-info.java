@@ -31,7 +31,9 @@ module colorshapesarchive.web {
     requires lombok;
     requires spring.web;
     requires powerframework.time;
+    requires powerframework.io;
     requires org.xerial.sqlitejdbc;
     requires asciidoctorj;
     requires asciidoctorj.api;
+    requires dev.mccue.guava.io;
 }

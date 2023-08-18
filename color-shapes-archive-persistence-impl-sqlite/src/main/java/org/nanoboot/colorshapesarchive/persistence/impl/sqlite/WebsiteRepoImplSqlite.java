@@ -44,7 +44,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             int pageNumber,
             int pageSize,
             Boolean contentVerified,
-            Boolean archiveVerified,
+            String archiveVerified,
             String recording,
             Integer number,
             String url,
@@ -68,10 +68,6 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
         }
         if (contentVerified != null) {
             sb.append(" AND ").append(WebsiteTable.CONTENT_VERIFIED)
-                    .append("=?");
-        }
-        if (archiveVerified != null) {
-            sb.append(" AND ").append(WebsiteTable.ARCHIVE_VERIFIED)
                     .append("=?");
         }
 
@@ -102,6 +98,21 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                     .append(WebsiteTable.RECORDING_ID)
                     .append("='' ");
         }
+        if (archiveVerified != null && archiveVerified.equals("yes")) {
+            sb.append(" AND ")
+                    .append(WebsiteTable.ARCHIVE_VERIFIED)
+                    .append(" IS NOT NULL AND ")
+                    .append(WebsiteTable.ARCHIVE_VERIFIED)
+            .append("=1 ");
+        }
+
+        if (archiveVerified != null && archiveVerified.equals("no")) {
+            sb.append(" AND ")
+                    .append(WebsiteTable.ARCHIVE_VERIFIED)
+                    .append(" IS NULL OR ")
+                    .append(WebsiteTable.ARCHIVE_VERIFIED)
+                    .append("!=1 ");
+        }
         String sql = sb.toString();
         System.err.println(sql);
         int i = 0;
@@ -115,9 +126,6 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
 
             if (contentVerified != null) {
                 stmt.setInt(++i, contentVerified ? 1 : 0);
-            }
-            if (archiveVerified != null) {
-                stmt.setInt(++i, archiveVerified ? 1 : 0);
             }
             if (number != null) {
                 stmt.setInt(++i, number);

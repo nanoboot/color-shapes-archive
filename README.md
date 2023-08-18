@@ -29,7 +29,8 @@
  
 ## How to
 
- * How to create WARC files? Install PyWB. Install Redis and run redis-server.wb-manager init lines-{website number}
+ * How to create WARC files? Install PyWB. Install Redis and run redis-server.
+ * How to create PyWB collection? wb-manager init lines-{website number}
  * How to convert single HTML file to WARC? warcit http://www.iana.org/ ./www.iana.org/ 
  * How to merge WARC files into one? cat *.warc.gz > tmp&&mv tmp tmp.warc.gz
  * How to clear Redis? redis-cli FLUSHALL

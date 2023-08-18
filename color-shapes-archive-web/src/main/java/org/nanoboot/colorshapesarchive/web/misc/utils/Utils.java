@@ -18,9 +18,16 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 package org.nanoboot.colorshapesarchive.web.misc.utils;
 
+import dev.mccue.guava.hash.Hashing;
+import dev.mccue.guava.io.Files;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.jsp.SkipPageException;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.asciidoctor.Asciidoctor;
 import static org.asciidoctor.Asciidoctor.Factory.create;
 
@@ -94,5 +101,33 @@ public class Utils {
                 .convert(text, new HashMap<String, Object>());
         
         return "\n\n\n" + asciidocCompiled + "\n\n\n";
+    }
+    public static boolean runProcess(String command, File workingDirectory) {
+        try {
+            boolean isWindows = System.getProperty("os.name")
+                    .toLowerCase().startsWith("windows");
+            ProcessBuilder builder = new ProcessBuilder();
+            builder.command(isWindows ? "cmd.exe" : "sh", isWindows ? "/c" : "-c", command);
+            
+            builder.directory(workingDirectory);
+            Process process = builder.start();
+            
+            return process.waitFor() == 0;
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex);
+        }
+    }
+    public static void throwErrorInJsp(String error, jakarta.servlet.jsp.JspWriter out) throws SkipPageException, IOException {
+        out.println("<span style=\"font-weight:bold;color:red;\">" + error + "</span>");
+        throw new jakarta.servlet.jsp.SkipPageException();
+    }
+       public static String calculateSHA512Hash(File file) {
+        try {
+            return Files.hash(file, Hashing.sha512()).toString();
+        } catch (IOException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex);
+        }
     }
 }

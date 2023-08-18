@@ -38,7 +38,7 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
             int pageNumber,
             int pageSize,
             Boolean contentVerified,
-            Boolean archiveVerified,
+            String archiveVerified,
             String recording,
             Integer number,
             String url,
@@ -55,7 +55,7 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
                                 true,
                                 true,
                                 true,
-                                true,
+                                null,
                                 null,
                                 "",
                                 null,
@@ -87,25 +87,6 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
                 }
             }
 
-            if (contentVerified != null) {
-                if (w.getContentVerified().booleanValue() && !contentVerified) {
-                    continue;
-                }
-
-                if (!w.getContentVerified().booleanValue() && contentVerified) {
-                    continue;
-                }
-            }
-
-            if (archiveVerified != null) {
-                if (w.getArchiveVerified().booleanValue() && !archiveVerified) {
-                    continue;
-                }
-
-                if (!w.getArchiveVerified().booleanValue() && archiveVerified) {
-                    continue;
-                }
-            }
             finalList.add(w);
 
         }
