@@ -23,3 +23,8 @@ obsolete*
 color-shapes-archive.confpath/*
 
 /target/
+
+#Eclipse
+.project
+**.settings/
+**.classpath
