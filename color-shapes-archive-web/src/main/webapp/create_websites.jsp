@@ -78,6 +78,7 @@
     <% } else { %>
     <table><tr><th>#</th><th>Result</th><th>Url</th></tr>
     <%
+        Long timeAsLong = org.nanoboot.powerframework.time.moment.UniversalDateTime.now().toLong();
       java.util.List<String> lines = param_urls.lines().filter(url->!url.isBlank()).toList();
       int failedCount = 0;
       int successCount = 0;
@@ -103,7 +104,7 @@ boolean failedBecauseAlreadyExists = websiteRepo.hasSuchUrl(url);
                 false,
                 false,
                 null,
-        "bulk added - " + org.nanoboot.powerframework.time.moment.UniversalDateTime.now().toLong(), null, null);
+        "bulk added - " + timeAsLong, null, null);
 
         int numberOfNewWebsite = websiteRepo.create(newWebsite);
 
