@@ -40,7 +40,15 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
     private SqliteConnectionFactory sqliteConnectionFactory;
 
     @Override
-    public List<Website> list(int pageNumber, int pageSize, Boolean contentVerified, Boolean archiveVerified, Integer number, String url, Integer variantNumber) {
+    public List<Website> list(
+            int pageNumber,
+            int pageSize,
+            Boolean contentVerified,
+            Boolean archiveVerified,
+            String recording,
+            Integer number,
+            String url,
+            Integer variantNumber) {
         int numberEnd = pageSize * pageNumber;
         int numberStart = numberEnd - pageSize + 1;
 
@@ -78,6 +86,21 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
         if (variantNumber != null) {
             sb.append(" AND ").append(WebsiteTable.VARIANT_NUMBER)
                     .append(" =?");
+        }
+        if (recording != null && recording.equals("yes")) {
+            sb.append(" AND ")
+                    .append(WebsiteTable.RECORDING_ID)
+                    .append(" IS NOT NULL AND ")
+                    .append(WebsiteTable.RECORDING_ID)
+            .append("!='' ");
+        }
+
+        if (recording != null && recording.equals("no")) {
+            sb.append(" AND ")
+                    .append(WebsiteTable.RECORDING_ID)
+                    .append(" IS NULL OR ")
+                    .append(WebsiteTable.RECORDING_ID)
+                    .append("='' ");
         }
         String sql = sb.toString();
         System.err.println(sql);
@@ -139,7 +162,9 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 rs.getInt(WebsiteTable.CONTENT_VERIFIED) != 0,
                 rs.getInt(WebsiteTable.ARCHIVE_VERIFIED) != 0,
                 rs.getInt(WebsiteTable.VARIANT_NUMBER),
-                rs.getString(WebsiteTable.COMMENT)
+                rs.getString(WebsiteTable.COMMENT),
+                rs.getString(WebsiteTable.RECORDING_ID),
+                rs.getString(WebsiteTable.RECORDING_COMMENT)
         );
     }
 
@@ -160,12 +185,14 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(WebsiteTable.VERIFIED).append(",")
                 .append(WebsiteTable.CONTENT_VERIFIED).append(",")
                 .append(WebsiteTable.ARCHIVE_VERIFIED).append(",")
-                .append(WebsiteTable.COMMENT);
+                .append(WebsiteTable.COMMENT).append(",")
+                .append(WebsiteTable.RECORDING_ID).append(",")
+                .append(WebsiteTable.RECORDING_COMMENT);
         if (website.getVariantNumber() != null) {
             sb.append(",").append(WebsiteTable.VARIANT_NUMBER);
         }
         sb.append(")")
-                .append(" VALUES (?,?,?,?,  ?,?,?,?,?");
+                .append(" VALUES (?,?,?,?,  ?,?,?,?,? ,?,?");
         if (website.getVariantNumber() != null) {
             sb.append(",?");
         }
@@ -187,6 +214,8 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             stmt.setInt(++i, website.getContentVerified()? 1 : 0);
             stmt.setInt(++i, website.getArchiveVerified()? 1 : 0);
             stmt.setString(++i, website.getComment() == null ? "" : website.getComment());
+            stmt.setString(++i, website.getRecordingId() == null ? "" : website.getRecordingId());
+            stmt.setString(++i, website.getRecordingComment() == null ? "" : website.getRecordingComment());
             if (website.getVariantNumber() != null) {
                 stmt.setInt(++i, website.getVariantNumber());
             }
@@ -271,7 +300,9 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(WebsiteTable.CONTENT_VERIFIED).append("=?, ")
                 .append(WebsiteTable.ARCHIVE_VERIFIED).append("=?, ")
                 .append(WebsiteTable.VARIANT_NUMBER).append("=?, ")
-                .append(WebsiteTable.COMMENT).append("=? ")
+                .append(WebsiteTable.COMMENT).append("=?, ")
+                .append(WebsiteTable.RECORDING_ID).append("=?, ")
+                .append(WebsiteTable.RECORDING_COMMENT).append("=?")
                 .append(" WHERE ").append(WebsiteTable.NUMBER).append("=?");
 
         String sql = sb.toString();
@@ -290,6 +321,8 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             stmt.setInt(++i, website.getArchiveVerified() ? 1 : 0);
             stmt.setInt(++i, website.getVariantNumber());
             stmt.setString(++i, website.getComment());
+            stmt.setString(++i, website.getRecordingId());
+            stmt.setString(++i, website.getRecordingComment());
             //
             stmt.setInt(++i, website.getNumber());
 

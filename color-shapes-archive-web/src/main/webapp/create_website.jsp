@@ -152,7 +152,7 @@
                 param_contentVerified == null ? false : param_contentVerified.equals("1"),
                 param_archiveVerified == null ? false : param_archiveVerified.equals("1"),
                 (param_variantNumber == null || param_variantNumber.isEmpty()) ? null : Integer.valueOf(param_variantNumber),
-        "");
+        "", null, null);
 
         int numberOfNewWebsite = websiteRepo.create(newWebsite);
 

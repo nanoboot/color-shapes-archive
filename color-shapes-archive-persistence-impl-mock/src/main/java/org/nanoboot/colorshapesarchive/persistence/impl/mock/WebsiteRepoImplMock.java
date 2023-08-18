@@ -34,7 +34,15 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
     private int nextNumber = 1;
 
     @Override
-    public List<Website> list(int pageNumber, int pageSize, Boolean contentVerified, Boolean archiveVerified, Integer number, String url, Integer variantNumber) {
+    public List<Website> list(
+            int pageNumber,
+            int pageSize,
+            Boolean contentVerified,
+            Boolean archiveVerified,
+            String recording,
+            Integer number,
+            String url,
+            Integer variantNumber) {
         if (internalList.isEmpty()) {
             for (int i = 0; i < 50; i++) {
                 internalList.add(
@@ -49,7 +57,9 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
                                 true,
                                 true,
                                 null,
-                                ""));
+                                "",
+                                null,
+                                null));
             }
         }
         List<Website> finalList = new ArrayList<>();

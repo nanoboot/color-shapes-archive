@@ -145,6 +145,14 @@
             </tr>
 
             <tr>
+                <td><label for="comment">Recording comment</label></td>
+                <td style="text-align:left;">
+                    <input type="text" name="recordingComment" value="<%=website.getRecordingComment() == null ? "" : website.getRecordingComment()%>" size="50" >
+                    <input type="hidden" name="recordingId" value="<%=website.getRecordingId() == null ? "" : website.getRecordingId()%>" size="36" >
+                </td>
+            </tr>
+
+            <tr>
                 <td><a href="websites.jsp" style="font-size:130%;background:#dddddd;border:2px solid #bbbbbb;padding:2px;text-decoration:none;">Cancel</a></td>
                 <td style="text-align:right;"><input type="submit" value="Update"></td>
             </tr>
@@ -172,6 +180,9 @@
         String param_archiveVerified = request.getParameter("archiveVerified");
         String param_variantNumber = request.getParameter("variantNumber");
         String param_comment = request.getParameter("comment");
+        String param_recordingId = request.getParameter("recordingId");
+        String param_recordingComment = request.getParameter("recordingComment");
+        
         //
         if (param_webArchiveSnapshot != null && param_webArchiveSnapshot.isEmpty()) {
             param_webArchiveSnapshot = null;
@@ -198,7 +209,9 @@
                 param_contentVerified == null ? false : param_contentVerified.equals("1"),
                 param_archiveVerified == null ? false : param_archiveVerified.equals("1"),
                 (param_variantNumber == null || param_variantNumber.isEmpty()) ? null : Integer.valueOf(param_variantNumber),
-                param_comment);
+                param_comment,
+                param_recordingId,
+                param_recordingComment);
 
         websiteRepo.update(updatedWebsite);
     %>

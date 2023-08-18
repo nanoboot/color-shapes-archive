@@ -28,9 +28,17 @@ import org.nanoboot.colorshapesarchive.entity.Website;
  */
 public interface WebsiteRepo {
     default List<Website> list(int pageNumber,int pageSize) {
-        return list(pageNumber, pageSize, null, null, null, null, null);
+        return list(pageNumber, pageSize, null, null, null, null, null, null);
     }
-    List<Website> list(int pageNumber, int pageSize, Boolean contentVerified, Boolean archiveVerified, Integer number, String url, Integer variantNumber);
+    List<Website> list(
+            int pageNumber,
+            int pageSize,
+            Boolean contentVerified,
+            Boolean archiveVerified,
+            String recording,
+            Integer number,
+            String url,
+            Integer variantNumber);
     int create(Website website);
     Website read(Integer number);
     void update(Website website);

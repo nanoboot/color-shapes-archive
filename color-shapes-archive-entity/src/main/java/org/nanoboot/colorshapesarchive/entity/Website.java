@@ -45,6 +45,8 @@ public class Website {
     private Boolean archiveVerified;
     private Integer variantNumber;
     private String comment;
+    private String recordingId;
+    private String recordingComment;
     public String getArchiveUrl() {
         String archiveWebUrl = System.getProperty("color-shapes-archive.archiveWebUrl");
         

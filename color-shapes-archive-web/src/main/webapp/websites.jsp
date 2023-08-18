@@ -78,6 +78,7 @@
         
         String contentVerified = request.getParameter("contentVerified");
         String archiveVerified = request.getParameter("archiveVerified");
+        String recording = request.getParameter("recording");
         String pageNumber = request.getParameter("pageNumber");
         String previousNextPage = request.getParameter("PreviousNextPage");
         if (previousNextPage != null && !previousNextPage.isEmpty()) {
@@ -101,6 +102,13 @@
         <label for="variantNumber">Variant number </label><input type="text" name="variantNumber" value="<%=variantNumber != null ? variantNumber : ""%>" size="5" style="margin-right:10px;">
         <label for="contentVerified">Content verified</label><input type="checkbox" name="contentVerified"  <%=contentVerified != null && contentVerified.equals("1") ? "checked " : ""%>value="1">
         <label for="archiveVerified">Archive verified</label><input type="checkbox" name="archiveVerified"  <%=archiveVerified != null && archiveVerified.equals("1") ? "checked " : ""%>value="1">
+        <label for="recording">Recording</label>
+        <select id="recording" name="recording">
+            <option value="all">All</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
         <input type="submit" value="Filter" style="margin-left:20px;height:40px;">
         <br>
         <br>
@@ -115,6 +123,7 @@
                 10,
                 contentVerified == null ? null : Boolean.valueOf(contentVerified.equals("1")),
                 archiveVerified == null ? null : Boolean.valueOf(archiveVerified.equals("1")),
+                recording,
                 number == null || number.isEmpty() ? null : Integer.valueOf(number),
                 url == null || url.isEmpty() ? null : url,
                 variantNumber == null || variantNumber.isEmpty() ? null : Integer.valueOf(variantNumber)
@@ -200,6 +209,7 @@
                 <%=w.getDeadUrl().booleanValue() ? "<span class=\"grey_flag\" title=\"Dead url\">†</span>" : ""%>
                 <%=w.getContentVerified().booleanValue() ? "<span class=\"orange_flag\" title=\"Content verified\">C</span>" : ""%>
                 <%=w.getArchiveVerified().booleanValue() ? "<span class=\"green_flag\" title=\"Archive verified\">A</span>" : ""%>
+                <%=(w.getRecordingId() != null && !w.getRecordingId().isEmpty()) ? "<span class=\"red_flag\" title=\"Recording in progress\">R</span>" : ""%>
             </td>
             <td><%=w.getComment() == null ? EMPTY : (w.getComment().length() > 16 ? w.getComment().substring(0,16) + "..." : w.getComment())%></td>
 

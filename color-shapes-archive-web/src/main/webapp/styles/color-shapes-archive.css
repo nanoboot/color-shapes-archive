@@ -89,7 +89,7 @@ dt {
 }
 
 table {
-    font-size:125%;
+    font-size:100%;
     margin-left: 20px;
 }
 
@@ -118,7 +118,7 @@ iframe {
     margin: 10px;
 }
 
-.grey_flag, .yellow_flag, .orange_flag, .green_flag {
+.grey_flag, .yellow_flag, .orange_flag, .green_flag, .red_flag {
     border: 2px solid black;
     padding: 4px;
     margin-left:4px;
@@ -141,13 +141,17 @@ iframe {
     background:#33ff33;
 }
 
+.red_flag {
+    background:#ff0000;
+}
+
 form {
     margin-left:20px;
     margin-bottom:40px;
 }
 
 form input, form label {
-    font-size:130%;
+    font-size:120%;
 }
 
 input[type="checkbox"] {
@@ -157,7 +161,7 @@ input[type="checkbox"] {
 }
 
 ._select {
-    font-size:130%;
+    font-size:120%;
 }
 form table tr:hover {
     background:white;

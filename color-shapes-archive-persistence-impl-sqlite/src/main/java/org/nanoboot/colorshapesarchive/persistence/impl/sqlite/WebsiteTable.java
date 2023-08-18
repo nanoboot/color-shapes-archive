@@ -38,6 +38,8 @@ public class WebsiteTable {
     //
     public static final String VARIANT_NUMBER = "VARIANT_NUMBER";
     public static final String COMMENT = "COMMENT";
+    public static final String RECORDING_ID = "RECORDING_ID";
+    public static final String RECORDING_COMMENT = "RECORDING_COMMENT";
     
     
     private WebsiteTable() {
