@@ -343,4 +343,46 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
         }
     }
 
+        public boolean hasSuchUrl(String url) {
+    
+        if (url == null) {
+            throw new RuntimeException("url is null");
+        }
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append("SELECT count(*) as count FROM ")
+                .append(WebsiteTable.TABLE_NAME)
+                .append(" WHERE ")
+                .append(WebsiteTable.URL)
+                .append("=?");
+
+        String sql = sb.toString();
+        int i = 0;
+        ResultSet rs = null;
+        try (
+                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+
+            stmt.setString(++i, url);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Integer count = rs.getInt("count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        throw new IllegalStateException(this.getClass().getName() + "." + "hasSuchUrl()");
+}
 }

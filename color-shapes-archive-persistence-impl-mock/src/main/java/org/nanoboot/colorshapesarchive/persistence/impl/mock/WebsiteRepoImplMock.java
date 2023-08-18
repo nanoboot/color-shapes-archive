@@ -127,5 +127,7 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
         internalList.add(website);
 
     }
-
+    public boolean hasSuchUrl(String url) {
+        return false;
+    }
 }

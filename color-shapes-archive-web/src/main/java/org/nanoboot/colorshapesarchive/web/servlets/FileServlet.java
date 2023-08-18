@@ -42,7 +42,7 @@ public class FileServlet extends HttpServlet {
             throws ServletException, IOException {
 
         if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(req)) {
-            resp.getOutputStream().println("Access forbidden");
+            resp.getOutputStream().println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
             return;
         }
         //resp.setContentType("text/plain");

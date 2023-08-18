@@ -159,6 +159,19 @@ input[type="checkbox"] {
     height:35px;
     content: "\f00d";
 }
+input[type="submit"] {
+    padding:5px 10px;
+}
+textarea::placeholder {
+  opacity: 0.6;
+  color: grey;
+  font-size:100%;
+}
+textarea{
+    font-size:120%;
+    font-family:courier;
+    margin-bottom:10px;
+}
 
 ._select {
     font-size:120%;

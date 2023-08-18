@@ -37,11 +37,13 @@
 
     <span class="nav"><a href="index.jsp">Home</a>
         >> <a href="websites.jsp">Websites</a>
-        >> <a href="create_website.jsp" class="nav_a_current">Add Website</a></span>
+        >> <a href="create_website.jsp" class="nav_a_current">Add Website</a>
+     <a href="create_websites.jsp">Add Websites</a>
+    </span>
         
     <%
         if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
-            out.println("Access forbidden");
+            out.println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
             throw new jakarta.servlet.jsp.SkipPageException();
         }
     %>
@@ -116,6 +118,7 @@
 
     </form>
 
+
     <% } else { %>
 
     <%
@@ -141,6 +144,12 @@
             param_language = null;
         }
         //
+        if(param_url.endsWith("/")) {
+        org.nanoboot.colorshapesarchive.web.misc.utils.Utils.throwErrorInJsp("Adding failed, because URL ends with /", out);
+        }
+        if(websiteRepo.hasSuchUrl(param_url)) {
+        org.nanoboot.colorshapesarchive.web.misc.utils.Utils.throwErrorInJsp("Adding failed, because this URL already exists", out);
+        }
         Website newWebsite = new Website(
                 0,
                 param_url,

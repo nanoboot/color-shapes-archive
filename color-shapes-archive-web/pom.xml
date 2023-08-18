@@ -68,6 +68,10 @@
             <version>2.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>org.nanoboot.powerframework</groupId>
+            <artifactId>power-time</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>

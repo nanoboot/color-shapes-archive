@@ -161,8 +161,11 @@ if(!org.nanoboot.colorshapesarchive.web.misc.utils.Utils.runProcess("wb-manager 
 websiteRepo.update(website);
 java.io.File tmpCollection = new java.io.File(pywbRootDirPath + "/collections/" + website.getRecordingId());
 java.io.File website_number = new java.io.File(tmpCollection, "/website_number.txt");
+java.io.File recording_comment = new java.io.File(tmpCollection, "/recording_comment.txt");
 
 org.nanoboot.powerframework.io.utils.FileUtils.writeTextToFile(website.getNumber().toString(), website_number);
+org.nanoboot.powerframework.io.utils.FileUtils.writeTextToFile(website.getRecordingComment() == null ? "" : website.getRecordingComment(), recording_comment);
+
     }
         //#####
                   if(recording_action.equals("Save")&&recordingEnabled){

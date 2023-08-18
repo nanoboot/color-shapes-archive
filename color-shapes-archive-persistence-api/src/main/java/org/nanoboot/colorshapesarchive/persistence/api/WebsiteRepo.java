@@ -45,5 +45,6 @@ public interface WebsiteRepo {
     default void delete(Integer Number) {
         throw new UnsupportedOperationException();
     }
+    boolean hasSuchUrl(String url);
     
 }

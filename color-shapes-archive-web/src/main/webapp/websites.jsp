@@ -45,6 +45,7 @@
             <% boolean canUpdate = org.nanoboot.colorshapesarchive.web.misc.utils.Utils.canUpdate(request); %>
 <% if(canUpdate) { %>
 >> <a href="create_website.jsp">Add Website</a>
+     <a href="create_websites.jsp">Add Websites</a>
 <% } %>
 
 

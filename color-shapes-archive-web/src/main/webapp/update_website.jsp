@@ -65,7 +65,7 @@
 
     <%
         if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
-            out.println("Access forbidden");
+            out.println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
             throw new jakarta.servlet.jsp.SkipPageException();
         }
     %>
@@ -154,7 +154,15 @@
 
             <tr>
                 <td><a href="websites.jsp" style="font-size:130%;background:#dddddd;border:2px solid #bbbbbb;padding:2px;text-decoration:none;">Cancel</a></td>
-                <td style="text-align:right;"><input type="submit" value="Update"></td>
+                <td style="text-align:right;">
+                
+                <input type="submit" value="Update">
+                </td>
+            </tr>
+            <tr style="height:30px;"></tr>
+            <tr>
+                <td><label for"confirmClear">Confirm clear:</label><input type="checkbox" name="confirmClear" value="1"></td>
+                <td style="text-align:right;"><input type="submit" name="clearSubmit" value="Clear (!will delete this website!)"></td>
             </tr>
         </table>
         <b style="color:red;font-size:200%;margin-left:20px;">*</b> ...mandatory
@@ -212,6 +220,23 @@
                 param_comment,
                 param_recordingId,
                 param_recordingComment);
+        if(request.getParameter("confirmClear") != null && request.getParameter("confirmClear").equals("1") && request.getParameter("clearSubmit") != null && request.getParameter("clearSubmit").equals("Clear (!will delete this website!)")) {
+           updatedWebsite = new Website(
+                Integer.valueOf(number),
+                "freefree" + ((int)(Math.random() * 1000000)) + ((int)(Math.random() * 1000000)),
+                null,
+                null,
+                null,
+                false,
+                false,
+                false,
+                false,
+                0,
+                null,
+                null,
+                null);
+        }
+          
 
         websiteRepo.update(updatedWebsite);
     %>

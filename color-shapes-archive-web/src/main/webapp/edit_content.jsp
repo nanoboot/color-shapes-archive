@@ -85,7 +85,7 @@
 
         <%
             if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
-                out.println("Access forbidden");
+                out.println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
                 throw new jakarta.servlet.jsp.SkipPageException();
             }
         %>
