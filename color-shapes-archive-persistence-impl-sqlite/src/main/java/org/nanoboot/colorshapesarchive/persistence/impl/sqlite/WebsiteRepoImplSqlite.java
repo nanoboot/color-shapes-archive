@@ -58,8 +58,14 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append("SELECT * FROM ")
                 .append(WebsiteTable.TABLE_NAME)
                 .append(" WHERE ");
-        boolean pagingIsEnabled = contentVerified == null && archiveVerified == null && number == null && url == null && variantNumber == null;
+        boolean pagingIsEnabled = contentVerified == null && (archiveVerified == null || archiveVerified.equals("all"))  && number == null && url == null && variantNumber == null;
 
+        System.err.println("pagingIsEnabled=" + pagingIsEnabled);
+        System.err.println("contentVerified=" + contentVerified);
+        System.err.println("number=" + number);
+        System.err.println("url=" + url);
+        System.err.println("variantNumber=" + variantNumber);
+        System.err.println("archiveVerified=" + archiveVerified);
         if (pagingIsEnabled) {
             sb.append(WebsiteTable.NUMBER)
                     .append(" BETWEEN ? AND ? ");
