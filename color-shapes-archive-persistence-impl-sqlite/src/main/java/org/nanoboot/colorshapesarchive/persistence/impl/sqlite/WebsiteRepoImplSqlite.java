@@ -60,12 +60,6 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(" WHERE ");
         boolean pagingIsEnabled = contentVerified == null && (archiveVerified == null || archiveVerified.equals("all"))  && number == null && url == null && variantNumber == null;
 
-        System.err.println("pagingIsEnabled=" + pagingIsEnabled);
-        System.err.println("contentVerified=" + contentVerified);
-        System.err.println("number=" + number);
-        System.err.println("url=" + url);
-        System.err.println("variantNumber=" + variantNumber);
-        System.err.println("archiveVerified=" + archiveVerified);
         if (pagingIsEnabled) {
             sb.append(WebsiteTable.NUMBER)
                     .append(" BETWEEN ? AND ? ");
@@ -236,11 +230,11 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             //
 
             stmt.execute();
-            System.out.println(stmt.toString());
+            //System.out.println(stmt.toString());
             ResultSet rs = connection.createStatement().executeQuery("select last_insert_rowid() as last");
             while (rs.next()) {
                 int numberOfNewWebsite = rs.getInt("last");
-                System.out.println("numberOfNewWebsite=" + numberOfNewWebsite);
+                //System.out.println("numberOfNewWebsite=" + numberOfNewWebsite);
                 return numberOfNewWebsite;
             }
 
@@ -341,7 +335,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             stmt.setInt(++i, website.getNumber());
 
             int numberOfUpdatedRows = stmt.executeUpdate();
-            System.out.println("numberOfUpdatedRows=" + numberOfUpdatedRows);
+            //System.out.println("numberOfUpdatedRows=" + numberOfUpdatedRows);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (ClassNotFoundException ex) {

@@ -1,6 +1,6 @@
 # Color Shapes Archive
 
- * This is a project, which has a goal to collect all webpages from Internet, which are related to "Color Lines" game and its clones 
+ * This is a project intended for future generations, which has a goal to collect all webpages from Internet, which are related to "Color Lines" game and its clones
  * It is collection of static "Color Lines" related web pages and its clones
  
 ## Local setup
