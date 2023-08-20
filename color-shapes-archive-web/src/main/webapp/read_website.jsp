@@ -263,8 +263,8 @@ org.nanoboot.powerframework.io.utils.FileUtils.writeTextToFile(hash, hexFile);
         tmpArchiveWebUrlBase=(tmpArchiveWebUrlBase.startsWith("localhost") ? "http://" : "") + tmpArchiveWebUrlBase.substring(0,tmpArchiveWebUrlBase.length() - tmpArray[tmpArray.length - 1 ].length() - 1);
         
                 %>
-                <button style="padding:2px;font-size:110%;margin-left:15px;" onclick=" window.open('<%=tmpArchiveWebUrlBase +"/" + website.getRecordingId() + "/record/" + website.getUrl()%>','_blank')">Record</button>
-                 <button style="padding:2px;font-size:110%;" onclick=" window.open('<%=tmpArchiveWebUrlBase +"/" + website.getRecordingId() + "/" + website.getUrl()%>','_blank')">Replay</button>
+                <a style="padding:2px;font-size:110%;margin-left:15px;" href="<%=tmpArchiveWebUrlBase +"/" + website.getRecordingId() + "/record/" + website.getUrl()%>" target="_blank">Record</a>
+                <a style="padding:2px;font-size:110%;" href="<%=tmpArchiveWebUrlBase +"/" + website.getRecordingId() + "/" + website.getUrl()%>" target="_blank">Replay</a>
                  <% } %>
                  
                  <% } %>
