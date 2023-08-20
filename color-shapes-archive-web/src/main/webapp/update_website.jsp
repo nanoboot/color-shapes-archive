@@ -159,7 +159,7 @@
                 <input type="submit" value="Update">
                 </td>
             </tr>
-            <tr style="height:30px;"></tr>
+            <tr style="height:100px;"></tr>
             <tr>
                 <td><label for"confirmClear">Confirm clear:</label><input type="checkbox" name="confirmClear" value="1"></td>
                 <td style="text-align:right;"><input type="submit" name="clearSubmit" value="Clear (!will delete this website!)"></td>
