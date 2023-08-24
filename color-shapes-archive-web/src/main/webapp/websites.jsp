@@ -81,6 +81,7 @@
         String archiveVerified = request.getParameter("archiveVerified");
         String recording = request.getParameter("recording");
         String pageNumber = request.getParameter("pageNumber");
+        String pageSize = request.getParameter("pageSize");
         String previousNextPage = request.getParameter("PreviousNextPage");
         if (previousNextPage != null && !previousNextPage.isEmpty()) {
             if (previousNextPage.equals("Previous page")) {
@@ -128,7 +129,7 @@
     <%
         List<Website> websites = websiteRepo.list(
                 pageNumberInt,
-                10,
+                ((pageSize == null || pageSize.isEmpty()) ? 10 : Integer.valueOf(pageSize)),
                 contentVerified == null ? null : Boolean.valueOf(contentVerified.equals("1")),
                 archiveVerified,
                 recording,
