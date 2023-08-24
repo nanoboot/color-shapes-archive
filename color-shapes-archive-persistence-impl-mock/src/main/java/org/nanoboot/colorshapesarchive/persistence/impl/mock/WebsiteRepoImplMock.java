@@ -130,4 +130,14 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
     public boolean hasSuchUrl(String url) {
         return false;
     }
+
+    @Override
+    public long archived() {
+        return 0;
+    }
+
+    @Override
+    public long notArchived() {
+        return 0;
+    }
 }

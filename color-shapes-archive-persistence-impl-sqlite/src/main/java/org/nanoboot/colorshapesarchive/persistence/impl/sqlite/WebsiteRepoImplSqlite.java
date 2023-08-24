@@ -385,4 +385,56 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
         }
         throw new IllegalStateException(this.getClass().getName() + "." + "hasSuchUrl()");
 }
+
+    @Override
+    public long archived() {
+        return archived(true);
+    }
+
+    @Override
+    public long notArchived() {
+        return archived(false);
+    }
+    private long archived(boolean b) {
+        
+        StringBuilder sb = new StringBuilder();
+        sb
+                .append("SELECT count(*) as count FROM ")
+                .append(WebsiteTable.TABLE_NAME)
+                .append(" WHERE ");
+        
+                    sb.append(WebsiteTable.ARCHIVE_VERIFIED)
+                    .append(" IS NOT NULL AND ")
+                    .append(WebsiteTable.ARCHIVE_VERIFIED)
+            .append("= ").append(b ? 1 : 0);
+       
+
+        String sql = sb.toString();
+        System.err.println(sql);
+        ResultSet rs = null;
+        try (
+                 Connection connection = sqliteConnectionFactory.createConnection();  PreparedStatement stmt = connection.prepareStatement(sql);) {
+
+
+            System.err.println(stmt.toString());
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                return rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(WebsiteRepoImplSqlite.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return 0;
+    }
 }

@@ -46,5 +46,7 @@ public interface WebsiteRepo {
         throw new UnsupportedOperationException();
     }
     boolean hasSuchUrl(String url);
+    long archived();
+    long notArchived();
     
 }

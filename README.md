@@ -13,6 +13,7 @@
 ## Used tools
  * Mozilla Firefox
    * Used to visit and save web pages
+ * Google Chrome
  * Offline Explorer
  * Web HTTP Tracker
  * Netbeans IDE
@@ -21,6 +22,8 @@
  * Save Page WE (Firefox add-on)
  * SimpleScreenRecorder
  * Easy Youtube Video Downloader
+ * PyWb
+ * Warcit
  * Web Archive (Firefox add-on)
  * Webrecorder ArchiveWeb.page (Google Chrome add-on)
  * WARCreate (Google Chrome add-on)
