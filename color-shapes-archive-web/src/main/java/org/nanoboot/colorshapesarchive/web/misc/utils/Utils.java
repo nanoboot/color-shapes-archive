@@ -23,9 +23,16 @@ import dev.mccue.guava.io.Files;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.SkipPageException;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.asciidoctor.Asciidoctor;
@@ -99,30 +106,60 @@ public class Utils {
 
         String asciidocCompiled = asciidoctor
                 .convert(text, new HashMap<String, Object>());
-        
+
         return "\n\n\n" + asciidocCompiled + "\n\n\n";
     }
+
     public static boolean runProcess(String command, File workingDirectory) {
+        class StreamGobbler implements Runnable {
+
+            private InputStream inputStream;
+            private Consumer<String> consumer;
+
+            public StreamGobbler(InputStream inputStream, Consumer<String> consumer) {
+                this.inputStream = inputStream;
+                this.consumer = consumer;
+            }
+
+            @Override
+            public void run() {
+                new BufferedReader(new InputStreamReader(inputStream)).lines()
+                        .forEach(consumer);
+            }
+        }
         try {
             boolean isWindows = System.getProperty("os.name")
                     .toLowerCase().startsWith("windows");
             ProcessBuilder builder = new ProcessBuilder();
             builder.command(isWindows ? "cmd.exe" : "sh", isWindows ? "/c" : "-c", command);
-            
+
             builder.directory(workingDirectory);
             Process process = builder.start();
+            StreamGobbler streamGobbler = 
+ 
+            new StreamGobbler(process.getInputStream(), System.out::println);
             
-            return process.waitFor() == 0;
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            Future<?> future = executorService.submit(streamGobbler);
+
+
+            int resultCode = process.waitFor();
+            boolean result = resultCode == 0;
+            System.out.println("resultCode=" + resultCode);
+            executorService.shutdownNow();
+            return result;
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException(ex);
         }
     }
+
     public static void throwErrorInJsp(String error, jakarta.servlet.jsp.JspWriter out) throws SkipPageException, IOException {
         out.println("<span style=\"font-weight:bold;color:red;\">" + error + "</span>");
         throw new jakarta.servlet.jsp.SkipPageException();
     }
-       public static String calculateSHA512Hash(File file) {
+
+    public static String calculateSHA512Hash(File file) {
         try {
             return Files.hash(file, Hashing.sha512()).toString();
         } catch (IOException ex) {

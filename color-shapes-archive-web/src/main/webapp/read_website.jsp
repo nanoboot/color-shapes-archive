@@ -154,9 +154,10 @@ boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("wind
                   website.setRecordingId(java.util.UUID.randomUUID().toString());
                   //https://www.baeldung.com/run-shell-command-in-java
                   
-
-if(!org.nanoboot.colorshapesarchive.web.misc.utils.Utils.runProcess("wb-manager init " + website.getRecordingId(), pywbRootDir))
-                org.nanoboot.colorshapesarchive.web.misc.utils.Utils.throwErrorInJsp("Creating PyWB collection failed.", out);
+                  boolean result = org.nanoboot.colorshapesarchive.web.misc.utils.Utils.runProcess("wb-manager init " + website.getRecordingId(), pywbRootDir);
+                  
+                  if(!result)
+                  org.nanoboot.colorshapesarchive.web.misc.utils.Utils.throwErrorInJsp("Creating PyWB collection failed.", out);
                 
 websiteRepo.update(website);
 java.io.File tmpCollection = new java.io.File(pywbRootDirPath + "/collections/" + website.getRecordingId());
