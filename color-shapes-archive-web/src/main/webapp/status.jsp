@@ -29,7 +29,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>List websites - Color Shapes Archive</title>
+        <title>Archiving status for websites - Color Shapes Archive</title>
         <link rel="stylesheet" type="text/css" href="styles/color-shapes-archive.css">
         <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="32x32">
     </head>
@@ -77,7 +77,7 @@
     <%
         double archived = (double) websiteRepo.archived();
         double notArchived = (double)websiteRepo.notArchived();
-        double total = (double)(archived + notArchived);
+        int total = (int)(archived + notArchived);
     %>
     <p style="margin-left:20px;">
     Archived: <%=archived%> (<%=((int)(archived/total*100))%>%) <br>

@@ -64,7 +64,35 @@
     <form action="create_websites.jsp" method="post">
         <label for="urls">Urls <b style="color:red;font-size:130%;">*</b>: </label><br>
 
-        <textarea id="urls" name="urls" rows="20" cols="100" placeholder="Insert here list of URLS - each URL on one row."></textarea><br>
+        <textarea id="urls" name="urls" rows="20" cols="100" placeholder="Insert here list of URLS - each URL on one row.">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</textarea><br>
        
             <a href="websites.jsp" style="font-size:130%;background:#dddddd;border:2px solid #bbbbbb;padding:2px;text-decoration:none;margin-right:80px;">Cancel</a>
             <input type="submit" value="Add urls">
