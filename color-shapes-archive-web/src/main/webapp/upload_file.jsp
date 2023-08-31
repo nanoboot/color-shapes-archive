@@ -173,6 +173,10 @@
                                 if(!parentDir.exists()) {
                                     parentDir.mkdirs();
                                 }
+                                File numberDir = new File(filePath + number);
+                                if(!numberDir.exists()) {
+                                    numberDir.mkdirs();
+                                }
                                 new File(tmpFileName).renameTo(newFile);
                                 ////
                                 byte[] sha512sumByteArray = MessageDigest.getInstance("SHA-512").digest(Files.readAllBytes(Paths.get(newFile.getAbsolutePath())));
