@@ -51,6 +51,16 @@
     <%
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         WebsiteRepo websiteRepo = context.getBean("websiteRepoImplSqlite", WebsiteRepo.class);
+        java.util.List<Website> freefreeWebsites = websiteRepo.list(
+                1,
+                100,
+                null,
+                null,
+                null,
+                null,
+                "freefree",
+                null
+        );
     %>
 
 
@@ -121,6 +131,24 @@ boolean failedBecauseAlreadyExists = websiteRepo.hasSuchUrl(url);
                       Website newWebsite = null;
         
         if(!failed) {
+        if(!freefreeWebsites.isEmpty()) {
+        Website freefreeWebsite = freefreeWebsites.get(0);
+        freefreeWebsites.remove(0);
+        newWebsite = new Website(
+                freefreeWebsite.getNumber(),
+                url,
+                null,
+                null,
+                null,
+                false,
+                false,
+                false,
+                false,
+                0,
+        "bulk added - " + timeAsLong, null, null);
+        websiteRepo.update(newWebsite);
+        
+        } else {
          newWebsite = new Website(
                 0,
                 url,
@@ -137,6 +165,7 @@ boolean failedBecauseAlreadyExists = websiteRepo.hasSuchUrl(url);
         int numberOfNewWebsite = websiteRepo.create(newWebsite);
 
         newWebsite.setNumber(numberOfNewWebsite);
+        }
       } %>
 
 

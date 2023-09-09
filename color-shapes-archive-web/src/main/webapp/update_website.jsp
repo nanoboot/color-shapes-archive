@@ -220,7 +220,7 @@
                 param_comment,
                 param_recordingId,
                 param_recordingComment);
-        if(request.getParameter("confirmClear") != null && request.getParameter("confirmClear").equals("1") && request.getParameter("clearSubmit") != null && request.getParameter("clearSubmit").equals("Clear (!will delete this website!)")) {
+        if(param_archives == null && request.getParameter("confirmClear") != null && request.getParameter("confirmClear").equals("1") && request.getParameter("clearSubmit") != null && request.getParameter("clearSubmit").equals("Clear (!will delete this website!)")) {
            updatedWebsite = new Website(
                 Integer.valueOf(number),
                 "freefree" + ((int)(Math.random() * 1000000)) + ((int)(Math.random() * 1000000)),
