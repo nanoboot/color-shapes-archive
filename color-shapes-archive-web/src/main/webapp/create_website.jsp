@@ -80,18 +80,6 @@
                 <td style="text-align:left;"><input type="text" name="language" value="" size="4" ></td>
             </tr>
             <tr>
-                <td><label for="formatted">Formatted:</label></td>
-                <td style="text-align:left;">
-                    <input type="checkbox" name="formatted" value="1" > <b>⚠OBSOLETE ATTRIBUTE⚠</b>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="verified">Verified:</label></td>
-                <td style="text-align:left;">
-                    <input type="checkbox" name="verified" value="1" > <b>⚠OBSOLETE ATTRIBUTE⚠</b>
-                </td>
-            </tr>
-            <tr>
                 <td><label for="contentVerified">Content verified:</label></td>
                 <td style="text-align:left;">
                     <input type="checkbox" name="contentVerified" value="1" >
@@ -126,9 +114,6 @@
 
         String param_language = request.getParameter("language");
 
-        
-        String param_formatted = request.getParameter("formatted");
-        String param_verified = request.getParameter("verified");
         String param_contentVerified = request.getParameter("contentVerified");
         String param_archiveVerified = request.getParameter("archiveVerified");
         String param_variantNumber = request.getParameter("variantNumber");
@@ -156,8 +141,6 @@
                 null, 
                 param_webArchiveSnapshot,
                 param_language,
-                param_formatted == null ? false : param_formatted.equals("1"),
-                param_verified == null ? false : param_verified.equals("1"),
                 param_contentVerified == null ? false : param_contentVerified.equals("1"),
                 param_archiveVerified == null ? false : param_archiveVerified.equals("1"),
                 (param_variantNumber == null || param_variantNumber.isEmpty()) ? null : Integer.valueOf(param_variantNumber),
@@ -177,8 +160,6 @@
     url = <%=param_url%><br>
     webArchiveSnapshot = <%=param_webArchiveSnapshot%><br>
     language = <%=param_language%><br>
-    formatted = <%=param_formatted%><br>
-    verified = <%=param_verified%><br>
     content verified = <%=param_contentVerified%><br>
     archive verified = <%=param_archiveVerified%><br>
     variantNumber = <%=param_variantNumber%><br>

@@ -165,8 +165,6 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 rs.getString(WebsiteTable.ARCHIVES),
                 rs.getString(WebsiteTable.WEB_ARCHIVE_SNAPSHOT),
                 rs.getString(WebsiteTable.LANGUAGE),
-                rs.getInt(WebsiteTable.FORMATTED) != 0,
-                rs.getInt(WebsiteTable.VERIFIED) != 0,
                 rs.getInt(WebsiteTable.CONTENT_VERIFIED) != 0,
                 rs.getInt(WebsiteTable.ARCHIVE_VERIFIED) != 0,
                 rs.getInt(WebsiteTable.VARIANT_NUMBER),
@@ -189,8 +187,6 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(WebsiteTable.LANGUAGE).append(",")
                 //
                 
-                .append(WebsiteTable.FORMATTED).append(",")
-                .append(WebsiteTable.VERIFIED).append(",")
                 .append(WebsiteTable.CONTENT_VERIFIED).append(",")
                 .append(WebsiteTable.ARCHIVE_VERIFIED).append(",")
                 .append(WebsiteTable.COMMENT).append(",")
@@ -200,7 +196,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             sb.append(",").append(WebsiteTable.VARIANT_NUMBER);
         }
         sb.append(")")
-                .append(" VALUES (?,?,?,?,  ?,?,?,?,? ,?,?");
+                .append(" VALUES (?,?,?,?,  ?,?,? ,?,?");
         if (website.getVariantNumber() != null) {
             sb.append(",?");
         }
@@ -217,8 +213,6 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             stmt.setString(++i, website.getLanguage());
             //
             
-            stmt.setInt(++i, website.getFormatted() ? 1 : 0);
-            stmt.setInt(++i, website.getVerified() ? 1 : 0);
             stmt.setInt(++i, website.getContentVerified()? 1 : 0);
             stmt.setInt(++i, website.getArchiveVerified()? 1 : 0);
             stmt.setString(++i, website.getComment() == null ? "" : website.getComment());
@@ -303,8 +297,6 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append(WebsiteTable.LANGUAGE).append("=?, ")
                 //
                 
-                .append(WebsiteTable.FORMATTED).append("=?, ")
-                .append(WebsiteTable.VERIFIED).append("=?, ")
                 .append(WebsiteTable.CONTENT_VERIFIED).append("=?, ")
                 .append(WebsiteTable.ARCHIVE_VERIFIED).append("=?, ")
                 .append(WebsiteTable.VARIANT_NUMBER).append("=?, ")
@@ -323,8 +315,6 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
             stmt.setString(++i, website.getWebArchiveSnapshot());
             stmt.setString(++i, website.getLanguage());
             //
-            stmt.setInt(++i, website.getFormatted() ? 1 : 0);
-            stmt.setInt(++i, website.getVerified() ? 1 : 0);
             stmt.setInt(++i, website.getContentVerified() ? 1 : 0);
             stmt.setInt(++i, website.getArchiveVerified() ? 1 : 0);
             stmt.setInt(++i, website.getVariantNumber());

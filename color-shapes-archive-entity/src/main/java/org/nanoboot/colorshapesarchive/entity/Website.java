@@ -39,8 +39,6 @@ public class Website {
     private String archives;
     private String webArchiveSnapshot;
     private String language;
-    private Boolean formatted;
-    private Boolean verified;
     private Boolean contentVerified;
     private Boolean archiveVerified;
     private Integer variantNumber;

@@ -142,8 +142,6 @@ boolean failedBecauseAlreadyExists = websiteRepo.hasSuchUrl(url);
                 null,
                 false,
                 false,
-                false,
-                false,
                 0,
         "bulk added - " + timeAsLong, null, null);
         websiteRepo.update(newWebsite);
@@ -155,8 +153,6 @@ boolean failedBecauseAlreadyExists = websiteRepo.hasSuchUrl(url);
                 null,
                 null,
                 null,
-                false,
-                false,
                 false,
                 false,
                 null,

@@ -53,8 +53,6 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
                                 "abc",
                                 "en",
                                 true,
-                                true,
-                                true,
                                 null,
                                 null,
                                 "",
