@@ -276,6 +276,19 @@ org.nanoboot.powerframework.io.utils.FileUtils.writeTextToFile(hash, hexFile);
     </table>
         <p class="margin_left_and_big_font"><a href="list_archives.jsp?number=<%=website.getNumber()%>" target="_blank">List archives</a></p>
         
+        <% if(website.getArchiveUrl() != null && !website.getArchiveUrl().isEmpty()) {%>
+                    
+                    <script>
+                        function show_pywb_iframe() {
+                        document.getElementById('pywb_iframe').innerHTML='<iframe style="width: 100%; height: 100%" src="<%=website.getArchiveUrl()%>"></iframe>'
+                    }
+                    </script>
+                    <span class="margin_left_and_big_font"><button onclick="show_pywb_iframe()">Show website from archive</button></span>
+        <div id="pywb_iframe" class="margin_left_and_big_font"></div>
+                    <% } %>
+        
+        
+        
         <div id="footer">Content available under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License.">Creative Commons Attribution-ShareAlike 4.0 International License</a> <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License."><img alt="Content available under a Creative Commons Attribution-ShareAlike 4.0 International License." style="border-width:0" src="images/creative_commons_attribution_share_alike_4.0_international_licence_88x31.png" /></a></div>
 </body>
 </html>
