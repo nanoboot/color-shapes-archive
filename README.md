@@ -36,6 +36,7 @@
  * How to create PyWB collection? wb-manager init lines-{website number}
  * How to convert single HTML file to WARC? warcit http://www.iana.org/ ./www.iana.org/ 
  * How to merge WARC files into one? cat *.warc.gz > tmp&&mv tmp tmp.warc.gz
+ * warcit https://www.youtube.com/watch?v= FwE6K49sU8 && warcit https://www.youtube.com/ description.txt&&warcit https://www.youtube.com/ video.mp4 &&cat *.warc.gz > tmp&&mv tmp tmp.warc.gz
  * How to clear Redis? redis-cli FLUSHALL
  * Where to view WARC file? https://replayweb.page
  * Disable cross-origin policy in Firefox (warning: this is a security bad thing): about:config > security.fileuri.strict_origin_policy

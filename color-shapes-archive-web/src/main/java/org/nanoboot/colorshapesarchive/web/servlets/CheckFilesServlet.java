@@ -32,6 +32,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.nanoboot.colorshapesarchive.web.misc.utils.Utils;
 
 @WebServlet(
         name = "CheckFilesServlet",
@@ -91,13 +92,7 @@ public class CheckFilesServlet extends HttpServlet {
                 }
                 sb.append("<tr>");
                 {
-                    ////
-                    byte[] sha512sumByteArray = calculateSha512(file);
-                    StringBuilder sb2 = new StringBuilder(sha512sumByteArray.length * 2);
-                    for (byte b : sha512sumByteArray) {
-                        sb2.append(String.format("%02x", b));
-                    }
-                    String realHexString = sb2.toString();
+                    String realHexString = calculateSha512(file);
                     String expectedHexString = "";
                     File hexFile = new File(file.getParentFile(), file.getName() + ".sha512");
 
@@ -147,13 +142,7 @@ public class CheckFilesServlet extends HttpServlet {
      
                 sb.append("<tr>");
                 {
-                    ////
-                    byte[] sha512sumByteArray = calculateSha512(archive);
-                    StringBuilder sb2 = new StringBuilder(sha512sumByteArray.length * 2);
-                    for (byte b : sha512sumByteArray) {
-                        sb2.append(String.format("%02x", b));
-                    }
-                    String realHexString = sb2.toString();
+                    String realHexString = calculateSha512(archive);
                     String expectedHexString = "";
                     File hexFile = new File(archive.getParentFile().getParentFile().getAbsolutePath() + "/archiveCheckSums/", archive.getName() + ".sha512");
 
@@ -199,12 +188,7 @@ public class CheckFilesServlet extends HttpServlet {
 
     }
 
-    private static byte[] calculateSha512(File file) {
-        try {
-            return MessageDigest.getInstance("SHA-512").digest(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
-        } catch (IOException | NoSuchAlgorithmException ex) {
-            Logger.getLogger(CheckFilesServlet.class.getName()).log(Level.SEVERE, null, ex);
-            throw new RuntimeException(ex);
-        }
+    private static String calculateSha512(File file) {
+        return Utils.calculateSHA512Hash(file);
     }
 }
