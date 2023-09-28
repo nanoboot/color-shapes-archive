@@ -1,5 +1,8 @@
 pipeline 
 /*
+
+Color Shapes Archive
+
 Requirements:
 
 Following variables are set in Jenkins:
@@ -8,7 +11,7 @@ Following variables are set in Jenkins:
 
 Maven is Installed
 
-Java 19 is installed
+Java 21 is installed - variable JAVA_21_HOME is set
 
 Following Systemd services are installed:
 tomcat10
@@ -30,6 +33,15 @@ tomcat10test
     		    sh '''
     		        #!/bin/bash
     		        echo JOB_NAME=$JOB_NAME
+
+    		        if [ -z "$JAVA_21_HOME" ]
+                        then
+                              echo "KO : Variable JAVA_21_HOME is empty. You fix this issue by adding this variable to configuration of Jenkins."
+                              exit 1
+                        else
+                              echo "OK : Variable JAVA_21_HOME is NOT empty"
+                        fi
+                        export JAVA_HOME=$JAVA_21_HOME
 
     		        mvn clean install -X
     		        

@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.nanoboot.powerframework</groupId>
             <artifactId>power-io</artifactId>
-            <version>2.0.1-SNAPSHOT</version>
+            <version>${power.version}</version>
         </dependency>
         <dependency>
             <groupId>org.nanoboot.powerframework</groupId>
