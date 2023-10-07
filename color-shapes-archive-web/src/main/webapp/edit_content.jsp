@@ -29,7 +29,7 @@
 
     <%@page import="java.util.Scanner"%>
     <%@page import="java.io.File"%>
-    <%@page import="org.nanoboot.colorshapesarchive.web.misc.utils.Utils"%>
+    <%@page import="org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils"%>
     <%@page import="org.nanoboot.colorshapesarchive.persistence.api.WebsiteRepo"%>
     <%@page import="org.nanoboot.colorshapesarchive.entity.Website"%>
     <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
@@ -84,7 +84,7 @@
         </span>
 
         <%
-            if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
+            if (org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.cannotUpdate(request)) {
                 out.println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
                 throw new jakarta.servlet.jsp.SkipPageException();
             }
@@ -146,7 +146,7 @@
             boolean isAdoc = false;
             isAdoc = contentString.startsWith("_adoc_");
             if(isAdoc) {out.println("<style>" + org.nanoboot.colorshapesarchive.web.misc.utils.Constants.ASCIIDOC_CSS + "</style>");}
-                out.println("<div>" + Utils.convertToAsciidocIfNeeded(contentString.replace("[[FILE]]", "FileServlet/" + number + "/")) + "</div>");
+                out.println("<div>" + OctagonJakartaUtils.convertToAsciidocIfNeeded(contentString.replace("[[FILE]]", "FileServlet/" + number + "/")) + "</div>");
             }
         %>
         <% if (submit_button_save_changes

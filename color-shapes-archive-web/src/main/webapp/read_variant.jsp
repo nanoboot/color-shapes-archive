@@ -4,7 +4,7 @@
 <%@page import="java.io.File"%>
 <%@page import="org.nanoboot.colorshapesarchive.entity.Variant"%>
 <%@page import="org.nanoboot.colorshapesarchive.persistence.api.VariantRepo"%>
-<%@page import="org.nanoboot.colorshapesarchive.web.misc.utils.Utils"%>
+<%@page import="org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils"%>
 <%@page import="org.nanoboot.colorshapesarchive.persistence.api.WebsiteRepo"%>
 <%@page import="org.nanoboot.colorshapesarchive.entity.Website"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
@@ -59,7 +59,7 @@
         >> <a href="variants.jsp">Variants</a>
         >> <a href="read_variant.jsp?number=<%=number%>" class="nav_a_current">Read</a>
         
-            <% boolean canUpdate = org.nanoboot.colorshapesarchive.web.misc.utils.Utils.canUpdate(request); %>
+            <% boolean canUpdate = org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.canUpdate(request); %>
 <% if(canUpdate) { %>
 <a href="update_variant.jsp?number=<%=number%>">Update</a>
         <a href="upload_variant_screenshot.jsp?number=<%=number%>">Upload screenshot</a>
@@ -129,16 +129,16 @@ window.location.href = 'update_variant.jsp?number=<%=number%>'
 
         </tr>
         <tr><th>Name</th><td><%=variant.getName()%></td></tr>
-        <tr><th>Note</th><td><%=Utils.formatToHtml(variant.getNote())%></td></tr>
-        <tr><th>Status</th><td><%=Utils.formatToHtml(variant.getStatus())%></td></tr>
-        <tr><th>Author</th><td><%=Utils.formatToHtml(variant.getAuthor())%></td></tr>
-        <tr><th>Licence</th><td><%=Utils.formatToHtml(variant.getLicence())%></td></tr>
-        <tr><th>User interface</th><td><%=Utils.formatToHtml(variant.getUserInterface())%></td></tr>
-        <tr><th>Programming language</th><td><%=Utils.formatToHtml(variant.getProgrammingLanguage())%></td></tr>
-        <tr><th>Binaries</th><td><%=Utils.formatToHtml(variant.getBinaries())%></td></tr>
-        <tr><th>Open source</th><td><%=Utils.formatToHtml(variant.getOpenSource())%></td></tr>
-        <tr><th>Last update</th><td><%=Utils.formatToHtml(variant.getLastUpdate())%></td></tr>
-        <tr><th>Last version</th><td><%=Utils.formatToHtml(variant.getLastVersion())%></td></tr>
+        <tr><th>Note</th><td><%=OctagonJakartaUtils.formatToHtml(variant.getNote())%></td></tr>
+        <tr><th>Status</th><td><%=OctagonJakartaUtils.formatToHtml(variant.getStatus())%></td></tr>
+        <tr><th>Author</th><td><%=OctagonJakartaUtils.formatToHtml(variant.getAuthor())%></td></tr>
+        <tr><th>Licence</th><td><%=OctagonJakartaUtils.formatToHtml(variant.getLicence())%></td></tr>
+        <tr><th>User interface</th><td><%=OctagonJakartaUtils.formatToHtml(variant.getUserInterface())%></td></tr>
+        <tr><th>Programming language</th><td><%=OctagonJakartaUtils.formatToHtml(variant.getProgrammingLanguage())%></td></tr>
+        <tr><th>Binaries</th><td><%=OctagonJakartaUtils.formatToHtml(variant.getBinaries())%></td></tr>
+        <tr><th>Open source</th><td><%=OctagonJakartaUtils.formatToHtml(variant.getOpenSource())%></td></tr>
+        <tr><th>Last update</th><td><%=OctagonJakartaUtils.formatToHtml(variant.getLastUpdate())%></td></tr>
+        <tr><th>Last version</th><td><%=OctagonJakartaUtils.formatToHtml(variant.getLastVersion())%></td></tr>
 
     </table>
         

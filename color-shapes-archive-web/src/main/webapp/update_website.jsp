@@ -1,4 +1,4 @@
-<%@page import="org.nanoboot.colorshapesarchive.web.misc.utils.Utils"%>
+<%@page import="org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils"%>
 <%@page import="org.nanoboot.colorshapesarchive.persistence.api.WebsiteRepo"%>
 <%@page import="org.nanoboot.colorshapesarchive.entity.Website"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
@@ -64,7 +64,7 @@
     </span>
 
     <%
-        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(request)) {
+        if (org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.cannotUpdate(request)) {
             out.println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
             throw new jakarta.servlet.jsp.SkipPageException();
         }
@@ -99,7 +99,7 @@
             </tr>
                         <tr>
                 <td><label for="archives">Archives <b style="color:red;font-size:130%;"></b>:</label></td>
-                <td><input type="text" name="archives" value="<%=Utils.formatToHtmlWithoutEmptyWord(website.getArchives())%>"></td>
+                <td><input type="text" name="archives" value="<%=OctagonJakartaUtils.formatToHtmlWithoutEmptyWord(website.getArchives())%>"></td>
             </tr>
             
             
@@ -109,7 +109,7 @@
             </tr>
             <tr>
                 <td><label for="language">Language:</label></td>
-                <td style="text-align:left;"><input type="text" name="language" value="<%=Utils.formatToHtmlWithoutEmptyWord(website.getLanguage())%>" size="4" ></td>
+                <td style="text-align:left;"><input type="text" name="language" value="<%=OctagonJakartaUtils.formatToHtmlWithoutEmptyWord(website.getLanguage())%>" size="4" ></td>
             </tr>
             <tr>
                 <td><label for="verified">Content verified:</label></td>

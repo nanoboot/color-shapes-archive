@@ -1,4 +1,4 @@
-<%@page import="org.nanoboot.colorshapesarchive.web.misc.utils.Utils"%>
+<%@page import="org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils"%>
 <%@page import="org.nanoboot.colorshapesarchive.entity.Variant"%>
 <%@page import="org.nanoboot.colorshapesarchive.persistence.api.VariantRepo"%>
 <%@page import="java.util.List"%>
@@ -45,7 +45,7 @@
         
         
                 
-            <% boolean canUpdate = org.nanoboot.colorshapesarchive.web.misc.utils.Utils.canUpdate(request); %>
+            <% boolean canUpdate = org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.canUpdate(request); %>
 <% if(canUpdate) { %>
 >> <a href="create_variant.jsp">Add Variant</a>
 <% } %>
@@ -170,35 +170,35 @@
             </td>
             
             <td>
-                <%=Utils.formatToHtml(v.getNote())%>
+                <%=OctagonJakartaUtils.formatToHtml(v.getNote())%>
             </td>
             <td>
-                <%=Utils.formatToHtml(v.getStatus())%>
+                <%=OctagonJakartaUtils.formatToHtml(v.getStatus())%>
             </td>
             <td>
-                <%=Utils.formatToHtml(v.getAuthor())%>
+                <%=OctagonJakartaUtils.formatToHtml(v.getAuthor())%>
             </td>
             <td>
-                <%=Utils.formatToHtml(v.getLicence())%>
+                <%=OctagonJakartaUtils.formatToHtml(v.getLicence())%>
             </td>
             <td>
-                <%=Utils.formatToHtml(v.getOpenSource())%>
+                <%=OctagonJakartaUtils.formatToHtml(v.getOpenSource())%>
             </td>
             <td>
-                <%=Utils.formatToHtml(v.getUserInterface())%>
+                <%=OctagonJakartaUtils.formatToHtml(v.getUserInterface())%>
             </td>
             <td>
-                <%=Utils.formatToHtml(v.getProgrammingLanguage())%>
+                <%=OctagonJakartaUtils.formatToHtml(v.getProgrammingLanguage())%>
             </td>
 
             <td>
-                <%=Utils.formatToHtml(v.getBinaries())%>
+                <%=OctagonJakartaUtils.formatToHtml(v.getBinaries())%>
             </td>
             <td>
                 <%=v.getLastUpdate()== null ? EMPTY :v.getLastUpdate().toString()%>
             </td>
             <td>
-                <%=Utils.formatToHtml(v.getLastVersion())%>
+                <%=OctagonJakartaUtils.formatToHtml(v.getLastVersion())%>
             </td>
 
         </tr>
