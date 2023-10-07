@@ -36,4 +36,5 @@ module colorshapesarchive.web {
     requires asciidoctorj;
     requires asciidoctorj.api;
     requires dev.mccue.guava.io;
+    requires octagon.jakarta;
 }

@@ -32,7 +32,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.nanoboot.colorshapesarchive.web.misc.utils.Utils;
+import org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils;
 
 @WebServlet(
         name = "CheckFilesServlet",
@@ -44,7 +44,7 @@ public class CheckFilesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        if (org.nanoboot.colorshapesarchive.web.misc.utils.Utils.cannotUpdate(req)) {
+        if (OctagonJakartaUtils.cannotUpdate(req)) {
             resp.getOutputStream().println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
             return;
         }
@@ -189,6 +189,6 @@ public class CheckFilesServlet extends HttpServlet {
     }
 
     private static String calculateSha512(File file) {
-        return Utils.calculateSHA512Hash(file);
+        return OctagonJakartaUtils.calculateSHA512Hash(file);
     }
 }
