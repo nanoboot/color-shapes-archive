@@ -114,7 +114,7 @@ window.location.href = 'update_website.jsp?number=<%=number%>'
         <tr><th>Archive url</th><td>
                 <%
                     if(website.getArchiveUrl() != null && !website.getArchiveUrl().isEmpty()) {%>
-                    <a href="<%=OctagonJakartaUtils.formatToHtml(website.getArchiveUrl())%>" target="_blank"><%=OctagonJakartaUtils.formatToHtml(website.getArchiveUrl())%></a>
+                    <%=OctagonJakartaUtils.formatToHtml(website.getArchiveUrl())%>
                     <% } else {%><%=OctagonJakartaUtils.formatToHtml(website.getArchiveUrl())%><%}
             %>
             </td></tr>
@@ -202,6 +202,9 @@ if(!org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.runProcess("cat *.war
                     
                     java.io.File finalWarcGzInFinalCollection = new java.io.File(targetArchiveDir, finalWarcGz.getName());
                     finalWarcGz.renameTo(finalWarcGzInFinalCollection);
+                    
+                    
+                    
                     String hash = org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.calculateSHA512Hash(finalWarcGzInFinalCollection);
                     
                     File archiveCheckSums = new File(finalWarcGzInFinalCollection.getParentFile().getParentFile().getAbsolutePath() + "/" + "archiveCheckSums");
