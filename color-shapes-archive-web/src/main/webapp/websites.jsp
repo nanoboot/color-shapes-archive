@@ -184,6 +184,9 @@
 
         <%
             for (Website w : websites) {
+                if(w.getUrl().startsWith("freefree")) {
+                    continue;
+                }
         %>
         <tr>
             <td><%=w.getNumber()%></td>
