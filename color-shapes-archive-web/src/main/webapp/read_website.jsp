@@ -57,10 +57,14 @@
         
                     <% boolean canUpdate = org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.canUpdate(request); %>
 <% if(canUpdate) { %>
-        <a href="update_website.jsp?number=<%=number%>">Update</a>
-        <a href="show_content.jsp?number=<%=number%>">Show</a>
+        <a href="update_website.jsp?number=<%=number%>">Update</a>        
+<% } %>
+<a href="show_content.jsp?number=<%=number%>">Show</a>
+<% if(canUpdate) { %>
         <a href="edit_content.jsp?number=<%=number%>">Edit</a>
+<% } %>
         <a href="list_files.jsp?number=<%=number%>">List</a>
+<% if(canUpdate) { %>
         <a href="upload_file.jsp?number=<%=number%>">Upload</a>
         <a href="add_archive.jsp?number=<%=number%>">Add archive</a>
 <% } %>

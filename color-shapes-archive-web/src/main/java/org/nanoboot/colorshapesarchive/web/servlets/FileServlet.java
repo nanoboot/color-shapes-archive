@@ -42,10 +42,10 @@ public class FileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        if (OctagonJakartaUtils.cannotUpdate(req)) {
-            resp.getOutputStream().println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
-            return;
-        }
+//        if (OctagonJakartaUtils.cannotUpdate(req)) {
+//            resp.getOutputStream().println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
+//            return;
+//        }
         //resp.setContentType("text/plain");
         //resp.setHeader("Content-disposition", "attachment; filename=sample.txt");
 

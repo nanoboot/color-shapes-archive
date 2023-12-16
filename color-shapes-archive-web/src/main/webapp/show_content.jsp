@@ -54,30 +54,37 @@
         <span class="nav" style="margin-bottom:0;"><a href="index.jsp">Home</a>
             >> <a href="websites.jsp">Websites</a>
             >> <a href="read_website.jsp?number=<%=number%>">Read</a>
-
+            <% boolean canUpdate = org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.canUpdate(request); %>
+<% if(canUpdate) { %>
             <a href="update_website.jsp?number=<%=number%>">Update</a>
+            <% } %>
 
 
             <a href="show_content.jsp?number=<%=number%>" class="nav_a_current">Show</a>
+            <% if(canUpdate) { %>
             <a href="edit_content.jsp?number=<%=number%>">Edit</a>
+            <% } %>
             <a href="list_files.jsp?number=<%=number%>">List</a>
+            <% if(canUpdate) { %>
             <a href="upload_file.jsp?number=<%=number%>">Upload</a>
-
+            <% } %>
 
         </span>
         <script>
             function redirectToEdit() {
+                <%if (org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.canUpdate(request)) {%>
                 window.location.href = 'edit_content.jsp?number=<%=number%>'
+                <% } %>
 
             }
 
         </script>  
 
         <%
-            if (org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.cannotUpdate(request)) {
-                out.println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
-                throw new jakarta.servlet.jsp.SkipPageException();
-            }
+//            if (org.nanoboot.octagon.jakarta.utils.OctagonJakartaUtils.cannotUpdate(request)) {
+//                out.println("&nbsp;&nbsp;&nbsp;&nbsp;Access forbidden. <br><br> &nbsp;&nbsp;&nbsp;&nbsp;<a href=\"login.html\" target=\"_blank\">Log in</a>");
+//                throw new jakarta.servlet.jsp.SkipPageException();
+//            }
         %>
 
         <p class="margin_left_and_big_font" style="background:white;margin:0;padding-top:20px;">
