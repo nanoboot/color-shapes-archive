@@ -102,8 +102,13 @@
         <label for="number">Number </label><input type="text" name="number" value="<%=number != null ? number : ""%>" size="5" style="margin-right:10px;">
         <label for="url">Url </label><input type="text" name="url" value="<%=url != null ? url : ""%>" style="margin-right:10px;">
         <label for="variantNumber">Variant number </label><input type="text" name="variantNumber" value="<%=variantNumber != null ? variantNumber : ""%>" size="5" style="margin-right:10px;">
-        <label for="contentVerified">Content verified</label><input type="checkbox" name="contentVerified"  <%=contentVerified != null && contentVerified.equals("1") ? "checked " : ""%>value="1">
-        
+        <label for="contentVerified">Content verified</label>
+        <select id="contentVerified" name="contentVerified">
+            <option value="all">All</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+                
         <label for="archiveVerified">Archive verified</label>
         <select id="archiveVerified" name="archiveVerified">
             <option value="all">All</option>
@@ -130,7 +135,7 @@
         List<Website> websites = websiteRepo.list(
                 pageNumberInt,
                 ((pageSize == null || pageSize.isEmpty()) ? 10 : Integer.valueOf(pageSize)),
-                contentVerified == null ? null : Boolean.valueOf(contentVerified.equals("1")),
+                contentVerified,
                 archiveVerified,
                 recording,
                 number == null || number.isEmpty() ? null : Integer.valueOf(number),

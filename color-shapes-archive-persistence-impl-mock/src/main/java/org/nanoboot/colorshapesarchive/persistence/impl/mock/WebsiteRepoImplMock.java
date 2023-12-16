@@ -37,7 +37,7 @@ public class WebsiteRepoImplMock implements WebsiteRepo {
     public List<Website> list(
             int pageNumber,
             int pageSize,
-            Boolean contentVerified,
+            String contentVerified,
             String archiveVerified,
             String recording,
             Integer number,

@@ -43,7 +43,7 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
     public List<Website> list(
             int pageNumber,
             int pageSize,
-            Boolean contentVerified,
+            String contentVerified,
             String archiveVerified,
             String recording,
             Integer number,
@@ -58,17 +58,13 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 .append("SELECT * FROM ")
                 .append(WebsiteTable.TABLE_NAME)
                 .append(" WHERE ");
-        boolean pagingIsEnabled = contentVerified == null && (archiveVerified == null || archiveVerified.equals("all"))  && number == null && url == null && variantNumber == null;
+        boolean pagingIsEnabled = (contentVerified == null || contentVerified.equals("all")) && (archiveVerified == null || archiveVerified.equals("all"))  && number == null && url == null && variantNumber == null;
 
         if (pagingIsEnabled) {
             sb.append(WebsiteTable.NUMBER)
                     .append(" BETWEEN ? AND ? ");
         } else {
             sb.append("1=1");
-        }
-        if (contentVerified != null) {
-            sb.append(" AND ").append(WebsiteTable.CONTENT_VERIFIED)
-                    .append("=?");
         }
 
         if (number != null) {
@@ -98,6 +94,34 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                     .append(WebsiteTable.RECORDING_ID)
                     .append("='' ");
         }
+        
+        if((contentVerified != null && contentVerified.equals("no")) || (archiveVerified != null && archiveVerified.equals("no"))) {
+                    sb.append(" AND ((")
+                    .append(WebsiteTable.CONTENT_VERIFIED)
+                    .append(" IS NULL or ")
+                    .append(WebsiteTable.CONTENT_VERIFIED)
+                            .append("=0) and ( ")
+                    .append(WebsiteTable.ARCHIVE_VERIFIED)
+                    .append(" IS NULL or ")
+                    .append(WebsiteTable.ARCHIVE_VERIFIED)
+            .append("=0)) ");
+        } else {
+        if (contentVerified != null && contentVerified.equals("yes")) {
+            sb.append(" AND ")
+                    .append(WebsiteTable.CONTENT_VERIFIED)
+                    .append(" IS NOT NULL AND ")
+                    .append(WebsiteTable.CONTENT_VERIFIED)
+            .append("=1 ");
+        }
+
+        if (contentVerified != null && contentVerified.equals("no")) {
+            sb.append(" AND ")
+                    .append(WebsiteTable.CONTENT_VERIFIED)
+                    .append(" IS NULL OR ")
+                    .append(WebsiteTable.CONTENT_VERIFIED)
+                    .append("!=1 ");
+        }
+        
         if (archiveVerified != null && archiveVerified.equals("yes")) {
             sb.append(" AND ")
                     .append(WebsiteTable.ARCHIVE_VERIFIED)
@@ -113,6 +137,8 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                     .append(WebsiteTable.ARCHIVE_VERIFIED)
                     .append("!=1 ");
         }
+        }
+                
         String sql = sb.toString();
         System.err.println(sql);
         int i = 0;
@@ -124,9 +150,6 @@ public class WebsiteRepoImplSqlite implements WebsiteRepo {
                 stmt.setInt(++i, numberEnd);
             }
 
-            if (contentVerified != null) {
-                stmt.setInt(++i, contentVerified ? 1 : 0);
-            }
             if (number != null) {
                 stmt.setInt(++i, number);
             }
