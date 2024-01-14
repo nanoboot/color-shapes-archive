@@ -130,6 +130,18 @@
             }
         %>
 
+        <script>
+        const apo='"'
+const insertIntoTextarea = (textarea, text) => {
+    const position = textarea.selectionStart;
+    const before = textarea.value.substring(0, position);
+    const after = textarea.value.substring(position, textarea.value.length);
+
+    textarea.value = before + text + after;
+    textarea.selectionStart = textarea.selectionEnd = position + text.length;
+};
+</script>
+
         <% //if(submit_button_save_changes == null) { %>
         <form action="edit_content.jsp" method="post">
             <input type="submit" name="submit_button_save_changes" value="Save Changes">&nbsp;&nbsp;
@@ -137,7 +149,21 @@
             <input type="submit" name="submit_button_cancel" value="Cancel">&nbsp;&nbsp;
             <input type="hidden" name="number" value="<%=number%>">
             <br>
-            <textarea id="content" name="content" lang="en" dir="ltr" rows="20"
+            <br>            
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<h1>AAA</h1>')">H1</button> 
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<p>AAA</p>')">P</button>
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<a href='+apo+'[[FILE]]AAA'+apo+'>AAA</a>')">A</button>
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<img src='+apo+'[[FILE]]FILENAME'+apo+'>')">IMG</button> 
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<br>')">BR</button> 
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<hr>')">HR</button> 
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<ul>AAA</ul>')">UL</button> 
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<li>AAA</li>')">LI</button>
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<video controls loop muted width='+apo+'400'+apo+'><source src='+apo+'[[FILE]]AAA'+apo+' type='+apo+'video/mp4'+apo+'>This browser does not display the video tag. Video AAA could not be played.</video>')">VIDEO</button>
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<table>\n<tr><th>AAA</th><th>AAA</th><th>AAA</th></tr>\n<tr><td>AAA</td><td>AAA</td><td>AAA</td></tr>\n</table>')">TABLE</button>
+            <button type="button" style="font-size:150%" onclick="insertIntoTextarea(getElementById('content'),'<embed src='+apo+'AAA.swf'+apo+' width='+apo+'550'+apo+' height='+apo+'400'+apo+'></embed>')">FLASH</button>
+            
+            <br>
+            <textarea id="content" name="content" id="content" lang="en" dir="ltr" rows="20"
                       onChange="flgChange = true;" onKeyPress="flgChange = true;" style="width:100%;font-family:monospace;font-size:150%;margin-top:10px;"><%=contentString%></textarea>
         </form>
         <% //} %>
@@ -146,7 +172,7 @@
             boolean isAdoc = false;
             isAdoc = contentString.startsWith("_adoc_");
             if(isAdoc) {out.println("<style>" + org.nanoboot.colorshapesarchive.web.misc.utils.Constants.ASCIIDOC_CSS + "</style>");}
-                out.println("<div>" + OctagonJakartaUtils.convertToAsciidocIfNeeded(contentString.replace("[[FILE]]", "FileServlet/" + number + "/")) + "</div>");
+                out.println("<div style=\"\">" + OctagonJakartaUtils.convertToAsciidocIfNeeded(contentString.replace("[[FILE]]", "FileServlet/" + number + "/")) + "</div>");
             }
         %>
         <% if (submit_button_save_changes
